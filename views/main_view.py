@@ -1,15 +1,14 @@
-import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5.uic import loadUi
-from usuarios import SqlDataBase_usuarios
+from PyQt5.QtWidgets import QMainWindow
+import sql_structures
 
-usuarios = SqlDataBase_usuarios()
+usuarios = sql_structures.SqlDataBase_usuarios()
 
 
 class VentanaPrincipal(QMainWindow):
     def __init__(self):
         super(VentanaPrincipal, self).__init__()
-        loadUi('DB1.ui', self)
+        loadUi('views/designs/DB1.ui', self)
 
         self.frame_menu.hide()
         # self.btn_menu.hide()
@@ -55,6 +54,25 @@ class VentanaPrincipal(QMainWindow):
         # Inicio sesion
         self.btn_iniciar_sesion.clicked.connect(self.iniciar_sesion)
 
+        # COPMRAS CAFE
+        self.cafeComprarBTN.clicked.connect(self.buy_coffee)
+
+    def buy_coffee(self):
+        try:
+            coffee = sql_structures.Coffee(self.regionCombobx.currentText(),
+                                           self.fincaText.text(),
+                                           int(self.cantidadText.text()),
+                                           self.estadoCombobx.currentText(),
+                                           self.tipoCombobx.currentText())
+
+            coffee.management('buy_coffee')
+
+            self.fincaText.clear()
+            self.cantidadText.clear()
+
+        except Exception as e:
+            print(e)
+
     def minimizar(self):
         self.showMinimized()
 
@@ -72,17 +90,20 @@ class VentanaPrincipal(QMainWindow):
         usuario_comprobacion = str(self.lineEdit_usuarios.text())
         rol = str(usuarios.get_rol(usuario_comprobacion))
         if rol == 'Administrador':
-            self.self.btn_menu.show()
+            self.btn_menu.show()
+
         elif rol == 'Vendedor':
-            self.self.btn_menu.show()
+            self.btn_menu.show()
             self.btn_inventario.hide()
             self.btn_mobiliario.hide()
             self.btn_catacion.hide()
             self.btn_usuario.hide()
+
         elif rol == 'Bodegero':
-            self.self.btn_menu.show()
+            self.btn_menu.show()
+
         elif rol == 'Catador':
-            self.self.btn_menu.show()
+            self.btn_menu.show()
 
     def menu_show(self):
         self.btn_menu.hide()
@@ -168,10 +189,3 @@ class VentanaPrincipal(QMainWindow):
     def loaddata(self):
         tableWidget_usuarios = self.tableWidget_usuarios
         usuarios.usuarios(tableWidget_usuarios)
-
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    mi_app = VentanaPrincipal()
-    mi_app.show()
-    sys.exit(app.exec())

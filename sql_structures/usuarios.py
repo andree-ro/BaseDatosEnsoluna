@@ -4,7 +4,7 @@ from PyQt5 import QtWidgets
 
 class SqlDataBase_usuarios:
 	def __init__(self):
-		self.conn = sql.connect("usuarios.db")
+		self.conn = sql.connect("sql_structures/dbs/usuarios.db")
 
 	def createDB(self):
 		self.conn.commit()

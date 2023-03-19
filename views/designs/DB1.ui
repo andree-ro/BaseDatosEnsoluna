@@ -2605,11 +2605,16 @@ font: 75 10pt &quot;Open Sans Semibold&quot;</string>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QComboBox" name="comboBox_4">
+                     <widget class="QComboBox" name="regionCombobx">
                       <property name="styleSheet">
                        <string notr="true">color: rgb(89, 31, 11);
 font: 75 10pt &quot;Open Sans Semibold&quot;</string>
                       </property>
+                      <item>
+                       <property name="text">
+                        <string>--Seleccionar--</string>
+                       </property>
+                      </item>
                       <item>
                        <property name="text">
                         <string>Huehuetenango</string>
@@ -2682,7 +2687,7 @@ font: 75 10pt &quot;Open Sans Semibold&quot;</string>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QLineEdit" name="lineEdit_3">
+                     <widget class="QLineEdit" name="fincaText">
                       <property name="minimumSize">
                        <size>
                         <width>195</width>
@@ -2727,7 +2732,7 @@ font: 75 10pt &quot;Open Sans Semibold&quot;</string>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QLineEdit" name="lineEdit_4">
+                     <widget class="QLineEdit" name="cantidadText">
                       <property name="minimumSize">
                        <size>
                         <width>190</width>
@@ -2772,7 +2777,7 @@ font: 75 10pt &quot;Open Sans Semibold&quot;</string>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QComboBox" name="comboBox_5">
+                     <widget class="QComboBox" name="estadoCombobx">
                       <property name="maximumSize">
                        <size>
                         <width>300</width>
@@ -2783,6 +2788,11 @@ font: 75 10pt &quot;Open Sans Semibold&quot;</string>
                        <string notr="true">color: rgb(89, 31, 11);
 font: 75 10pt &quot;Open Sans Semibold&quot;</string>
                       </property>
+                      <item>
+                       <property name="text">
+                        <string>--Seleccionar--</string>
+                       </property>
+                      </item>
                       <item>
                        <property name="text">
                         <string>Oro</string>
@@ -2830,11 +2840,16 @@ font: 75 10pt &quot;Open Sans Semibold&quot;</string>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QComboBox" name="comboBox_6">
+                     <widget class="QComboBox" name="tipoCombobx">
                       <property name="styleSheet">
                        <string notr="true">color: rgb(89, 31, 11);
 font: 75 10pt &quot;Open Sans Semibold&quot;</string>
                       </property>
+                      <item>
+                       <property name="text">
+                        <string>--Seleccionar--</string>
+                       </property>
+                      </item>
                       <item>
                        <property name="text">
                         <string>Primeras</string>
@@ -2892,7 +2907,7 @@ font: 75 10pt &quot;Open Sans Semibold&quot;</string>
                      </spacer>
                     </item>
                     <item>
-                     <widget class="QPushButton" name="pushButton_7">
+                     <widget class="QPushButton" name="cafeComprarBTN">
                       <property name="minimumSize">
                        <size>
                         <width>0</width>
