@@ -4,7 +4,8 @@ import numbers
 
 class Manager:
     def __init__(self):
-        self.database_dir = "user='root', password='I.gt.MPW.2023.U', host='127.0.0.1', database='mydb'"
+        # self.database_dir = "user='root', password='I.gt.MPW.2023.U', host='127.0.0.1', database='mydb'"
+        self.database_dir = "user='root', password='andree2332', host='127.0.0.1', database='mydb'"
 
         # Connect to the database
         self.cnx = None
@@ -14,7 +15,7 @@ class Manager:
 
     def connect(self):
         # Connect to the database
-        self.cnx = mysql.connector.connect(user='root', password='I.gt.MPW.2023.U',
+        self.cnx = mysql.connector.connect(user='root', password='andree2332',
                                            host='127.0.0.1', database='mydb')
 
         # Create a cursor object

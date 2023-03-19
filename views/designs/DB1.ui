@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1149</width>
-    <height>838</height>
+    <height>856</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -84,7 +84,7 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>Imagenes/Imagen5.png</normaloff>Imagenes/Imagen5.png</iconset>
+           <normaloff>../../../../../../.designer/backup/Imagenes/Imagen5.png</normaloff>../../../../../../.designer/backup/Imagenes/Imagen5.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -129,7 +129,7 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>Imagenes/Imagen6.png</normaloff>Imagenes/Imagen6.png</iconset>
+           <normaloff>../../../../../../.designer/backup/Imagenes/Imagen6.png</normaloff>../../../../../../.designer/backup/Imagenes/Imagen6.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -229,7 +229,7 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>Imagenes/786263.png</normaloff>Imagenes/786263.png</iconset>
+           <normaloff>../../../../../../.designer/backup/Imagenes/786263.png</normaloff>../../../../../../.designer/backup/Imagenes/786263.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -274,7 +274,7 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>Imagenes/159699.png</normaloff>Imagenes/159699.png</iconset>
+           <normaloff>../../../../../../.designer/backup/Imagenes/159699.png</normaloff>../../../../../../.designer/backup/Imagenes/159699.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -319,7 +319,7 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>Imagenes/1263344.png</normaloff>Imagenes/1263344.png</iconset>
+           <normaloff>../../../../../../.designer/backup/Imagenes/1263344.png</normaloff>../../../../../../.designer/backup/Imagenes/1263344.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -364,7 +364,7 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>Imagenes/4115235-exit-logout-sign-out_114030.png</normaloff>Imagenes/4115235-exit-logout-sign-out_114030.png</iconset>
+           <normaloff>../../../../../../.designer/backup/Imagenes/4115235-exit-logout-sign-out_114030.png</normaloff>../../../../../../.designer/backup/Imagenes/4115235-exit-logout-sign-out_114030.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -442,7 +442,7 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>Imagenes/bolsa-de-cafe.png</normaloff>Imagenes/bolsa-de-cafe.png</iconset>
+           <normaloff>../../../../../../.designer/backup/Imagenes/bolsa-de-cafe.png</normaloff>../../../../../../.designer/backup/Imagenes/bolsa-de-cafe.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -497,7 +497,7 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>Imagenes/taza-de-cafe.png</normaloff>Imagenes/taza-de-cafe.png</iconset>
+           <normaloff>../../../../../../.designer/backup/Imagenes/taza-de-cafe.png</normaloff>../../../../../../.designer/backup/Imagenes/taza-de-cafe.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -552,7 +552,7 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>Imagenes/planta-de-cafe.png</normaloff>Imagenes/planta-de-cafe.png</iconset>
+           <normaloff>../../../../../../.designer/backup/Imagenes/planta-de-cafe.png</normaloff>../../../../../../.designer/backup/Imagenes/planta-de-cafe.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -607,7 +607,7 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>Imagenes/924514.png</normaloff>Imagenes/924514.png</iconset>
+           <normaloff>../../../../../../.designer/backup/Imagenes/924514.png</normaloff>../../../../../../.designer/backup/Imagenes/924514.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -662,7 +662,7 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>Imagenes/cosecha.png</normaloff>Imagenes/cosecha.png</iconset>
+           <normaloff>../../../../../../.designer/backup/Imagenes/cosecha.png</normaloff>../../../../../../.designer/backup/Imagenes/cosecha.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -1028,7 +1028,7 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
                             </property>
                             <property name="icon">
                              <iconset>
-                              <normaloff>Imagenes/Imagen5.png</normaloff>Imagenes/Imagen5.png</iconset>
+                              <normaloff>../../../../../../.designer/backup/Imagenes/Imagen5.png</normaloff>../../../../../../.designer/backup/Imagenes/Imagen5.png</iconset>
                             </property>
                             <property name="iconSize">
                              <size>
@@ -1077,7 +1077,7 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
                             </property>
                             <property name="icon">
                              <iconset>
-                              <normaloff>Imagenes/Imagen6.png</normaloff>Imagenes/Imagen6.png</iconset>
+                              <normaloff>../../../../../../.designer/backup/Imagenes/Imagen6.png</normaloff>../../../../../../.designer/backup/Imagenes/Imagen6.png</iconset>
                             </property>
                             <property name="iconSize">
                              <size>
@@ -1159,7 +1159,7 @@ font: 75 9pt &quot;Open Sans Semibold&quot;
                             </property>
                             <property name="icon">
                              <iconset>
-                              <normaloff>Imagenes/6553817.png</normaloff>Imagenes/6553817.png</iconset>
+                              <normaloff>../../../../../../.designer/backup/Imagenes/6553817.png</normaloff>../../../../../../.designer/backup/Imagenes/6553817.png</iconset>
                             </property>
                             <property name="iconSize">
                              <size>
@@ -2204,7 +2204,7 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
                          </property>
                          <property name="icon">
                           <iconset>
-                           <normaloff>Imagenes/Imagen5.png</normaloff>Imagenes/Imagen5.png</iconset>
+                           <normaloff>../../../../../../.designer/backup/Imagenes/Imagen5.png</normaloff>../../../../../../.designer/backup/Imagenes/Imagen5.png</iconset>
                          </property>
                          <property name="iconSize">
                           <size>
@@ -2253,7 +2253,7 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
                          </property>
                          <property name="icon">
                           <iconset>
-                           <normaloff>Imagenes/Imagen6.png</normaloff>Imagenes/Imagen6.png</iconset>
+                           <normaloff>../../../../../../.designer/backup/Imagenes/Imagen6.png</normaloff>../../../../../../.designer/backup/Imagenes/Imagen6.png</iconset>
                          </property>
                          <property name="iconSize">
                           <size>
@@ -2335,7 +2335,7 @@ font: 75 9pt &quot;Open Sans Semibold&quot;
                          </property>
                          <property name="icon">
                           <iconset>
-                           <normaloff>Imagenes/cafe.png</normaloff>Imagenes/cafe.png</iconset>
+                           <normaloff>../../../../../../.designer/backup/Imagenes/cafe.png</normaloff>../../../../../../.designer/backup/Imagenes/cafe.png</iconset>
                          </property>
                          <property name="iconSize">
                           <size>
@@ -2391,7 +2391,7 @@ font: 75 9pt &quot;Open Sans Semibold&quot;
                          </property>
                          <property name="icon">
                           <iconset>
-                           <normaloff>Imagenes/granos-de-cafe.png</normaloff>Imagenes/granos-de-cafe.png</iconset>
+                           <normaloff>../../../../../../.designer/backup/Imagenes/granos-de-cafe.png</normaloff>../../../../../../.designer/backup/Imagenes/granos-de-cafe.png</iconset>
                          </property>
                          <property name="iconSize">
                           <size>
@@ -2447,7 +2447,7 @@ font: 75 9pt &quot;Open Sans Semibold&quot;
                          </property>
                          <property name="icon">
                           <iconset>
-                           <normaloff>Imagenes/cafecini.png</normaloff>Imagenes/cafecini.png</iconset>
+                           <normaloff>../../../../../../.designer/backup/Imagenes/cafecini.png</normaloff>../../../../../../.designer/backup/Imagenes/cafecini.png</iconset>
                          </property>
                          <property name="iconSize">
                           <size>
@@ -3045,7 +3045,7 @@ font: 75 10pt &quot;Open Sans Semibold&quot;</string>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QLineEdit" name="lineEdit_5">
+                     <widget class="QLineEdit" name="colorBolsaText">
                       <property name="maximumSize">
                        <size>
                         <width>150</width>
@@ -3090,7 +3090,7 @@ font: 75 10pt &quot;Open Sans Semibold&quot;</string>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QLineEdit" name="lineEdit_6">
+                     <widget class="QLineEdit" name="stickerText">
                       <property name="maximumSize">
                        <size>
                         <width>150</width>
@@ -3141,7 +3141,7 @@ font: 75 10pt &quot;Open Sans Semibold&quot;</string>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QLineEdit" name="lineEdit_7">
+                     <widget class="QLineEdit" name="TamanioText">
                       <property name="maximumSize">
                        <size>
                         <width>150</width>
@@ -3182,7 +3182,7 @@ font: 75 10pt &quot;Open Sans Semibold&quot;</string>
                      </spacer>
                     </item>
                     <item>
-                     <widget class="QPushButton" name="pushButton_9">
+                     <widget class="QPushButton" name="enpaquetadoComprarBTN">
                       <property name="minimumSize">
                        <size>
                         <width>0</width>
@@ -3420,7 +3420,7 @@ font: 75 10pt &quot;Open Sans Semibold&quot;</string>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QComboBox" name="comboBox_7">
+                     <widget class="QComboBox" name="regionAcCombobx">
                       <property name="styleSheet">
                        <string notr="true">color: rgb(89, 31, 11);
 font: 75 10pt &quot;Open Sans Semibold&quot;</string>
@@ -3497,7 +3497,7 @@ font: 75 10pt &quot;Open Sans Semibold&quot;</string>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QLineEdit" name="lineEdit_8">
+                     <widget class="QLineEdit" name="fincaAcText">
                       <property name="minimumSize">
                        <size>
                         <width>195</width>
@@ -3542,7 +3542,7 @@ font: 75 10pt &quot;Open Sans Semibold&quot;</string>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QLineEdit" name="lineEdit_9">
+                     <widget class="QLineEdit" name="cantidadAcText">
                       <property name="minimumSize">
                        <size>
                         <width>190</width>
@@ -3587,7 +3587,7 @@ font: 75 10pt &quot;Open Sans Semibold&quot;</string>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QComboBox" name="comboBox_8">
+                     <widget class="QComboBox" name="estadoAcText">
                       <property name="maximumSize">
                        <size>
                         <width>300</width>
@@ -3645,7 +3645,7 @@ font: 75 10pt &quot;Open Sans Semibold&quot;</string>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QComboBox" name="comboBox_9">
+                     <widget class="QComboBox" name="tipoAcText">
                       <property name="styleSheet">
                        <string notr="true">color: rgb(89, 31, 11);
 font: 75 10pt &quot;Open Sans Semibold&quot;</string>
@@ -3694,28 +3694,79 @@ font: 75 10pt &quot;Open Sans Semibold&quot;</string>
                      <number>100</number>
                     </property>
                     <item>
-                     <spacer name="horizontalSpacer_20">
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
+                     <widget class="QLabel" name="label_38">
+                      <property name="text">
+                       <string>Columna a actualizar: </string>
                       </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>40</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                     </spacer>
+                     </widget>
                     </item>
                     <item>
-                     <widget class="QPushButton" name="pushButton_8">
-                      <property name="minimumSize">
-                       <size>
-                        <width>0</width>
-                        <height>35</height>
-                       </size>
+                     <widget class="QComboBox" name="columnaAcText">
+                      <item>
+                       <property name="text">
+                        <string>Region</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>Finca</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>Cantidad</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>Estado</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>Tipo</string>
+                       </property>
+                      </item>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_39">
+                      <property name="text">
+                       <string>Valor:</string>
                       </property>
-                      <property name="styleSheet">
-                       <string notr="true">QFrame{
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="valorAcText"/>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QFrame" name="frame_46">
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <widget class="QPushButton" name="cafeAcBTN">
+                    <property name="geometry">
+                     <rect>
+                      <x>390</x>
+                      <y>20</y>
+                      <width>75</width>
+                      <height>35</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>35</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QFrame{
 background-color: rgb(51, 157, 255);
 }
 
@@ -3731,23 +3782,11 @@ background-color: rgb(209, 172, 127);
 font: 75 9pt  &quot;Open Sans Semibold&quot;
 }
 </string>
-                      </property>
-                      <property name="text">
-                       <string>Actualizar</string>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QFrame" name="frame_46">
-                   <property name="frameShape">
-                    <enum>QFrame::StyledPanel</enum>
-                   </property>
-                   <property name="frameShadow">
-                    <enum>QFrame::Raised</enum>
-                   </property>
+                    </property>
+                    <property name="text">
+                     <string>Actualizar</string>
+                    </property>
+                   </widget>
                   </widget>
                  </item>
                 </layout>
@@ -4636,7 +4675,7 @@ font: 75 10pt &quot;Open Sans Semibold&quot;</string>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QComboBox" name="comboBox_10">
+                     <widget class="QComboBox" name="regionElimComboBx">
                       <property name="styleSheet">
                        <string notr="true">color: rgb(89, 31, 11);
 font: 75 10pt &quot;Open Sans Semibold&quot;</string>
@@ -4713,7 +4752,7 @@ font: 75 10pt &quot;Open Sans Semibold&quot;</string>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QLineEdit" name="lineEdit_13">
+                     <widget class="QLineEdit" name="fincaElimText">
                       <property name="minimumSize">
                        <size>
                         <width>195</width>
@@ -4758,7 +4797,7 @@ font: 75 10pt &quot;Open Sans Semibold&quot;</string>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QLineEdit" name="lineEdit_14">
+                     <widget class="QLineEdit" name="cantidadElimText">
                       <property name="minimumSize">
                        <size>
                         <width>190</width>
@@ -4803,7 +4842,7 @@ font: 75 10pt &quot;Open Sans Semibold&quot;</string>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QComboBox" name="comboBox_11">
+                     <widget class="QComboBox" name="estadoElimComboBx">
                       <property name="maximumSize">
                        <size>
                         <width>300</width>
@@ -4923,7 +4962,7 @@ font: 75 10pt &quot;Open Sans Semibold&quot;</string>
                      </spacer>
                     </item>
                     <item>
-                     <widget class="QPushButton" name="pushButton_11">
+                     <widget class="QPushButton" name="eliminarBTN">
                       <property name="minimumSize">
                        <size>
                         <width>0</width>
@@ -4949,7 +4988,7 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
 </string>
                       </property>
                       <property name="text">
-                       <string>Actualizar</string>
+                       <string>Eliminar</string>
                       </property>
                      </widget>
                     </item>
@@ -5324,7 +5363,7 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
   </widget>
  </widget>
  <resources>
-  <include location="usuario.qrc"/>
+  <include location="../../../ProyectoEnsoluna/views/designs/usuario.qrc"/>
  </resources>
  <connections/>
 </ui>

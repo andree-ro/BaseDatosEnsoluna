@@ -57,18 +57,55 @@ class VentanaPrincipal(QMainWindow):
         # COPMRAS CAFE
         self.cafeComprarBTN.clicked.connect(self.buy_coffee)
 
+        # ACTUALIZACION CAFE
+        self.cafeAcBTN.clicked.connect(self.update_coffee)
+
+        # BORRAR CAFE
+        self.eliminarBTN.clicked.connect(self.delete_coffee)
+
     def buy_coffee(self):
         try:
             coffee = sql_structures.Coffee(self.regionCombobx.currentText(),
                                            self.fincaText.text(),
                                            int(self.cantidadText.text()),
-                                           self.estadoCombobx.currentText(),
-                                           self.tipoCombobx.currentText())
+                                           self.estadoCombobx.currentText())
 
             coffee.management('buy_coffee')
 
             self.fincaText.clear()
             self.cantidadText.clear()
+
+        except Exception as e:
+            print(e)
+
+    def update_coffee(self):
+        try:
+            coffee = sql_structures.Coffee(self.regionAcCombobx.currentText(),
+                                           self.fincaAcText.text(),
+                                           int(self.cantidadAcText.text()),
+                                           self.estadoAcText.currentText(),
+                                           self.columnaAcText.currentText(),
+                                           self.valorAcText.text())
+
+            coffee.management('update_coffee')
+
+            # self.fincaText.clear()
+            # self.cantidadText.clear()
+
+        except Exception as e:
+            print(e)
+
+    def delete_coffee(self):
+        try:
+            coffee = sql_structures.Coffee(self.regionElimComboBx.currentText(),
+                                           self.fincaElimText.text(),
+                                           int(self.cantidadElimText.text()),
+                                           self.estadoElimComboBx.currentText())
+
+            coffee.management('delete_coffee')
+
+            # self.fincaText.clear()
+            # self.cantidadText.clear()
 
         except Exception as e:
             print(e)
