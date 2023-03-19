@@ -63,6 +63,16 @@ class VentanaPrincipal(QMainWindow):
         # BORRAR CAFE
         self.eliminarBTN.clicked.connect(self.delete_coffee)
 
+        # COMPRAS EMPAQUETADO
+        self.empaquetadoComprarBTN.clicked.connect(self.buy_packaging)
+
+        # ACTUALIZACION EMPAQUETADO
+        self.actualizarEmpaqueBTN.clicked.connect(self.update_packaging)
+
+        # BORRAR EMPAQUETADO
+        self.eliminarEmpBTN.clicked.connect(self.delete_packaging)
+
+    # METODOS/FUNCIONES CLASE COFFEE
     def buy_coffee(self):
         try:
             coffee = sql_structures.Coffee(self.regionCombobx.currentText(),
@@ -89,8 +99,9 @@ class VentanaPrincipal(QMainWindow):
 
             coffee.management('update_coffee')
 
-            # self.fincaText.clear()
-            # self.cantidadText.clear()
+            self.fincaText.clear()
+            self.cantidadText.clear()
+            self.valorAcText.clear()
 
         except Exception as e:
             print(e)
@@ -104,8 +115,58 @@ class VentanaPrincipal(QMainWindow):
 
             coffee.management('delete_coffee')
 
-            # self.fincaText.clear()
-            # self.cantidadText.clear()
+            self.fincaText.clear()
+            self.cantidadText.clear()
+
+        except Exception as e:
+            print(e)
+
+    # METODOS/FUNCIONES CLASE PACKAGING
+    def buy_packaging(self):
+        try:
+            coffee = sql_structures.Packaging(self.stickerText.text(),
+                                              self.colorBolsaText.text(),
+                                              self.tamanioText.text())
+
+            coffee.management('buy_packaging')
+
+            self.colorBolsaText.clear()
+            self.stickerText.clear()
+            self.tamanioText.clear()
+
+        except Exception as e:
+            print(e)
+
+    def update_packaging(self):
+        try:
+            coffee = sql_structures.Packaging(
+                self.stickerAcText.text(),
+                self.colorAcText.text(),
+                self.tamanioAcText.text(),
+                self.columnaAcEmCombobx.currentText(),
+                self.valorAcEmText.text())
+
+            coffee.management('update_packaging')
+
+            self.colorAcText.clear()
+            self.stickerAcText.clear()
+            self.tamanioAcText.clear()
+            self.valorAcEmText.clear()
+
+        except Exception as e:
+            print(e)
+
+    def delete_packaging(self):
+        try:
+            coffee = sql_structures.Packaging(self.stickerElimText.text(),
+                                              self.colorElimText.text(),
+                                              self.tamanioElimText.text())
+
+            coffee.management('delete_packaging')
+
+            self.stickerElimText.clear()
+            self.colorElimText.clear()
+            self.tamanioElimText.clear()
 
         except Exception as e:
             print(e)

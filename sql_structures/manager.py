@@ -58,7 +58,6 @@ class Manager:
 
         self.connect()
 
-
         data = f"'{data}'" if not (isinstance(data, numbers.Number)) else f"{data}"
 
         # Execute a INSERT query
@@ -72,7 +71,7 @@ class Manager:
         return self.print_table(table_name)
 
     def auto_id(self, table_name, table_data):
-        if not(self.is_empty(table_name)):
+        if not (self.is_empty(table_name)):
             self.connect()
 
             query = f"SELECT {table_data[0]} FROM {table_name} ORDER BY {table_data[0]} DESC;"
@@ -84,7 +83,7 @@ class Manager:
 
             self.close()
 
-            return id+1
+            return id + 1
 
         return 0
 
@@ -109,11 +108,11 @@ class Manager:
         for i, data in enumerate(table_data[1:]):
             value = data_list[i]
 
-            if not(isinstance(value, numbers.Number)):
-                query += f"{data} = '{value}' AND " if i != (len(data_list)-1) else f"{data} = '{value}';"
+            if not (isinstance(value, numbers.Number)):
+                query += f"{data} = '{value}' AND " if i != (len(data_list) - 1) else f"{data} = '{value}';"
 
             else:
-                query += f"{data} = {value} AND " if i != (len(data_list)-1) else f"{data} = {value};"
+                query += f"{data} = {value} AND " if i != (len(data_list) - 1) else f"{data} = {value};"
 
         self.cursor.execute(query)
 
@@ -131,11 +130,11 @@ class Manager:
         input_data = f"{id}, "
 
         for i, value in enumerate(data_list):
-            if not(isinstance(value, numbers.Number)):
-                input_data += f"'{value}', " if i != (len(data_list)-1) else f"'{value}'"
+            if not (isinstance(value, numbers.Number)):
+                input_data += f"'{value}', " if i != (len(data_list) - 1) else f"'{value}'"
 
             else:
-                input_data += f"{value}, " if i != (len(data_list)-1) else f"{value}"
+                input_data += f"{value}, " if i != (len(data_list) - 1) else f"{value}"
 
         print(input_data)
 
