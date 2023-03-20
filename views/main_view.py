@@ -57,9 +57,9 @@ class VentanaPrincipal(QMainWindow):
         # Usuarios
         # self.cargar_usuarios.clicked.connect(self.loaddata)
         self.btn_administrar.clicked.connect(self.show_page_usuarios_admin)
-        # self.btn_agregar_usuarios.clicked.connect(self.registar_usuarios)
-        # self.btn_eliminar_usuarios.clicked.connect(self.eliminar_usuarios)
-        # self.btn_actualizar_usuarios.clicked.connect(self.actualizar_usuarios)
+        self.btn_agregar_usuarios.clicked.connect(self.new_user)
+        self.btn_eliminar_usuarios.clicked.connect(self.delete_user)
+        self.btn_actualizar_usuarios.clicked.connect(self.update_user)
         # Inicio sesion
         #self.btn_iniciar_sesion.clicked.connect(self.iniciar_sesion)
 
@@ -506,6 +506,7 @@ class VentanaPrincipal(QMainWindow):
                     }
                     self.write_pdf('cotizacion.pdf', 'cotizacion_final.pdf', data_dict)
                     self.cantidad_line.clear()
+                    #self.
                 else:
                     raise Exception('Debe ser un valor mayor a 0')
             else:

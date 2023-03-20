@@ -64,7 +64,6 @@ class SqlDataBase_usuarios:
 		else:
 			self.column = 'Permisos_id'
 
-
 			tmp = self.data
 			tmp2 = self.role
 
@@ -73,7 +72,6 @@ class SqlDataBase_usuarios:
 			self.data = self.set_permisos()
 
 			self.role = tmp2
-
 
 			management.update_table(table_name, table_data, self.data_list, self.column, self.data)
 

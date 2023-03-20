@@ -41,6 +41,7 @@ class Catacion:
         management = Manager()
 
         data_list = [self.aroma, self.finca, self.region, self.altura, self.sabor, self.color, self.puntuacion]
+        print(data_list)
         management.insert_into_table('Catacion', columns_ingreso, data_list)
 
     def delete(self):

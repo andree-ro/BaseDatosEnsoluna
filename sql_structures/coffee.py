@@ -30,7 +30,7 @@ class Coffee:
             self.delete()
 
     def validate(self):
-        if self.region == '--Seleccionar--' and self.finca == '' and self.cantidad < 0 and self.estado == '--Seleccionar--':
+        if self.region == '--Seleccionar--' or self.finca == '' and self.cantidad < 0 and self.estado == '--Seleccionar--':
             raise Exception('Datos invalidos')
 
     def cafe_update(self):
