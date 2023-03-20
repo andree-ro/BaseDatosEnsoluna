@@ -71,6 +71,9 @@ class VentanaPrincipal(QMainWindow):
         self.btn_actualizar_usuarios.clicked.connect(self.update_user)
         self.btn_eliminar_usuarios.clicked.connect(self.delete_user)
 
+        # CARGAR TABLAS EN INVENTARIO
+        self.cargar_invetario.clicked.connect(self.carga_cafe)
+
     def new_user(self):
         usuarios = sql_structures.SqlDataBase_usuarios(self.info_usuario.text(),
                                                        self.info_contrasena.text(),
@@ -198,6 +201,14 @@ class VentanaPrincipal(QMainWindow):
             self.colorElimText.clear()
             self.tamanioElimText.clear()
 
+        except Exception as e:
+            print(e)
+
+    # metodo para cargar cafe y empaque
+    def carga_cafe(self):
+        try:
+            mana = sql_structures.Manager()
+            mana.print_table('Cafe')
         except Exception as e:
             print(e)
 
