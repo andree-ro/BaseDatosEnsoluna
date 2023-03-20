@@ -1,8 +1,8 @@
 from PyQt5.uic import loadUi
-from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtWidgets import QMainWindow, QTableWidget, QTableWidgetItem
 import sql_structures
 
-usuarios = sql_structures.SqlDataBase_usuarios()
+# usuarios = sql_structures.SqlDataBase_usuarios()
 
 
 class VentanaPrincipal(QMainWindow):
@@ -26,7 +26,7 @@ class VentanaPrincipal(QMainWindow):
         self.btn_menu_3.clicked.connect(self.menu_2_show)
         self.btn_menu_6.clicked.connect(self.menu_3_hide)
         self.btn_menu_5.clicked.connect(self.menu_3_show)
-        self.btn_iniciar_sesion.clicked.connect(self.iniciar_sesion)
+        # self.btn_iniciar_sesion.clicked.connect(self.iniciar_sesion)
 
         # paginas
         self.btn_inventario.clicked.connect(self.show_page_inventario)
@@ -51,13 +51,13 @@ class VentanaPrincipal(QMainWindow):
         self.btn_actualizar_C.clicked.connect(self.show_page_actualizar_catacion)
         self.btn_eliminar_C.clicked.connect(self.show_page_eliminar_catacion)
         # Usuarios
-        self.cargar_usuarios.clicked.connect(self.loaddata)
+        # self.cargar_usuarios.clicked.connect(self.loaddata)
         self.btn_administrar.clicked.connect(self.show_page_usuarios_admin)
-        self.btn_agregar_usuarios.clicked.connect(self.registar_usuarios)
-        self.btn_eliminar_usuarios.clicked.connect(self.eliminar_usuarios)
-        self.btn_actualizar_usuarios.clicked.connect(self.actualizar_usuarios)
+        # self.btn_agregar_usuarios.clicked.connect(self.registar_usuarios)
+        # self.btn_eliminar_usuarios.clicked.connect(self.eliminar_usuarios)
+        # self.btn_actualizar_usuarios.clicked.connect(self.actualizar_usuarios)
         # Inicio sesion
-        self.btn_iniciar_sesion.clicked.connect(self.iniciar_sesion)
+        #self.btn_iniciar_sesion.clicked.connect(self.iniciar_sesion)
 
         # COMPRAS CAFE
         self.cafeComprarBTN.clicked.connect(self.buy_coffee)
@@ -76,6 +76,88 @@ class VentanaPrincipal(QMainWindow):
 
         # BORRAR EMPAQUETADO
         self.eliminarEmpBTN.clicked.connect(self.delete_packaging)
+
+        # AGREGAR USUSARIO
+        self.btn_agregar_usuarios.clicked.connect(self.new_user)
+        self.btn_actualizar_usuarios.clicked.connect(self.update_user)
+        self.btn_eliminar_usuarios.clicked.connect(self.delete_user)
+
+        # BOTON CARGAR CAFE Y EMPAQUETADO
+        self.cargar_invetario.clicked.connect(self.carga_cafe_empacado)
+
+        # AGREGAR CATACION
+        self.cafeComprarBTN_2.clicked.connect(self.new_catacion)
+        self.cafeComprarBTN_3.clicked.connect(self.update_catacion)
+        self.eliminarBTN_2.clicked.connect(self.delete_catacion)
+
+
+    def new_user(self):
+        usuarios = sql_structures.SqlDataBase_usuarios(self.info_usuario.text(),
+                                                       self.info_contrasena.text(),
+                                                       self.info_rol.currentText())
+
+        usuarios.new_user()
+
+        self.info_usuario.clear()
+        self.info_contrasena.clear()
+
+
+    def update_user(self):
+        usuarios = sql_structures.SqlDataBase_usuarios(self.info_usuario_a.text(),
+                                                       self.info_contrasena_a.text(),
+                                                       self.info_rol_a.currentText(),
+                                                       self.info_rol_a_columna.currentText(),
+                                                       self.info_usuario_a_valor.text())
+
+        usuarios.update_user()
+
+        self.info_usuario_a.clear()
+        self.info_contrasena_a.clear()
+        self.info_usuario_a_valor.clear()
+
+
+    def delete_user(self):
+        usuarios = sql_structures.SqlDataBase_usuarios('', '', '', '', '', self.info_usuario_e.text())
+
+        usuarios.delete_user()
+
+        self.info_usuario_e.clear()
+
+    def new_catacion(self):
+        catacion = sql_structures.Catacion(self.aroma_catacion.text(),
+                                                       self.finca_catacion.text(),
+                                                       self.region_catacion.currentText(),
+                                                       self.altura_catacion.text(),
+                                                       self.sabor_catacion.text(),
+                                                       self.color_catacion.text(),
+                                                       self.puntuacion_catacion.text())
+
+        catacion.management('ing_catacion')
+
+
+    def update_catacion(self):
+        catacion = sql_structures.Catacion(self.aroma_catacion.text(),
+                                           self.finca_catacion.text(),
+                                           self.region_catacion.currentText(),
+                                           self.altura_catacion.text(),
+                                           self.sabor_catacion.text(),
+                                           self.color_catacion.text(),
+                                           self.puntuacion_catacion.text(),
+                                           self.columnaAcText_2.currentText(),
+                                           self.valorAcText_2.text())
+        catacion.catacion_update()
+
+
+    def delete_catacion(self):
+        catacion = sql_structures.Catacion(self.aroma_catacion.text(),
+                                           self.finca_catacion.text(),
+                                           self.region_catacion.currentText(),
+                                           self.altura_catacion.text(),
+                                           self.sabor_catacion.text(),
+                                           self.color_catacion.text(),
+                                           self.puntuacion_catacion.text())
+
+        catacion.delete()
 
     # METODOS/FUNCIONES CLASE COFFEE
     def buy_coffee(self):
@@ -176,6 +258,37 @@ class VentanaPrincipal(QMainWindow):
         except Exception as e:
             print(e)
 
+    def carga_cafe_empacado(self):
+        try:
+            datos_cafe = []
+            mana = sql_structures.Manager()
+            dato = mana.print_table('Cafe')
+            dato2 = mana.print_table('Empacado')
+            print(dato)
+            self.tableWidget.setRowCount(len(dato))
+
+            for y in dato.split():
+                datos_cafe.append(y)
+                print(datos_cafe)
+
+            # datos_cafe = dato.split(',')
+            print(datos_cafe)
+            for i in range(len(datos_cafe)):
+                self.tableWidget.setItem(i, 0, QTableWidgetItem(str(dato)))
+                self.tableWidget.setItem(i, 1, QTableWidgetItem(dato))
+                self.tableWidget.setItem(i, 2, QTableWidgetItem(dato))
+                self.tableWidget.setItem(i, 3, QTableWidgetItem(dato))
+                self.tableWidget.setItem(i, 4, QTableWidgetItem(dato))
+            self.tableWidget_2.setRowCount(len(dato2))
+            for x in range(len(dato2)):
+                self.tableWidget_2.setItem(x, 0, QTableWidgetItem(dato2))
+                self.tableWidget_2.setItem(x, 1, QTableWidgetItem(str(dato2)))
+                self.tableWidget_2.setItem(x, 2, QTableWidgetItem(str(dato2)))
+        except Exception as e:
+            print(e)
+
+
+
     def minimizar(self):
         self.showMinimized()
 
@@ -189,24 +302,24 @@ class VentanaPrincipal(QMainWindow):
         self.btn_maximizar.hide()
         self.btn_restaurar.show()
 
-    def iniciar_sesion(self):
-        usuario_comprobacion = str(self.lineEdit_usuarios.text())
-        rol = str(usuarios.get_rol(usuario_comprobacion))
-        if rol == 'Administrador':
-            self.btn_menu.show()
+    # def iniciar_sesion(self):
+    #    usuario_comprobacion = str(self.lineEdit_usuarios.text())
+    #    rol = str(usuarios.get_rol(usuario_comprobacion))
+    #    if rol == 'Administrador':
+    #        self.btn_menu.show()
 
-        elif rol == 'Vendedor':
-            self.btn_menu.show()
-            self.btn_inventario.hide()
-            self.btn_mobiliario.hide()
-            self.btn_catacion.hide()
-            self.btn_usuario.hide()
+    #    elif rol == 'Vendedor':
+    #        self.btn_menu.show()
+    #        self.btn_inventario.hide()
+    #        self.btn_mobiliario.hide()
+    #        self.btn_catacion.hide()
+    #        self.btn_usuario.hide()
 
-        elif rol == 'Bodegero':
-            self.btn_menu.show()
+    #    elif rol == 'Bodegero':
+    #        self.btn_menu.show()
 
-        elif rol == 'Catador':
-            self.btn_menu.show()
+    #    elif rol == 'Catador':
+    #        self.btn_menu.show()
 
     def menu_show(self):
         self.btn_menu.hide()
@@ -276,28 +389,3 @@ class VentanaPrincipal(QMainWindow):
 
     def show_page_eliminar_catacion(self):
         self.stackedWidget.setCurrentWidget(self.page_catacion_eliminar)
-
-    def registar_usuarios(self):
-        usuario = str(self.info_usuario.text())
-        contrasena = str(self.info_contrasena.text())
-        rol = str(self.info_rol.currentText())
-        usuarios.insertRow(usuario, contrasena, rol)
-        self.info_usuario.setText(" ")
-        self.info_contrasena.setText(" ")
-
-    def actualizar_usuarios(self):
-        usuario = str(self.info_usuario_a.text())
-        contrasena = str(self.info_contrasena_a.text())
-        rol = str(self.info_rol_a.currentText())
-        usuarios.updateFields(usuario, contrasena, rol)
-        self.info_usuario_a.setText(" ")
-        self.info_contrasena_a.setText(" ")
-
-    def eliminar_usuarios(self):
-        usuario = str(self.info_usuario_e.text())
-        usuarios.deleteRow(usuario)
-        self.info_usuario_e.setText(" ")
-
-    def loaddata(self):
-        tableWidget_usuarios = self.tableWidget_usuarios
-        usuarios.usuarios(tableWidget_usuarios)
