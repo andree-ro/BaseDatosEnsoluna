@@ -721,7 +721,7 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
           <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
          <property name="currentIndex">
-          <number>10</number>
+          <number>8</number>
          </property>
          <widget class="QWidget" name="page_usuario">
           <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -6377,7 +6377,7 @@ font: 75 12pt &quot;Open Sans Semibold&quot;</string>
                            </spacer>
                           </item>
                           <item>
-                           <widget class="QPushButton" name="btn_agregar_I_3">
+                           <widget class="QPushButton" name="btn_agregar_C">
                             <property name="minimumSize">
                              <size>
                               <width>150</width>
@@ -6433,7 +6433,7 @@ font: 75 9pt &quot;Open Sans Semibold&quot;
                            </spacer>
                           </item>
                           <item>
-                           <widget class="QPushButton" name="btn_actualizar_I_3">
+                           <widget class="QPushButton" name="btn_actualizar_C">
                             <property name="minimumSize">
                              <size>
                               <width>150</width>
@@ -6489,7 +6489,7 @@ font: 75 9pt &quot;Open Sans Semibold&quot;
                            </spacer>
                           </item>
                           <item>
-                           <widget class="QPushButton" name="btn_eliminar_I_3">
+                           <widget class="QPushButton" name="btn_eliminar_C">
                             <property name="minimumSize">
                              <size>
                               <width>150</width>

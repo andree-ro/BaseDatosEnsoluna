@@ -43,7 +43,13 @@ class VentanaPrincipal(QMainWindow):
         self.btn_volver_I_2.clicked.connect(self.show_page_inventario)
         self.btn_volver_I_3.clicked.connect(self.show_page_inventario)
         self.btn_volver_I_4.clicked.connect(self.show_page_usuarios)
-
+        self.btn_volver_catacion.clicked.connect(self.show_page_catacion)
+        self.btn_volver_catacion_2.clicked.connect(self.show_page_catacion)
+        self.btn_volver_catacion_3.clicked.connect(self.show_page_catacion)
+        # catacion
+        self.btn_agregar_C.clicked.connect(self.show_page_agregar_catacion)
+        self.btn_actualizar_C.clicked.connect(self.show_page_actualizar_catacion)
+        self.btn_eliminar_C.clicked.connect(self.show_page_eliminar_catacion)
         # Usuarios
         self.cargar_usuarios.clicked.connect(self.loaddata)
         self.btn_administrar.clicked.connect(self.show_page_usuarios_admin)
@@ -262,6 +268,15 @@ class VentanaPrincipal(QMainWindow):
 
     def show_page_usuarios_admin(self):
         self.stackedWidget.setCurrentWidget(self.page_administrar_usuarios)
+
+    def show_page_agregar_catacion(self):
+        self.stackedWidget.setCurrentWidget(self.page_catacion_agregar)
+
+    def show_page_actualizar_catacion(self):
+        self.stackedWidget.setCurrentWidget(self.page_catacion_actualizar)
+
+    def show_page_eliminar_catacion(self):
+        self.stackedWidget.setCurrentWidget(self.page_catacion_eliminar)
 
     def registar_usuarios(self):
         usuario = str(self.info_usuario.text())
