@@ -1,2 +1,5 @@
 PyQt5~=5.15.9
 mysql-connector-python~=8.0.32
+pandas~=1.5.3
+pdfrw~=0.4
+mysql~=0.0.3

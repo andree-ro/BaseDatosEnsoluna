@@ -1,6 +1,10 @@
 from PyQt5.uic import loadUi
-from PyQt5.QtWidgets import QMainWindow, QTableWidget, QTableWidgetItem
+from PyQt5.QtWidgets import QMainWindow, QTableWidget, QTableWidgetItem, QMessageBox
 import sql_structures
+import pandas as pdf
+import webbrowser
+import pdfrw
+from datetime import date
 
 # usuarios = sql_structures.SqlDataBase_usuarios()
 
@@ -84,11 +88,16 @@ class VentanaPrincipal(QMainWindow):
 
         # BOTON CARGAR CAFE Y EMPAQUETADO
         self.cargar_invetario.clicked.connect(self.carga_cafe_empacado)
+        self.cargar_invetario_3.clicked.connect(self.carga_catacion)
+        self.cargar_usuarios.clicked.connect(self.carga_usuario)
 
         # AGREGAR CATACION
         self.cafeComprarBTN_2.clicked.connect(self.new_catacion)
         self.cafeComprarBTN_3.clicked.connect(self.update_catacion)
         self.eliminarBTN_2.clicked.connect(self.delete_catacion)
+
+        # GENERAR COTIZACION
+        self.realizado_cotizacion.clicked.connect(self.realizarCotizacion)
 
 
     def new_user(self):
@@ -260,32 +269,58 @@ class VentanaPrincipal(QMainWindow):
 
     def carga_cafe_empacado(self):
         try:
-            datos_cafe = []
             mana = sql_structures.Manager()
             dato = mana.print_table('Cafe')
             dato2 = mana.print_table('Empacado')
-            print(dato)
             self.tableWidget.setRowCount(len(dato))
 
-            for y in dato.split():
-                datos_cafe.append(y)
-                print(datos_cafe)
 
-            # datos_cafe = dato.split(',')
-            print(datos_cafe)
-            for i in range(len(datos_cafe)):
-                self.tableWidget.setItem(i, 0, QTableWidgetItem(str(dato)))
-                self.tableWidget.setItem(i, 1, QTableWidgetItem(dato))
-                self.tableWidget.setItem(i, 2, QTableWidgetItem(dato))
-                self.tableWidget.setItem(i, 3, QTableWidgetItem(dato))
-                self.tableWidget.setItem(i, 4, QTableWidgetItem(dato))
+            for i in range(len(dato)):
+                self.tableWidget.setItem(i, 0, QTableWidgetItem(str(dato[i-1][1])))
+                self.tableWidget.setItem(i, 1, QTableWidgetItem(str(dato[i-1][2])))
+                self.tableWidget.setItem(i, 2, QTableWidgetItem(str(dato[i-1][3])))
+                self.tableWidget.setItem(i, 3, QTableWidgetItem(str(dato[i-1][4])))
+                self.tableWidget.setItem(i, 4, QTableWidgetItem('Hola'))
             self.tableWidget_2.setRowCount(len(dato2))
             for x in range(len(dato2)):
-                self.tableWidget_2.setItem(x, 0, QTableWidgetItem(dato2))
-                self.tableWidget_2.setItem(x, 1, QTableWidgetItem(str(dato2)))
-                self.tableWidget_2.setItem(x, 2, QTableWidgetItem(str(dato2)))
+                self.tableWidget_2.setItem(x, 0, QTableWidgetItem(str(dato2[x-1][1])))
+                self.tableWidget_2.setItem(x, 1, QTableWidgetItem(str(dato2[x-1][2])))
+                self.tableWidget_2.setItem(x, 2, QTableWidgetItem(str(dato2[x-1][3])))
         except Exception as e:
             print(e)
+
+    def carga_catacion(self):
+        try:
+            mana = sql_structures.Manager()
+            dato = mana.print_table('Catacion')
+            self.tableWidget_5.setRowCount(len(dato))
+
+            for i in range(len(dato)):
+                self.tableWidget_5.setItem(i, 0, QTableWidgetItem(str(dato[i - 1][1])))
+                self.tableWidget_5.setItem(i, 1, QTableWidgetItem(str(dato[i - 1][2])))
+                self.tableWidget_5.setItem(i, 2, QTableWidgetItem(str(dato[i - 1][3])))
+                self.tableWidget_5.setItem(i, 3, QTableWidgetItem(str(dato[i - 1][4])))
+                self.tableWidget_5.setItem(i, 4, QTableWidgetItem(str(dato[i - 1][5])))
+                self.tableWidget_5.setItem(i, 5, QTableWidgetItem(str(dato[i - 1][6])))
+                self.tableWidget_5.setItem(i, 6, QTableWidgetItem(str(dato[i - 1][7])))
+
+        except Exception as e:
+            print(e)
+
+    def carga_usuario(self):
+        try:
+            mana = sql_structures.Manager()
+            dato = mana.print_table('Usuarios')
+            self.tableWidget_usuarios.setRowCount(len(dato))
+
+            for i in range(len(dato)):
+                self.tableWidget_usuarios.setItem(i, 0, QTableWidgetItem(str(dato[i - 1][1])))
+                self.tableWidget_usuarios.setItem(i, 1, QTableWidgetItem(str(dato[i - 1][2])))
+                self.tableWidget_usuarios.setItem(i, 2, QTableWidgetItem(str(dato[i - 1][3])))
+
+        except Exception as e:
+            print(e)
+
 
 
 
@@ -389,3 +424,91 @@ class VentanaPrincipal(QMainWindow):
 
     def show_page_eliminar_catacion(self):
         self.stackedWidget.setCurrentWidget(self.page_catacion_eliminar)
+
+    def write_pdf(self, template, output, data_dict):
+        ANNOT_KEY = '/Annots'
+        ANNOT_FIELD_KEY = '/T'
+        ANNOT_VAL_KEY = '/V'
+        ANNOT_RECT_KEY = '/Rect'
+        SUBTYPE_KEY = '/Subtype'
+        WIDGET_SUBTYPE_KEY = '/Widget'
+
+        def fill_pdf(input_pdf_path, output_pdf_path, data_dict):
+            template_pdf = pdfrw.PdfReader(input_pdf_path)
+
+            for page in template_pdf.pages:
+                annotations = page[ANNOT_KEY]
+                for annotation in annotations:
+                    if annotation[SUBTYPE_KEY] == WIDGET_SUBTYPE_KEY:
+                        if annotation[ANNOT_FIELD_KEY]:
+                            key = annotation[ANNOT_FIELD_KEY][1:-1]
+                            if key in data_dict.keys():
+                                if type(data_dict[key]) == bool:
+                                    if data_dict[key] == True:
+                                        annotation.update(pdfrw.PdfDict(AS=pdfrw.PdfName('Yes')))
+                                    else:
+                                        annotation.update(pdfrw.PdfDict(V='{}'.format(data_dict[key])))
+                                        annotation.update(pdfrw.PdfDict(AP=''))
+            template_pdf.Root.AcroForm.update(pdfrw.PdfDict(NeedAppearances=pdfrw.PdfObject('true')))
+            pdfrw.PdfWriter().write(output_pdf_path, template_pdf)
+        fill_pdf(template, output, data_dict)
+        webbrowser.open_new(output)
+
+    def realizarCotizacion(self):
+        try:
+            region = self.regionAcCombobx_3.currentText()
+            finca = self.fincaAcText_3.text()
+            estado = self.estadoAcText_3.currentText()
+            tipo = 'oro'
+            precio = self.lineEdit_5.text()
+            print("Hola")
+            print(region)
+            if region != '--Seleccionar--' and finca != '' and estado != '--Seleccionar--':
+                print("Hola")
+                cantidad = int(self.cantidadAcText_3.text())
+                if cantidad > 0:
+                    print("Hola")
+                    QMessageBox.about(self, 'Aviso', 'Se ha generado la cotización!')
+                    data_dict = {
+                        'Fecha': date.today(),
+                        'Numero': '0',
+                        'Cliente': '',
+                        'Nit': 'C/F',
+                        'Direccion': 'Ciudad',
+                        'Telefono': '',
+                        'Correo': '',
+                        'Producto': f"Café de {self.regionAcCombobx_3.currentText()}, finca {finca}, {estado}, {tipo}",
+                        'Producto1': '',
+                        'Producto3': '',
+                        'Producto4': '',
+                        'Producto5': '',
+                        'Producto2': '',
+                        'Precio1': precio,
+                        'Precio2': '',
+                        'Precio3': '',
+                        'Precio4': '',
+                        'Precio5': '',
+                        'Unidades': cantidad,
+                        'Unidades1': '',
+                        'Unidades2': '',
+                        'Unidades3': '',
+                        'Unidades4': '',
+                        'Unidades5': '',
+                        'Precio': '',
+                        'Preciot': '',
+                        'Preciot1': '',
+                        'Preciot2': '',
+                        'Preciot3': '',
+                        'Preciot4': '',
+                        'Totalp': '',
+                        'Descuento': '',
+                        'Total': ''
+                    }
+                    self.write_pdf('cotizacion.pdf', 'cotizacion_final.pdf', data_dict)
+                    self.cantidad_line.clear()
+                else:
+                    raise Exception('Debe ser un valor mayor a 0')
+            else:
+                raise Exception('No se ha seleccionado uno de los parametros para la cotización.')
+        except Exception as e:
+            'Error'
