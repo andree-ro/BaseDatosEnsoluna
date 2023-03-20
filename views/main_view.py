@@ -2,6 +2,8 @@ from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import QMainWindow
 import sql_structures
 
+usuarios = sql_structures.SqlDataBase_usuarios()
+
 
 class VentanaPrincipal(QMainWindow):
     def __init__(self):
@@ -41,14 +43,23 @@ class VentanaPrincipal(QMainWindow):
         self.btn_volver_I_2.clicked.connect(self.show_page_inventario)
         self.btn_volver_I_3.clicked.connect(self.show_page_inventario)
         self.btn_volver_I_4.clicked.connect(self.show_page_usuarios)
-
+        self.btn_volver_catacion.clicked.connect(self.show_page_catacion)
+        self.btn_volver_catacion_2.clicked.connect(self.show_page_catacion)
+        self.btn_volver_catacion_3.clicked.connect(self.show_page_catacion)
+        # catacion
+        self.btn_agregar_C.clicked.connect(self.show_page_agregar_catacion)
+        self.btn_actualizar_C.clicked.connect(self.show_page_actualizar_catacion)
+        self.btn_eliminar_C.clicked.connect(self.show_page_eliminar_catacion)
         # Usuarios
+        self.cargar_usuarios.clicked.connect(self.loaddata)
         self.btn_administrar.clicked.connect(self.show_page_usuarios_admin)
-
+        self.btn_agregar_usuarios.clicked.connect(self.registar_usuarios)
+        self.btn_eliminar_usuarios.clicked.connect(self.eliminar_usuarios)
+        self.btn_actualizar_usuarios.clicked.connect(self.actualizar_usuarios)
         # Inicio sesion
         self.btn_iniciar_sesion.clicked.connect(self.iniciar_sesion)
 
-        # COPMRAS CAFE
+        # COMPRAS CAFE
         self.cafeComprarBTN.clicked.connect(self.buy_coffee)
 
         # ACTUALIZACION CAFE
@@ -65,45 +76,6 @@ class VentanaPrincipal(QMainWindow):
 
         # BORRAR EMPAQUETADO
         self.eliminarEmpBTN.clicked.connect(self.delete_packaging)
-
-        # AGREGAR USUSARIO
-        self.btn_agregar_usuarios.clicked.connect(self.new_user)
-        self.btn_actualizar_usuarios.clicked.connect(self.update_user)
-        self.btn_eliminar_usuarios.clicked.connect(self.delete_user)
-
-        # CARGAR TABLAS EN INVENTARIO
-        self.cargar_invetario.clicked.connect(self.carga_cafe)
-
-    def new_user(self):
-        usuarios = sql_structures.SqlDataBase_usuarios(self.info_usuario.text(),
-                                                       self.info_contrasena.text(),
-                                                       self.info_rol.currentText())
-
-        usuarios.new_user()
-
-        self.info_usuario.clear()
-        self.info_contrasena.clear()
-
-    def update_user(self):
-        usuarios = sql_structures.SqlDataBase_usuarios(self.info_usuario_a.text(),
-                                                       self.info_contrasena_a.text(),
-                                                       self.info_rol_a.currentText(),
-                                                       self.info_rol_a_columna.currentText(),
-                                                       self.info_usuario_a_valor.text())
-
-        usuarios.update_user()
-
-        self.info_usuario_a.clear()
-        self.info_contrasena_a.clear()
-        self.info_usuario_a_valor.clear()
-
-    def delete_user(self):
-        usuarios = sql_structures.SqlDataBase_usuarios('', '', '', '', '', self.info_usuario_e.text())
-
-        usuarios.delete_user()
-
-        self.info_usuario_e.clear()
-
 
     # METODOS/FUNCIONES CLASE COFFEE
     def buy_coffee(self):
@@ -204,14 +176,6 @@ class VentanaPrincipal(QMainWindow):
         except Exception as e:
             print(e)
 
-    # metodo para cargar cafe y empaque
-    def carga_cafe(self):
-        try:
-            mana = sql_structures.Manager()
-            mana.print_table('Cafe')
-        except Exception as e:
-            print(e)
-
     def minimizar(self):
         self.showMinimized()
 
@@ -226,25 +190,23 @@ class VentanaPrincipal(QMainWindow):
         self.btn_restaurar.show()
 
     def iniciar_sesion(self):
-        pass
+        usuario_comprobacion = str(self.lineEdit_usuarios.text())
+        rol = str(usuarios.get_rol(usuario_comprobacion))
+        if rol == 'Administrador':
+            self.btn_menu.show()
 
-        # usuario_comprobacion = str(self.lineEdit_usuarios.text())
-        # rol = str(usuarios.get_rol(usuario_comprobacion))
-        # if rol == 'Administrador':
-        #     self.btn_menu.show()
-        #
-        # elif rol == 'Vendedor':
-        #     self.btn_menu.show()
-        #     self.btn_inventario.hide()
-        #     self.btn_mobiliario.hide()
-        #     self.btn_catacion.hide()
-        #     self.btn_usuario.hide()
-        #
-        # elif rol == 'Bodegero':
-        #     self.btn_menu.show()
-        #
-        # elif rol == 'Catador':
-        #     self.btn_menu.show()
+        elif rol == 'Vendedor':
+            self.btn_menu.show()
+            self.btn_inventario.hide()
+            self.btn_mobiliario.hide()
+            self.btn_catacion.hide()
+            self.btn_usuario.hide()
+
+        elif rol == 'Bodegero':
+            self.btn_menu.show()
+
+        elif rol == 'Catador':
+            self.btn_menu.show()
 
     def menu_show(self):
         self.btn_menu.hide()
@@ -305,3 +267,37 @@ class VentanaPrincipal(QMainWindow):
 
     def show_page_usuarios_admin(self):
         self.stackedWidget.setCurrentWidget(self.page_administrar_usuarios)
+
+    def show_page_agregar_catacion(self):
+        self.stackedWidget.setCurrentWidget(self.page_catacion_agregar)
+
+    def show_page_actualizar_catacion(self):
+        self.stackedWidget.setCurrentWidget(self.page_catacion_actualizar)
+
+    def show_page_eliminar_catacion(self):
+        self.stackedWidget.setCurrentWidget(self.page_catacion_eliminar)
+
+    def registar_usuarios(self):
+        usuario = str(self.info_usuario.text())
+        contrasena = str(self.info_contrasena.text())
+        rol = str(self.info_rol.currentText())
+        usuarios.insertRow(usuario, contrasena, rol)
+        self.info_usuario.setText(" ")
+        self.info_contrasena.setText(" ")
+
+    def actualizar_usuarios(self):
+        usuario = str(self.info_usuario_a.text())
+        contrasena = str(self.info_contrasena_a.text())
+        rol = str(self.info_rol_a.currentText())
+        usuarios.updateFields(usuario, contrasena, rol)
+        self.info_usuario_a.setText(" ")
+        self.info_contrasena_a.setText(" ")
+
+    def eliminar_usuarios(self):
+        usuario = str(self.info_usuario_e.text())
+        usuarios.deleteRow(usuario)
+        self.info_usuario_e.setText(" ")
+
+    def loaddata(self):
+        tableWidget_usuarios = self.tableWidget_usuarios
+        usuarios.usuarios(tableWidget_usuarios)
