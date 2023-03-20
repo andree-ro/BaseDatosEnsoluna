@@ -721,7 +721,7 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
           <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
          <property name="currentIndex">
-          <number>9</number>
+          <number>4</number>
          </property>
          <widget class="QWidget" name="page_usuario">
           <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -3612,7 +3612,7 @@ font: 75 10pt &quot;Open Sans Semibold&quot;</string>
 font: 75 10pt &quot;Open Sans Semibold&quot;</string>
                       </property>
                       <property name="text">
-                       <string>Quintales:</string>
+                       <string>Cantidad:</string>
                       </property>
                      </widget>
                     </item>
@@ -3789,7 +3789,7 @@ font: 75 10pt &quot;Open Sans Semibold&quot;</string>
                       </item>
                       <item>
                        <property name="text">
-                        <string>Quintales</string>
+                        <string>Cantidad</string>
                        </property>
                       </item>
                       <item>

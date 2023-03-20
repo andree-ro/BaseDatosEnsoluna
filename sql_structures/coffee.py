@@ -1,8 +1,8 @@
 from .manager import Manager
 
 # Falta poner el tipo
-columns_ingreso = ['id', 'Region', 'Finca', 'Quintales', 'Estado']
-columns = ['id', 'Region', 'Finca', 'Libras', 'Estado']
+columns_ingreso = ['id', 'Region', 'Finca', 'Cantidad', 'Estado']
+columns = ['id', 'Region', 'Finca', 'Cantidad', 'Estado']
 
 
 class Coffee:
@@ -34,10 +34,24 @@ class Coffee:
             raise Exception('Datos invalidos')
 
     def cafe_update(self):
-        management = Manager()
 
+        management = Manager()
         data_list = [self.region, self.finca, self.cantidad, self.estado]
-        management.update_table('Cafe_ingreso', columns_ingreso, data_list, self.columna, self.valor)
+
+        libras = self.cantidad * 100
+        lista = [self.region, self.finca, libras, self.estado]
+
+        if self.columna == 'Cantidad':
+            data = self.valor * 100
+            # management.update_table('Cafe', columns, lista, self.columna, data)
+            management.update_table('Cafe_ingreso', columns_ingreso, data_list, self.columna, self.valor)
+
+
+        else:
+
+            # management.update_table('Cafe', columns, data_list, self.columna, self.valor)
+            management.update_table('Cafe_ingreso', columns_ingreso, data_list, self.columna, self.valor)
+
 
     def cafe_ingreso(self):
 
@@ -46,12 +60,17 @@ class Coffee:
         data_list = [self.region, self.finca, self.cantidad, self.estado]
         management.insert_into_table('Cafe_ingreso', columns_ingreso, data_list)
 
+        cantidad = self.cantidad * 100
+        data = [self.region, self.finca, cantidad, self.estado]
+        management.insert_into_table('Cafe', columns, data)
+
     def delete(self):
 
         management = Manager()
 
         data_list = [self.region, self.finca, self.cantidad, self.estado]
         management.delete_row('Cafe_ingreso', columns_ingreso, data_list)
+        management.delete_row('Cafe', columns, data_list)
 
     def __str__(self):
         return f"{self.region}, {self.finca}, {self.cantidad}, {self.estado}"
