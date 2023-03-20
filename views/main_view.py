@@ -56,11 +56,10 @@ class VentanaPrincipal(QMainWindow):
         self.btn_agregar_usuarios.clicked.connect(self.registar_usuarios)
         self.btn_eliminar_usuarios.clicked.connect(self.eliminar_usuarios)
         self.btn_actualizar_usuarios.clicked.connect(self.actualizar_usuarios)
-
         # Inicio sesion
         self.btn_iniciar_sesion.clicked.connect(self.iniciar_sesion)
 
-        # COPMRAS CAFE
+        # COMPRAS CAFE
         self.cafeComprarBTN.clicked.connect(self.buy_coffee)
 
         # ACTUALIZACION CAFE
