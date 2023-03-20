@@ -84,7 +84,7 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../../../../.designer/backup/Imagenes/Imagen5.png</normaloff>../../../../.designer/backup/Imagenes/Imagen5.png</iconset>
+           <normaloff>Imagenes/Imagen5.png</normaloff>Imagenes/Imagen5.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -129,7 +129,7 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../../../../.designer/backup/Imagenes/Imagen6.png</normaloff>../../../../.designer/backup/Imagenes/Imagen6.png</iconset>
+           <normaloff>Imagenes/Imagen6.png</normaloff>Imagenes/Imagen6.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -229,7 +229,7 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../../../../.designer/backup/Imagenes/786263.png</normaloff>../../../../.designer/backup/Imagenes/786263.png</iconset>
+           <normaloff>Imagenes/786263.png</normaloff>Imagenes/786263.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -274,7 +274,7 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../../../../.designer/backup/Imagenes/159699.png</normaloff>../../../../.designer/backup/Imagenes/159699.png</iconset>
+           <normaloff>Imagenes/159699.png</normaloff>Imagenes/159699.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -319,7 +319,7 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../../../../.designer/backup/Imagenes/1263344.png</normaloff>../../../../.designer/backup/Imagenes/1263344.png</iconset>
+           <normaloff>Imagenes/1263344.png</normaloff>Imagenes/1263344.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -364,7 +364,7 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../../../../.designer/backup/Imagenes/4115235-exit-logout-sign-out_114030.png</normaloff>../../../../.designer/backup/Imagenes/4115235-exit-logout-sign-out_114030.png</iconset>
+           <normaloff>Imagenes/4115235-exit-logout-sign-out_114030.png</normaloff>Imagenes/4115235-exit-logout-sign-out_114030.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -442,7 +442,7 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../../../../.designer/backup/Imagenes/bolsa-de-cafe.png</normaloff>../../../../.designer/backup/Imagenes/bolsa-de-cafe.png</iconset>
+           <normaloff>Imagenes/bolsa-de-cafe.png</normaloff>Imagenes/bolsa-de-cafe.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -493,11 +493,11 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
 }</string>
          </property>
          <property name="text">
-          <string>Ventas</string>
+          <string> Ventas</string>
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../../../../.designer/backup/Imagenes/taza-de-cafe.png</normaloff>../../../../.designer/backup/Imagenes/taza-de-cafe.png</iconset>
+           <normaloff>Imagenes/lista-de-precios.png</normaloff>Imagenes/lista-de-precios.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -552,7 +552,7 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../../../../.designer/backup/Imagenes/planta-de-cafe.png</normaloff>../../../../.designer/backup/Imagenes/planta-de-cafe.png</iconset>
+           <normaloff>Imagenes/planta-de-cafe.png</normaloff>Imagenes/planta-de-cafe.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -603,11 +603,11 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
 }</string>
          </property>
          <property name="text">
-          <string>Catación</string>
+          <string> Catación</string>
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../../../../.designer/backup/Imagenes/924514.png</normaloff>../../../../.designer/backup/Imagenes/924514.png</iconset>
+           <normaloff>Imagenes/cafecini.png</normaloff>Imagenes/cafecini.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -662,7 +662,7 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../../../../.designer/backup/Imagenes/cosecha.png</normaloff>../../../../.designer/backup/Imagenes/cosecha.png</iconset>
+           <normaloff>Imagenes/6553817.png</normaloff>Imagenes/6553817.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -721,7 +721,7 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
           <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
          <property name="currentIndex">
-          <number>10</number>
+          <number>11</number>
          </property>
          <widget class="QWidget" name="page_usuario">
           <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -2204,7 +2204,7 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
                          </property>
                          <property name="icon">
                           <iconset>
-                           <normaloff>../../../../.designer/backup/Imagenes/Imagen5.png</normaloff>../../../../.designer/backup/Imagenes/Imagen5.png</iconset>
+                           <normaloff>Imagenes/Imagen5.png</normaloff>Imagenes/Imagen5.png</iconset>
                          </property>
                          <property name="iconSize">
                           <size>
@@ -2253,7 +2253,7 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
                          </property>
                          <property name="icon">
                           <iconset>
-                           <normaloff>../../../../.designer/backup/Imagenes/Imagen6.png</normaloff>../../../../.designer/backup/Imagenes/Imagen6.png</iconset>
+                           <normaloff>Imagenes/Imagen6.png</normaloff>Imagenes/Imagen6.png</iconset>
                          </property>
                          <property name="iconSize">
                           <size>
@@ -2335,7 +2335,7 @@ font: 75 9pt &quot;Open Sans Semibold&quot;
                          </property>
                          <property name="icon">
                           <iconset>
-                           <normaloff>../../../../.designer/backup/Imagenes/cafe.png</normaloff>../../../../.designer/backup/Imagenes/cafe.png</iconset>
+                           <normaloff>Imagenes/cafe.png</normaloff>Imagenes/cafe.png</iconset>
                          </property>
                          <property name="iconSize">
                           <size>
@@ -2391,7 +2391,7 @@ font: 75 9pt &quot;Open Sans Semibold&quot;
                          </property>
                          <property name="icon">
                           <iconset>
-                           <normaloff>../../../../.designer/backup/Imagenes/granos-de-cafe.png</normaloff>../../../../.designer/backup/Imagenes/granos-de-cafe.png</iconset>
+                           <normaloff>Imagenes/granos-de-cafe.png</normaloff>Imagenes/granos-de-cafe.png</iconset>
                          </property>
                          <property name="iconSize">
                           <size>
@@ -2447,7 +2447,7 @@ font: 75 9pt &quot;Open Sans Semibold&quot;
                          </property>
                          <property name="icon">
                           <iconset>
-                           <normaloff>../../../../.designer/backup/Imagenes/cafecini.png</normaloff>../../../../.designer/backup/Imagenes/cafecini.png</iconset>
+                           <normaloff>Imagenes/grano-de-cafe.png</normaloff>Imagenes/grano-de-cafe.png</iconset>
                          </property>
                          <property name="iconSize">
                           <size>
@@ -6278,7 +6278,7 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
                             </property>
                             <property name="icon">
                              <iconset>
-                              <normaloff>../../../../.designer/backup/Imagenes/Imagen5.png</normaloff>../../../../.designer/backup/Imagenes/Imagen5.png</iconset>
+                              <normaloff>Imagenes/Imagen5.png</normaloff>Imagenes/Imagen5.png</iconset>
                             </property>
                             <property name="iconSize">
                              <size>
@@ -6327,7 +6327,7 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
                             </property>
                             <property name="icon">
                              <iconset>
-                              <normaloff>../../../../.designer/backup/Imagenes/Imagen6.png</normaloff>../../../../.designer/backup/Imagenes/Imagen6.png</iconset>
+                              <normaloff>Imagenes/Imagen6.png</normaloff>Imagenes/Imagen6.png</iconset>
                             </property>
                             <property name="iconSize">
                              <size>
@@ -6409,7 +6409,7 @@ font: 75 9pt &quot;Open Sans Semibold&quot;
                             </property>
                             <property name="icon">
                              <iconset>
-                              <normaloff>../../../../.designer/backup/Imagenes/cafe.png</normaloff>../../../../.designer/backup/Imagenes/cafe.png</iconset>
+                              <normaloff>Imagenes/cafe.png</normaloff>Imagenes/cafe.png</iconset>
                             </property>
                             <property name="iconSize">
                              <size>
@@ -6465,7 +6465,7 @@ font: 75 9pt &quot;Open Sans Semibold&quot;
                             </property>
                             <property name="icon">
                              <iconset>
-                              <normaloff>../../../../.designer/backup/Imagenes/granos-de-cafe.png</normaloff>../../../../.designer/backup/Imagenes/granos-de-cafe.png</iconset>
+                              <normaloff>Imagenes/granos-de-cafe.png</normaloff>Imagenes/granos-de-cafe.png</iconset>
                             </property>
                             <property name="iconSize">
                              <size>
@@ -6521,7 +6521,7 @@ font: 75 9pt &quot;Open Sans Semibold&quot;
                             </property>
                             <property name="icon">
                              <iconset>
-                              <normaloff>../../../../.designer/backup/Imagenes/cafecini.png</normaloff>../../../../.designer/backup/Imagenes/cafecini.png</iconset>
+                              <normaloff>Imagenes/grano-de-cafe.png</normaloff>Imagenes/grano-de-cafe.png</iconset>
                             </property>
                             <property name="iconSize">
                              <size>

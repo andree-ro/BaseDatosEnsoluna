@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QMainWindow, QTableWidget, QTableWidgetItem, QMessag
 import sql_structures
 import pandas as pdf
 import webbrowser
-import pdfrw
+# import pdfrw
 from datetime import date
 
 # usuarios = sql_structures.SqlDataBase_usuarios()
