@@ -1,62 +1,93 @@
-import sqlite3 as sql
-from PyQt5 import QtWidgets
+from .manager import Manager
+
+table_name = 'usuarios'
+table_data = ['id', 'nombre', 'rol', 'contraseña', 'Permisos_id']
+
+management = Manager()
 
 
 class SqlDataBase_usuarios:
-	def __init__(self):
-		self.conn = sql.connect("sql_structures/dbs/usuarios.db")
+	def __init__(self, name, password, role, column = None, data = None, id = None):
+		self.name = name
+		self.password = password
+		self.role = role
 
-	def createDB(self):
-		self.conn.commit()
-		self.conn.close()
+		self.column = column
+		self.data = data
+		self.id = id
 
-	def createTable(self):
-		cursor = self.conn.cursor()
-		cursor.execute(
-			"""CREATE TABLE usuarios (
-				usuario text,
-				contrasena text,
-				rol text
-			)"""
-		)
-		self.conn.commit()
-		self.conn.close()
+		self.permiso_id = self.set_permisos() if self.role != '' else ''
 
-	def updateFields(self, usuario, contrasena, rol):
-		cursor = self.conn.cursor()
-		instruccion = f"UPDATE usuarios SET contrasena = '{contrasena}' WHERE usuario like '{usuario}%'  "
-		instruccion_2 = f"UPDATE usuarios SET rol = '{rol}' WHERE usuario like '{usuario}%'  "
-		cursor.execute(instruccion)
-		cursor.execute(instruccion_2)
-		self.conn.commit()
+		self.data_list = [self.name, self.role, self.password, self.permiso_id]
 
-	def insertRow(self, usuario, contrasena, rol):
-		cursor = self.conn.cursor()
-		instruccion = f"INSERT INTO usuarios VALUES ('{usuario}', '{contrasena}', '{rol}') "
-		cursor.execute(instruccion)
-		self.conn.commit()
+	def set_permisos(self):
+		if self.role == 'Administrador':
+			self.permiso_id = 0
 
-	def deleteRow(self, usuario):
-		cursor = self.conn.cursor()
-		instruccion = f"DELETE FROM usuarios WHERE usuario like '{usuario}%'"
-		cursor.execute(instruccion)
-		self.conn.commit()
+		elif self.role == 'Vendedor':
+			self.permiso_id = 1
 
-	def usuarios(self, tableWidget_usuarios):
-		cursor = self.conn.cursor()
-		instruccion = "SELECT * FROM usuarios"
-		result = cursor.execute(instruccion)
-		tableWidget_usuarios.setRowCount(0)
+		elif self.role == 'Bodegero':
+			self.permiso_id = 2
 
-		for row_number, row_data in enumerate(result):
-			tableWidget_usuarios.insertRow(row_number)
-			for column_number, data in enumerate(row_data):
-				tableWidget_usuarios.setItem(row_number, column_number, QtWidgets.QTableWidgetItem(str(data)))
+		elif self.role == 'Catador':
+			self.permiso_id = 3
 
-	def get_rol(self, usuario):
-		cursor = self.conn.cursor()
-		instruccion = f"SELECT rol FROM usuarios Where usuario = '{usuario}'"
-		cursor.execute(instruccion)
-		result = cursor.fetchall()
-		result = result[0][0]
-		return str(result)
+		return self.permiso_id
+
+	def validate(self):
+		if self.name == '' and self.password == '' and self.role == '--Seleccionar--':
+			raise Exception('Datos invalidos')
+
+	def new_user(self):
+		self.validate()
+
+		self.set_permisos()
+
+		management.insert_into_table(table_name, table_data, self.data_list)
+
+	def set_column_name(self):
+		if self.column == 'Usuario':
+			self.column = 'nombre'
+
+		elif self.column == 'Contraseña':
+			self.column = 'contraseña'
+
+	def update_user(self):
+		self.validate()
+
+		self.set_permisos()
+
+		if self.column != 'Rol':
+			self.set_column_name()
+
+		else:
+			self.column = 'Permisos_id'
+
+
+			tmp = self.data
+			tmp2 = self.role
+
+			self.role = self.data
+
+			self.data = self.set_permisos()
+
+			self.role = tmp2
+
+
+			management.update_table(table_name, table_data, self.data_list, self.column, self.data)
+
+			self.column = 'rol'
+
+			self.data_list[3] = self.data
+
+			self.data = tmp
+
+		management.update_table(table_name, table_data, self.data_list, self.column, self.data)
+
+	def delete_user(self):
+		management.delete_id_row(table_name, table_data, self.id)
+
+	def __str__(self):
+		return f"name = {self.name}\npassword = {self.password}\nrole = {self.role}" \
+			   f"\ncolumn = {self.column}\ndata = {self.data}\nid = {self.id}\npermiso = {self.permiso_id}"

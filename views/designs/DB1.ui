@@ -1337,6 +1337,11 @@ font: 75 10pt &quot;Open Sans Semibold&quot;</string>
                       </property>
                       <item>
                        <property name="text">
+                        <string>--Seleccionar--</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
                         <string>Administrador</string>
                        </property>
                       </item>
@@ -1556,6 +1561,11 @@ font: 75 10pt &quot;Open Sans Semibold&quot;</string>
                       </property>
                       <item>
                        <property name="text">
+                        <string>--Seleccionar--</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
                         <string>Administrador</string>
                        </property>
                       </item>
@@ -1575,6 +1585,71 @@ font: 75 10pt &quot;Open Sans Semibold&quot;</string>
                        </property>
                       </item>
                      </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QFrame" name="frame_111">
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_65">
+                    <item>
+                     <widget class="QLabel" name="label_42">
+                      <property name="styleSheet">
+                       <string notr="true">color: rgb(89, 31, 11);
+font: 75 10pt &quot;Open Sans Semibold&quot;</string>
+                      </property>
+                      <property name="text">
+                       <string>Columna a modificar</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QComboBox" name="info_rol_a_columna">
+                      <property name="styleSheet">
+                       <string notr="true">color: rgb(89, 31, 11);
+font: 75 10pt &quot;Open Sans Semibold&quot;</string>
+                      </property>
+                      <item>
+                       <property name="text">
+                        <string>--Seleccionar--</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>Usuario</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>Contraseña</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>Rol</string>
+                       </property>
+                      </item>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_43">
+                      <property name="styleSheet">
+                       <string notr="true">color: rgb(89, 31, 11);
+font: 75 10pt &quot;Open Sans Semibold&quot;</string>
+                      </property>
+                      <property name="text">
+                       <string>Valor</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="info_usuario_a_valor"/>
                     </item>
                    </layout>
                   </widget>
@@ -1711,7 +1786,7 @@ font: 75 12pt &quot;Open Sans Semibold&quot;</string>
 font: 75 10pt &quot;Open Sans Semibold&quot;</string>
                       </property>
                       <property name="text">
-                       <string>Usuario:</string>
+                       <string>ID</string>
                       </property>
                      </widget>
                     </item>

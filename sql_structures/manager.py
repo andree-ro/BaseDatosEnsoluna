@@ -4,8 +4,10 @@ import numbers
 
 class Manager:
     def __init__(self):
-        # self.database_dir = "user='root', password='I.gt.MPW.2023.U', host='127.0.0.1', database='mydb'"
-        self.database_dir = "user='root', password='andree2332', host='127.0.0.1', database='mydb'"
+        self.database_user = 'root'
+        self.database_password = 'I.gt.MPW.2023.U'
+        self.database_host = '127.0.0.1'
+        self.database_database = 'mydb'
 
         # Connect to the database
         self.cnx = None
@@ -13,10 +15,22 @@ class Manager:
         # Create a cursor object
         self.cursor = None
 
+    def set_database_user(self, value):
+        self.database_user = value
+
+    def set_database_password(self, value):
+        self.database_password = value
+
+    def set_database_host(self, value):
+        self.database_host = value
+
+    def set_database_database(self, value):
+        self.database_database = value
+
     def connect(self):
         # Connect to the database
-        self.cnx = mysql.connector.connect(user='root', password='andree2332',
-                                           host='127.0.0.1', database='mydb')
+        self.cnx = mysql.connector.connect(user=self.database_user, password=self.database_password,
+                                           host=self.database_host, database=self.database_database)
 
         # Create a cursor object
         self.cursor = self.cnx.cursor()
@@ -37,6 +51,18 @@ class Manager:
         self.close()
 
         return True if row[0][0] == 0 else False
+
+    def delete_id_row(self, table_name, table_data, id):
+        self.connect()
+
+        query = f"DELETE FROM {table_name} WHERE ({table_data[0]} = {id});"
+        self.cursor.execute(query)
+
+        self.cnx.commit()
+
+        self.close()
+
+        return self.print_table(table_name)
 
     def delete_row(self, table_name, table_data, data_list):
         id = self.get_id(table_name, table_data, data_list)
@@ -123,30 +149,34 @@ class Manager:
         return rows[0][0]
 
     def insert_into_table(self, table_name, table_data, data_list):
-        id = self.auto_id(table_name, table_data)
+        try:
+            self.get_id(table_name, table_data, data_list)
 
-        self.connect()
+            raise Exception('Dato ya existente')
 
-        input_data = f"{id}, "
+        except:
+            id = self.auto_id(table_name, table_data)
 
-        for i, value in enumerate(data_list):
-            if not (isinstance(value, numbers.Number)):
-                input_data += f"'{value}', " if i != (len(data_list) - 1) else f"'{value}'"
+            self.connect()
 
-            else:
-                input_data += f"{value}, " if i != (len(data_list) - 1) else f"{value}"
+            input_data = f"{id}, "
 
-        print(input_data)
+            for i, value in enumerate(data_list):
+                if not (isinstance(value, numbers.Number)):
+                    input_data += f"'{value}', " if i != (len(data_list) - 1) else f"'{value}'"
 
-        # Execute a INSERT query
-        query = f"INSERT INTO {table_name} VALUES ({input_data})"
+                else:
+                    input_data += f"{value}, " if i != (len(data_list) - 1) else f"{value}"
 
-        self.cursor.execute(query)
+            # Execute a INSERT query
+            query = f"INSERT INTO {table_name} VALUES ({input_data})"
 
-        self.cnx.commit()
+            self.cursor.execute(query)
 
-        self.close()
-        return self.print_table(table_name)
+            self.cnx.commit()
+
+            self.close()
+            return self.print_table(table_name)
 
     def print_table(self, table_name):
         self.connect()
@@ -161,3 +191,7 @@ class Manager:
         self.close()
 
         return rows
+
+    def __str__(self):
+        return f"Usuario: {self.database_user}\nContrasenia: {self.database_password}" \
+               f"\nHost: {self.database_host}\nBase de datos: {self.database_database}"
