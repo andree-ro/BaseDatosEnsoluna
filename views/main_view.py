@@ -8,6 +8,8 @@ from datetime import date
 
 # usuarios = sql_structures.SqlDataBase_usuarios()
 
+# TODO
+# - Agregar mensajes de confirmacion
 
 class VentanaPrincipal(QMainWindow):
     def __init__(self):
@@ -339,6 +341,8 @@ class VentanaPrincipal(QMainWindow):
 
     # def iniciar_sesion(self):
     #    usuario_comprobacion = str(self.lineEdit_usuarios.text())
+    #       SELECT * FROM users WHERE name = 'texto' -> consulta que nos devuelve un usuario
+    #       tambien hacer una consulta a la tabla rol
     #    rol = str(usuarios.get_rol(usuario_comprobacion))
     #    if rol == 'Administrador':
     #        self.btn_menu.show()
@@ -433,8 +437,10 @@ class VentanaPrincipal(QMainWindow):
         SUBTYPE_KEY = '/Subtype'
         WIDGET_SUBTYPE_KEY = '/Widget'
 
-        def fill_pdf(input_pdf_path, output_pdf_path, data_dict):
+        def fill_pdf(input_pdf_path, output_pdf_path, data):
             template_pdf = pdfrw.PdfReader(input_pdf_path)
+
+            print(data)
 
             for page in template_pdf.pages:
                 annotations = page[ANNOT_KEY]
@@ -442,13 +448,13 @@ class VentanaPrincipal(QMainWindow):
                     if annotation[SUBTYPE_KEY] == WIDGET_SUBTYPE_KEY:
                         if annotation[ANNOT_FIELD_KEY]:
                             key = annotation[ANNOT_FIELD_KEY][1:-1]
-                            if key in data_dict.keys():
-                                if type(data_dict[key]) == bool:
-                                    if data_dict[key] == True:
+                            if key in data.keys():
+                                if type(data[key]) == bool:
+                                    if data[key] == True:
                                         annotation.update(pdfrw.PdfDict(AS=pdfrw.PdfName('Yes')))
-                                    else:
-                                        annotation.update(pdfrw.PdfDict(V='{}'.format(data_dict[key])))
-                                        annotation.update(pdfrw.PdfDict(AP=''))
+                                else:
+                                    annotation.update(pdfrw.PdfDict(V='{}'.format(data[key])))
+                                    annotation.update(pdfrw.PdfDict(AP=''))
             template_pdf.Root.AcroForm.update(pdfrw.PdfDict(NeedAppearances=pdfrw.PdfObject('true')))
             pdfrw.PdfWriter().write(output_pdf_path, template_pdf)
         fill_pdf(template, output, data_dict)

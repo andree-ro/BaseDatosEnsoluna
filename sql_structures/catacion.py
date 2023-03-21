@@ -1,6 +1,6 @@
 from .manager import  Manager
 
-columns_ingreso = ['id', 'Aroma', 'Finca', 'Region', 'Altura', 'Sabor', 'Color', 'Puntuacion', 'usuarios_id']
+columns_ingreso = ['idCatacion', 'Aroma', 'Finca', 'Region', 'Altura', 'Sabor', 'Color', 'Puntuacion', 'usuarios_id']
 
 class Catacion:
     def __init__(self, aroma, finca, region, altura, sabor, color, puntuacion, columna = None, valor = None):
@@ -33,16 +33,18 @@ class Catacion:
     def catacion_update(self):
 
         management = Manager()
-        data_list = [self.aroma, self.finca, self.region, self.altura, self.sabor, self.color, self.puntuacion]
+        data_list = [self.aroma, self.finca, self.region, self.altura, self.sabor, self.color, float(self.puntuacion)]
         management.update_table('Catacion', columns_ingreso, data_list, self.columna, self.valor)
 
     def catacion_ingreso(self):
+        try:
+            management = Manager()
 
-        management = Manager()
-
-        data_list = [self.aroma, self.finca, self.region, self.altura, self.sabor, self.color, self.puntuacion]
-        print(data_list)
-        management.insert_into_table('Catacion', columns_ingreso, data_list)
+            data_list = [self.aroma, self.finca, self.region, self.altura, self.sabor, self.color, self.puntuacion, 1]
+            management.insert_into_table('Catacion', columns_ingreso, data_list)
+        except Exception as e:
+            'ERROR'
+            print(e)
 
     def delete(self):
 

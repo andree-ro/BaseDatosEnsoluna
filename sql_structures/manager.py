@@ -171,8 +171,9 @@ class Manager:
                     input_data += f"{value}, " if i != (len(data_list) - 1) else f"{value}"
 
             # Execute a INSERT query
-            query = f"INSERT INTO {table_name} VALUES ({input_data})"
 
+            query = f"INSERT INTO {table_name} VALUES ({input_data})"
+            print(query)
             self.cursor.execute(query)
 
             self.cnx.commit()
