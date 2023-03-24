@@ -32,7 +32,7 @@ class VentanaPrincipal(QMainWindow):
         self.btn_menu_3.clicked.connect(self.menu_2_show)
         self.btn_menu_6.clicked.connect(self.menu_3_hide)
         self.btn_menu_5.clicked.connect(self.menu_3_show)
-        # self.btn_iniciar_sesion.clicked.connect(self.iniciar_sesion)
+        self.btn_iniciar_sesion.clicked.connect(self.iniciar_sesion)
 
         # paginas
         self.btn_inventario.clicked.connect(self.show_page_inventario)
@@ -339,31 +339,48 @@ class VentanaPrincipal(QMainWindow):
         self.btn_maximizar.hide()
         self.btn_restaurar.show()
 
-    # def iniciar_sesion(self):
-    #    usuario_comprobacion = str(self.lineEdit_usuarios.text())
-    #       SELECT * FROM users WHERE name = 'texto' -> consulta que nos devuelve un usuario
-    #       tambien hacer una consulta a la tabla rol
-    #    rol = str(usuarios.get_rol(usuario_comprobacion))
-    #    if rol == 'Administrador':
-    #        self.btn_menu.show()
+    def iniciar_sesion(self):
+        usuario_comprobacion = self.lineEdit_usuarios.text()
+        usuario = sql_structures.Manager()
+        rol = usuario.iniciar_ses(usuario_comprobacion)
+        contrasena_comprobacion = self.lineEdit_contrasena.text()
+        contrasena = usuario.iniciar_contra(usuario_comprobacion)
+        if contrasena_comprobacion == contrasena:
+            t = True
+            if rol == 1:
+                self.menu_show(t)
+                self.btn_menu.show()
+            elif rol == 2:
+                self.menu_show(t)
+                self.btn_inventario.hide()
+                self.btn_mobiliario.hide()
+                self.btn_catacion.hide()
+                self.btn_usuario.hide()
+            elif rol == 3:
+                self.menu_show(t)
+                self.btn_ventas.hide()
+                self.btn_mobiliario.hide()
+                self.btn_catacion.hide()
+                self.btn_usuario.hide()
+            elif rol == 4:
+                self.menu_show(t)
+                self.btn_inventario.hide()
+                self.btn_mobiliario.hide()
+                self.btn_ventas.hide()
+                self.btn_usuario.hide()
+            else:
+                QMessageBox.about(self, 'Aviso', 'Usuario incorrecto!')
+        else:
+            QMessageBox.about(self, 'Aviso', 'Contraseña incorrecta!')
 
-    #    elif rol == 'Vendedor':
-    #        self.btn_menu.show()
-    #        self.btn_inventario.hide()
-    #        self.btn_mobiliario.hide()
-    #        self.btn_catacion.hide()
-    #        self.btn_usuario.hide()
-
-    #    elif rol == 'Bodegero':
-    #        self.btn_menu.show()
-
-    #    elif rol == 'Catador':
-    #        self.btn_menu.show()
-
-    def menu_show(self):
+    def menu_show(self, t):
         self.btn_menu.hide()
         self.btn_menu_2.show()
-        self.frame_menu.show()
+        if t == True:
+            self.frame_menu.show()
+        else:
+            pass
+            # self.frame_menu.hide()
 
     def menu_hide(self):
         self.btn_menu.show()
@@ -517,5 +534,4 @@ class VentanaPrincipal(QMainWindow):
                     raise Exception('Debe ser un valor mayor a 0')
             else:
                 raise Exception('No se ha seleccionado uno de los parametros para la cotización.')
-        except Exception as e:
-            'Error'
+        except Exception as e: 'Error'

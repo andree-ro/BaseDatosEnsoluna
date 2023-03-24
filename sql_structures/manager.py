@@ -6,8 +6,8 @@ class Manager:
     def __init__(self):
         self.database_user = 'root'
         # self.database_password = 'I.gt.MPW.2023.U'
-        self.database_password = 'andree2332'
-        # self.database_password = 'Marco.andres23'
+        #self.database_password = 'andree2332'
+        self.database_password = 'Marco.andres23'
         self.database_host = '127.0.0.1'
         self.database_database = 'mydb'
 
@@ -194,6 +194,36 @@ class Manager:
         self.close()
 
         return rows
+
+    def iniciar_ses(self, data):
+        self.connect()
+        rol = 'rol'
+        usuarios = 'usuarios'
+        query = f"SELECT {rol} FROM {usuarios} WHERE nombre =  '{data}';"
+        self.cursor.execute(query)
+        rows = self.cursor.fetchall()
+        self.close()
+        # -> consulta que nos devuelve un usuario tambien hacer una consulta a la tabla rol
+        if rows[0][0] == 'Administrador':
+            return 1
+        elif rows[0][0] == 'Vendedor':
+            return 2
+        elif rows[0][0] == 'Bodegero':
+            return 3
+        elif rows[0][0] == 'Catador':
+            return 4
+
+    def iniciar_contra(self, data):
+        self.connect()
+        contrasena = 'contraseña'
+        usuarios = 'usuarios'
+        query = f"SELECT {contrasena} FROM {usuarios} WHERE nombre =  '{data}';"
+        self.cursor.execute(query)
+        rows = self.cursor.fetchall()
+        self.close()
+        return rows[0][0]
+
+
 
     def __str__(self):
         return f"Usuario: {self.database_user}\nContrasenia: {self.database_password}" \

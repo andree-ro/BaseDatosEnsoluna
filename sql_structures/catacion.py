@@ -1,6 +1,6 @@
 from .manager import  Manager
 
-columns_ingreso = ['idCatacion', 'Aroma', 'Finca', 'Region', 'Altura', 'Sabor', 'Color', 'Puntuacion', 'usuarios_id']
+columns_ingreso = ['id', 'Aroma', 'Finca', 'Region', 'Altura', 'Sabor', 'Color', 'Puntuacion', 'usuarios_id']
 
 class Catacion:
     def __init__(self, aroma, finca, region, altura, sabor, color, puntuacion, columna = None, valor = None):
@@ -50,5 +50,5 @@ class Catacion:
 
         management = Manager()
 
-        data_list = [self.aroma, self.finca, self.region, self.altura, self.sabor, self.color, self.puntuacion]
+        data_list = [self.aroma, self.finca, self.region, self.altura, self.sabor, self.color, self.puntuacion, 0]
         management.delete_row('Catacion', columns_ingreso, data_list)

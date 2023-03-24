@@ -36,11 +36,11 @@ class SqlDataBase_usuarios:
 		return self.permiso_id
 
 	def validate(self):
-		if self.name == '' and self.password == '' and self.role == '--Seleccionar--':
+		if self.name == '' or self.password == '' or self.role == '--Seleccionar--':
 			raise Exception('Datos invalidos')
 
 	def new_user(self):
-		self.validate()
+		# self.validate()
 
 		self.set_permisos()
 
@@ -85,6 +85,9 @@ class SqlDataBase_usuarios:
 
 	def delete_user(self):
 		management.delete_id_row(table_name, table_data, self.id)
+
+	def inicio(self):
+		pass
 
 	def __str__(self):
 		return f"name = {self.name}\npassword = {self.password}\nrole = {self.role}" \
