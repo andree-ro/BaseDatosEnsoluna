@@ -721,7 +721,7 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
           <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
          <property name="currentIndex">
-          <number>2</number>
+          <number>12</number>
          </property>
          <widget class="QWidget" name="page_usuario">
           <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -7644,6 +7644,9 @@ font: 75 10pt &quot;Open Sans Semibold&quot;</string>
                    <property name="styleSheet">
                     <string notr="true">color: rgb(89, 31, 11);
 font: 75 10pt &quot;Open Sans Semibold&quot;</string>
+                   </property>
+                   <property name="echoMode">
+                    <enum>QLineEdit::Password</enum>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignCenter</set>

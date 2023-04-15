@@ -1,9 +1,22 @@
 from .manager import Manager
+from encrypt import *
+
+
+
 
 table_name = 'usuarios'
 table_data = ['id', 'nombre', 'rol', 'contraseña', 'Permisos_id']
 
 management = Manager()
+
+encrip = Metodo()
+refue = Metodos_refuerzo()
+key = "abcdefghijkl12345678!@#$"
+# key = 'protodrjympg15599357!@#$'
+key1 = "~~Marp~~__842631597"
+a = ""
+offset = 8
+encrypted = ""
 
 
 class SqlDataBase_usuarios:
@@ -43,8 +56,14 @@ class SqlDataBase_usuarios:
 		# self.validate()
 
 		self.set_permisos()
+		# falta utilizar libreria para cifrar
+		password = self.password
+		encrypted = encrip.encrypt(offset, password, key)
+		data_list = [self.name, self.role, encrypted, self.permiso_id]
 
-		management.insert_into_table(table_name, table_data, self.data_list)
+
+		management.insert_into_table(table_name, table_data, data_list)
+		print(encrypted)
 
 	def set_column_name(self):
 		if self.column == 'Usuario':
@@ -86,8 +105,6 @@ class SqlDataBase_usuarios:
 	def delete_user(self):
 		management.delete_id_row(table_name, table_data, self.id)
 
-	def inicio(self):
-		pass
 
 	def __str__(self):
 		return f"name = {self.name}\npassword = {self.password}\nrole = {self.role}" \

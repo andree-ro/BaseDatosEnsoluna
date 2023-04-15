@@ -5,6 +5,7 @@ import pandas as pdf
 import webbrowser
 import pdfrw
 from datetime import date
+from encrypt import *
 
 # usuarios = sql_structures.SqlDataBase_usuarios()
 
@@ -132,7 +133,6 @@ class VentanaPrincipal(QMainWindow):
 
         usuarios.delete_user()
 
-        self.info_usuario_e.clear()
 
     def new_catacion(self):
         catacion = sql_structures.Catacion(self.aroma_catacion.text(),
@@ -323,9 +323,6 @@ class VentanaPrincipal(QMainWindow):
         except Exception as e:
             print(e)
 
-
-
-
     def minimizar(self):
         self.showMinimized()
 
@@ -340,12 +337,23 @@ class VentanaPrincipal(QMainWindow):
         self.btn_restaurar.show()
 
     def iniciar_sesion(self):
+        encrip = Metodo()
+        refue = Metodos_refuerzo()
+        key = "abcdefghijkl12345678!@#$"
+        # key = 'protodrjympg15599357!@#$'
+        key1 = "~~Marp~~__842631597"
+        a = ""
+        offset = 8
+        encrypted = ""
+
+
         usuario_comprobacion = self.lineEdit_usuarios.text()
         usuario = sql_structures.Manager()
         rol = usuario.iniciar_ses(usuario_comprobacion)
         contrasena_comprobacion = self.lineEdit_contrasena.text()
         contrasena = usuario.iniciar_contra(usuario_comprobacion)
-        if contrasena_comprobacion == contrasena:
+        c = encrip.decrypt(offset, contrasena, key)
+        if contrasena_comprobacion == c:
             t = True
             if rol == 1:
                 self.menu_show(t)
