@@ -721,7 +721,7 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
           <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
          <property name="currentIndex">
-          <number>12</number>
+          <number>10</number>
          </property>
          <widget class="QWidget" name="page_usuario">
           <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -7031,6 +7031,43 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
                         <string>Realizado</string>
                        </property>
                       </widget>
+                      <widget class="QPushButton" name="agregarCotizacion">
+                       <property name="geometry">
+                        <rect>
+                         <x>300</x>
+                         <y>20</y>
+                         <width>75</width>
+                         <height>35</height>
+                        </rect>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>0</width>
+                         <height>35</height>
+                        </size>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true">QFrame{
+background-color: rgb(51, 157, 255);
+}
+
+QPushButton{
+color: rgb(89, 31, 11);
+background-color: rgb(255, 255, 255);
+font: 75 9pt &quot;Open Sans Semibold&quot;
+}
+
+QPushButton:hover{
+color: rgb(255, 255, 255);
+background-color: rgb(209, 172, 127);
+font: 75 9pt  &quot;Open Sans Semibold&quot;
+}
+</string>
+                       </property>
+                       <property name="text">
+                        <string>+</string>
+                       </property>
+                      </widget>
                      </widget>
                     </item>
                    </layout>
@@ -7373,6 +7410,37 @@ font: 75 10pt &quot;Open Sans Semibold&quot;</string>
                           </size>
                          </property>
                         </spacer>
+                       </item>
+                       <item>
+                        <widget class="QPushButton" name="agregarFactura">
+                         <property name="minimumSize">
+                          <size>
+                           <width>0</width>
+                           <height>35</height>
+                          </size>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">QFrame{
+background-color: rgb(51, 157, 255);
+}
+
+QPushButton{
+color: rgb(89, 31, 11);
+background-color: rgb(255, 255, 255);
+font: 75 9pt &quot;Open Sans Semibold&quot;
+}
+
+QPushButton:hover{
+color: rgb(255, 255, 255);
+background-color: rgb(209, 172, 127);
+font: 75 9pt  &quot;Open Sans Semibold&quot;
+}
+</string>
+                         </property>
+                         <property name="text">
+                          <string>+</string>
+                         </property>
+                        </widget>
                        </item>
                        <item>
                         <widget class="QPushButton" name="realizado_facturacion">

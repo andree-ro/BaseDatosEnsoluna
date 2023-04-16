@@ -6,6 +6,7 @@ import webbrowser
 import pdfrw
 from datetime import date
 from encrypt import *
+from reportlab.pdfgen import canvas
 
 # usuarios = sql_structures.SqlDataBase_usuarios()
 
@@ -16,7 +17,7 @@ class VentanaPrincipal(QMainWindow):
     def __init__(self):
         super(VentanaPrincipal, self).__init__()
         loadUi('views/designs/DB1.ui', self)
-
+        self.productos = []
         self.frame_menu.hide()
         # self.btn_menu.hide()
         self.btn_menu_2.hide()
@@ -101,6 +102,9 @@ class VentanaPrincipal(QMainWindow):
 
         # GENERAR COTIZACION
         self.realizado_cotizacion.clicked.connect(self.realizarCotizacion)
+        
+        # AGREGAR COTIZACION ARRAY
+        self.agregarCotizacion.clicked.connect(self.agregarCotizacion)
 
 
     def new_user(self):
@@ -454,92 +458,55 @@ class VentanaPrincipal(QMainWindow):
     def show_page_eliminar_catacion(self):
         self.stackedWidget.setCurrentWidget(self.page_catacion_eliminar)
 
-    def write_pdf(self, template, output, data_dict):
-        ANNOT_KEY = '/Annots'
-        ANNOT_FIELD_KEY = '/T'
-        ANNOT_VAL_KEY = '/V'
-        ANNOT_RECT_KEY = '/Rect'
-        SUBTYPE_KEY = '/Subtype'
-        WIDGET_SUBTYPE_KEY = '/Widget'
-
-        def fill_pdf(input_pdf_path, output_pdf_path, data):
-            template_pdf = pdfrw.PdfReader(input_pdf_path)
-
-            print(data)
-
-            for page in template_pdf.pages:
-                annotations = page[ANNOT_KEY]
-                for annotation in annotations:
-                    if annotation[SUBTYPE_KEY] == WIDGET_SUBTYPE_KEY:
-                        if annotation[ANNOT_FIELD_KEY]:
-                            key = annotation[ANNOT_FIELD_KEY][1:-1]
-                            if key in data.keys():
-                                if type(data[key]) == bool:
-                                    if data[key] == True:
-                                        annotation.update(pdfrw.PdfDict(AS=pdfrw.PdfName('Yes')))
-                                else:
-                                    annotation.update(pdfrw.PdfDict(V='{}'.format(data[key])))
-                                    annotation.update(pdfrw.PdfDict(AP=''))
-            template_pdf.Root.AcroForm.update(pdfrw.PdfDict(NeedAppearances=pdfrw.PdfObject('true')))
-            pdfrw.PdfWriter().write(output_pdf_path, template_pdf)
-        fill_pdf(template, output, data_dict)
-        webbrowser.open_new(output)
+    # METODO AGREGAR COTIZACION BOTON
+    def agregarCotizacion(self):
+        region = self.regionAcCombobx_3.currentText()
+        finca = self.fincaAcText_3.text()
+        cantidadUnidad = self.cantidadAcText_3.text()
+        estado = self.estadoAcText_3.currentText()
+        precioUnidad = self.lineEdit_5.text()
+        self.productos.append({"region": region,
+                                "finca": finca,
+                                "cantidadUnidad": cantidadUnidad,
+                                "estado": estado,
+                                "precioUnidad": precioUnidad})
+        # TODO
+        # lIMPIAR TEXT
 
     def realizarCotizacion(self):
-        try:
-            region = self.regionAcCombobx_3.currentText()
-            finca = self.fincaAcText_3.text()
-            estado = self.estadoAcText_3.currentText()
-            tipo = 'oro'
-            precio = self.lineEdit_5.text()
-            print("Hola")
-            print(region)
-            if region != '--Seleccionar--' and finca != '' and estado != '--Seleccionar--':
-                print("Hola")
-                cantidad = int(self.cantidadAcText_3.text())
-                if cantidad > 0:
-                    print("Hola")
-                    QMessageBox.about(self, 'Aviso', 'Se ha generado la cotización!')
-                    data_dict = {
-                        'Fecha': date.today(),
-                        'Numero': '0',
-                        'Cliente': '',
-                        'Nit': 'C/F',
-                        'Direccion': 'Ciudad',
-                        'Telefono': '',
-                        'Correo': '',
-                        'Producto': f"Café de {self.regionAcCombobx_3.currentText()}, finca {finca}, {estado}, {tipo}",
-                        'Producto1': '',
-                        'Producto3': '',
-                        'Producto4': '',
-                        'Producto5': '',
-                        'Producto2': '',
-                        'Precio1': precio,
-                        'Precio2': '',
-                        'Precio3': '',
-                        'Precio4': '',
-                        'Precio5': '',
-                        'Unidades': cantidad,
-                        'Unidades1': '',
-                        'Unidades2': '',
-                        'Unidades3': '',
-                        'Unidades4': '',
-                        'Unidades5': '',
-                        'Precio': '',
-                        'Preciot': '',
-                        'Preciot1': '',
-                        'Preciot2': '',
-                        'Preciot3': '',
-                        'Preciot4': '',
-                        'Totalp': '',
-                        'Descuento': '',
-                        'Total': ''
-                    }
-                    self.write_pdf('cotizacion.pdf', 'cotizacion_final.pdf', data_dict)
-                    self.cantidad_line.clear()
-                    #self.
-                else:
-                    raise Exception('Debe ser un valor mayor a 0')
-            else:
-                raise Exception('No se ha seleccionado uno de los parametros para la cotización.')
-        except Exception as e: 'Error'
+        # Crear un nuevo documento PDF
+        pdf = canvas.Canvas("factura.pdf")
+
+        # Configurar el estilo del texto
+        pdf.setFont("Helvetica", 12)
+
+        # Agregar los datos del cliente
+        cliente_nombre = "Juan Perez"
+        cliente_direccion = "Calle 123"
+        pdf.drawString(100, 700, "Cliente: " + cliente_nombre)
+        pdf.drawString(100, 680, "Dirección: " + cliente_direccion)
+
+        # Agregar los datos de la factura
+        pdf.drawString(400, 700, "Factura #001")
+        pdf.drawString(400, 680, "Fecha: 15/04/2023")
+
+        # Agregar los productos a la factura
+        y = 600  # Posición vertical inicial
+        for producto in self.productos:
+            pdf.drawString(100, y, producto["region"])
+            pdf.drawString(200, y, str(producto["finca"]))
+            pdf.drawString(300, y, str(producto["cantidadUnidad"]))
+            pdf.drawString(400, y, str(producto["estado"]))
+            pdf.drawString(500, y, str(producto["precioUnidad"]))
+            y -= 20
+
+        # Calcular el total de la factura
+        total = sum([(producto["precio"] * producto["unidad"]) for producto in self.productos])
+
+        # Agregar el total a la factura
+        pdf.drawString(400, y - 20, "Total: " + str(total))
+
+        # Guardar el documento PDF
+        pdf.save()
+
+        webbrowser.open_new(pdf)
