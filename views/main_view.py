@@ -8,6 +8,7 @@ from datetime import date
 from encrypt import *
 from reportlab.pdfgen import canvas
 
+
 # usuarios = sql_structures.SqlDataBase_usuarios()
 
 # TODO
@@ -65,7 +66,7 @@ class VentanaPrincipal(QMainWindow):
         self.btn_eliminar_usuarios.clicked.connect(self.delete_user)
         self.btn_actualizar_usuarios.clicked.connect(self.update_user)
         # Inicio sesion
-        #self.btn_iniciar_sesion.clicked.connect(self.iniciar_sesion)
+        # self.btn_iniciar_sesion.clicked.connect(self.iniciar_sesion)
 
         # COMPRAS CAFE
         self.cafeComprarBTN.clicked.connect(self.buy_coffee)
@@ -102,10 +103,9 @@ class VentanaPrincipal(QMainWindow):
 
         # GENERAR COTIZACION
         self.realizado_cotizacion.clicked.connect(self.realizarCotizacion)
-        
-        # AGREGAR COTIZACION ARRAY
-        self.agregarCotizacion.clicked.connect(self.agregarCotizacion)
 
+        # AGREGAR COTIZACION ARRAY
+        self.agregarCotizacion.clicked.connect(self.agregarCotizacionUno)
 
     def new_user(self):
         usuarios = sql_structures.SqlDataBase_usuarios(self.info_usuario.text(),
@@ -116,7 +116,6 @@ class VentanaPrincipal(QMainWindow):
 
         self.info_usuario.clear()
         self.info_contrasena.clear()
-
 
     def update_user(self):
         usuarios = sql_structures.SqlDataBase_usuarios(self.info_usuario_a.text(),
@@ -131,24 +130,21 @@ class VentanaPrincipal(QMainWindow):
         self.info_contrasena_a.clear()
         self.info_usuario_a_valor.clear()
 
-
     def delete_user(self):
         usuarios = sql_structures.SqlDataBase_usuarios('', '', '', '', '', self.info_usuario_e.text())
 
         usuarios.delete_user()
 
-
     def new_catacion(self):
         catacion = sql_structures.Catacion(self.aroma_catacion.text(),
-                                                       self.finca_catacion.text(),
-                                                       self.region_catacion.currentText(),
-                                                       self.altura_catacion.text(),
-                                                       self.sabor_catacion.text(),
-                                                       self.color_catacion.text(),
-                                                       self.puntuacion_catacion.text())
+                                           self.finca_catacion.text(),
+                                           self.region_catacion.currentText(),
+                                           self.altura_catacion.text(),
+                                           self.sabor_catacion.text(),
+                                           self.color_catacion.text(),
+                                           self.puntuacion_catacion.text())
 
         catacion.management('ing_catacion')
-
 
     def update_catacion(self):
         catacion = sql_structures.Catacion(self.aroma_catacion.text(),
@@ -161,7 +157,6 @@ class VentanaPrincipal(QMainWindow):
                                            self.columnaAcText_2.currentText(),
                                            self.valorAcText_2.text())
         catacion.catacion_update()
-
 
     def delete_catacion(self):
         catacion = sql_structures.Catacion(self.aroma_catacion.text(),
@@ -280,18 +275,17 @@ class VentanaPrincipal(QMainWindow):
             dato2 = mana.print_table('Empacado')
             self.tableWidget.setRowCount(len(dato))
 
-
             for i in range(len(dato)):
-                self.tableWidget.setItem(i, 0, QTableWidgetItem(str(dato[i-1][1])))
-                self.tableWidget.setItem(i, 1, QTableWidgetItem(str(dato[i-1][2])))
-                self.tableWidget.setItem(i, 2, QTableWidgetItem(str(dato[i-1][3])))
-                self.tableWidget.setItem(i, 3, QTableWidgetItem(str(dato[i-1][4])))
+                self.tableWidget.setItem(i, 0, QTableWidgetItem(str(dato[i - 1][1])))
+                self.tableWidget.setItem(i, 1, QTableWidgetItem(str(dato[i - 1][2])))
+                self.tableWidget.setItem(i, 2, QTableWidgetItem(str(dato[i - 1][3])))
+                self.tableWidget.setItem(i, 3, QTableWidgetItem(str(dato[i - 1][4])))
                 self.tableWidget.setItem(i, 4, QTableWidgetItem('Hola'))
             self.tableWidget_2.setRowCount(len(dato2))
             for x in range(len(dato2)):
-                self.tableWidget_2.setItem(x, 0, QTableWidgetItem(str(dato2[x-1][1])))
-                self.tableWidget_2.setItem(x, 1, QTableWidgetItem(str(dato2[x-1][2])))
-                self.tableWidget_2.setItem(x, 2, QTableWidgetItem(str(dato2[x-1][3])))
+                self.tableWidget_2.setItem(x, 0, QTableWidgetItem(str(dato2[x - 1][1])))
+                self.tableWidget_2.setItem(x, 1, QTableWidgetItem(str(dato2[x - 1][2])))
+                self.tableWidget_2.setItem(x, 2, QTableWidgetItem(str(dato2[x - 1][3])))
         except Exception as e:
             print(e)
 
@@ -349,7 +343,6 @@ class VentanaPrincipal(QMainWindow):
         a = ""
         offset = 8
         encrypted = ""
-
 
         usuario_comprobacion = self.lineEdit_usuarios.text()
         usuario = sql_structures.Manager()
@@ -458,24 +451,26 @@ class VentanaPrincipal(QMainWindow):
     def show_page_eliminar_catacion(self):
         self.stackedWidget.setCurrentWidget(self.page_catacion_eliminar)
 
+
+    # COTIZACION
     # METODO AGREGAR COTIZACION BOTON
-    def agregarCotizacion(self):
+    def agregarCotizacionUno(self):
         region = self.regionAcCombobx_3.currentText()
         finca = self.fincaAcText_3.text()
         cantidadUnidad = self.cantidadAcText_3.text()
         estado = self.estadoAcText_3.currentText()
         precioUnidad = self.lineEdit_5.text()
         self.productos.append({"region": region,
-                                "finca": finca,
-                                "cantidadUnidad": cantidadUnidad,
-                                "estado": estado,
-                                "precioUnidad": precioUnidad})
+                               "finca": finca,
+                               "cantidadUnidad": cantidadUnidad,
+                               "estado": estado,
+                               "precioUnidad": precioUnidad})
         # TODO
         # lIMPIAR TEXT
 
     def realizarCotizacion(self):
         # Crear un nuevo documento PDF
-        pdf = canvas.Canvas("factura.pdf")
+        pdf = canvas.Canvas("cotizacion.pdf")
 
         # Configurar el estilo del texto
         pdf.setFont("Helvetica", 12)
@@ -485,11 +480,9 @@ class VentanaPrincipal(QMainWindow):
         cliente_direccion = "Calle 123"
         pdf.drawString(100, 700, "Cliente: " + cliente_nombre)
         pdf.drawString(100, 680, "Dirección: " + cliente_direccion)
-
         # Agregar los datos de la factura
         pdf.drawString(400, 700, "Factura #001")
         pdf.drawString(400, 680, "Fecha: 15/04/2023")
-
         # Agregar los productos a la factura
         y = 600  # Posición vertical inicial
         for producto in self.productos:
@@ -499,14 +492,74 @@ class VentanaPrincipal(QMainWindow):
             pdf.drawString(400, y, str(producto["estado"]))
             pdf.drawString(500, y, str(producto["precioUnidad"]))
             y -= 20
-
         # Calcular el total de la factura
-        total = sum([(producto["precio"] * producto["unidad"]) for producto in self.productos])
-
+        total = 0
+        print(self.productos)
+        for producto in self.productos:
+            total = float(producto["precioUnidad"]) * int(producto["cantidadUnidad"])
+            total = + total
         # Agregar el total a la factura
         pdf.drawString(400, y - 20, "Total: " + str(total))
-
         # Guardar el documento PDF
         pdf.save()
+        webbrowser.open_new("cotizacion.pdf")
 
-        webbrowser.open_new(pdf)
+        #FACTURA
+        # METODO AGREGAR COTIZACION BOTON
+        def agregarFacturaUno(self):
+            region = self.regionAcCombobx_3.currentText()
+            finca = self.fincaAcText_3.text()
+            cantidadUnidad = self.cantidadAcText_3.text()
+            estado = self.estadoAcText_3.currentText()
+            precioUnidad = self.lineEdit_5.text()
+            self.productos.append({"region": region,
+                                   "finca": finca,
+                                   "cantidadUnidad": cantidadUnidad,
+                                   "estado": estado,
+                                   "precioUnidad": precioUnidad})
+            # TODO
+            # lIMPIAR TEXT
+
+        def realizarFactura(self):
+            # Crear un nuevo documento PDF
+            pdf = canvas.Canvas("factura.pdf")
+            print("1")
+            # Configurar el estilo del texto
+            pdf.setFont("Helvetica", 12)
+
+            # Agregar los datos del cliente
+            cliente_nombre = "Juan Perez"
+            cliente_direccion = "Calle 123"
+            pdf.drawString(100, 700, "Cliente: " + cliente_nombre)
+            pdf.drawString(100, 680, "Dirección: " + cliente_direccion)
+            print("2")
+            # Agregar los datos de la factura
+            pdf.drawString(400, 700, "Factura #001")
+            pdf.drawString(400, 680, "Fecha: 15/04/2023")
+            print("3")
+            # Agregar los productos a la factura
+            y = 600  # Posición vertical inicial
+            print("4")
+            for producto in self.productos:
+                print("Inicio for")
+                pdf.drawString(100, y, producto["region"])
+                pdf.drawString(200, y, str(producto["finca"]))
+                pdf.drawString(300, y, str(producto["cantidadUnidad"]))
+                pdf.drawString(400, y, str(producto["estado"]))
+                pdf.drawString(500, y, str(producto["precioUnidad"]))
+                y -= 20
+                print("Final for")
+            print("fuera for")
+            # Calcular el total de la factura
+            total = 0
+            print(self.productos)
+            for producto in self.productos:
+                total = float(producto["precioUnidad"]) * int(producto["cantidadUnidad"])
+                total = + total
+            print(total)
+            # Agregar el total a la factura
+            pdf.drawString(400, y - 20, "Total: " + str(total))
+            print("error")
+            # Guardar el documento PDF
+            pdf.save()
+            webbrowser.open_new("factura.pdf")

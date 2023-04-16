@@ -4,6 +4,8 @@ import webbrowser
 import pdfrw
 from datetime import date
 
+# Falta poner el tipo
+columns_ingreso = ['id', 'Region', 'Finca', 'Cantidad', 'Estado']
 
 class venta:
     def __init__(self, region, finca, cantidad, estado, columna = None, valor = None):
@@ -33,7 +35,12 @@ class venta:
         if self.region == '--Seleccionar--' and self.finca == '' and self.cantidad < 0 and self.estado == '--Seleccionar--':
             raise Exception('Datos invalidos')
 
+    def venta_ingreso(self):
 
+        management = Manager()
+
+        data_list = [self.region, self.finca, self.cantidad, self.estado]
+        management.insert_into_table('Cafe_ingreso', columns_ingreso, data_list)
 
     def update_inventario(self):
         pass
