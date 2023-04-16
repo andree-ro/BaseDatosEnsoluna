@@ -7,7 +7,7 @@ import pdfrw
 from datetime import date
 from encrypt import *
 from reportlab.pdfgen import canvas
-
+from datetime import datetime
 
 # usuarios = sql_structures.SqlDataBase_usuarios()
 
@@ -106,6 +106,12 @@ class VentanaPrincipal(QMainWindow):
 
         # AGREGAR COTIZACION ARRAY
         self.agregarCotizacion.clicked.connect(self.agregarCotizacionUno)
+
+        # GENERAR FACTURA
+        self.realizado_facturacion.clicked.connect(self.realizarFactura)
+
+        # AGREGAR FACTURA AL ARRAY
+        self.agregarFactura.clicked.connect(self.agregarFacturaUno)
 
     def new_user(self):
         usuarios = sql_structures.SqlDataBase_usuarios(self.info_usuario.text(),
@@ -451,7 +457,6 @@ class VentanaPrincipal(QMainWindow):
     def show_page_eliminar_catacion(self):
         self.stackedWidget.setCurrentWidget(self.page_catacion_eliminar)
 
-
     # COTIZACION
     # METODO AGREGAR COTIZACION BOTON
     def agregarCotizacionUno(self):
@@ -469,9 +474,75 @@ class VentanaPrincipal(QMainWindow):
         # lIMPIAR TEXT
 
     def realizarCotizacion(self):
-        # Crear un nuevo documento PDF
-        pdf = canvas.Canvas("cotizacion.pdf")
+        now = datetime.now()
+        formato = now.strftime('%d - %m - %Y')
 
+        # Crear un nuevo documento PDF
+        pdf = canvas.Canvas("contizacion.pdf")
+        # Configurar el estilo del texto
+        pdf.setFont("Helvetica", 12)
+
+        # Agregar los datos del cliente
+        cliente_nombre = "Juan Perez"
+        cliente_direccion = "Calle 123"
+        pdf.drawString(100, 700, "Cliente: " + cliente_nombre)
+        pdf.drawString(100, 680, "Dirección: " + cliente_direccion)
+        # Agregar los datos de la factura
+        pdf.drawString(400, 700, "Cotizacion #001")
+        pdf.drawString(400, 680, f"Fecha: {formato}")
+        # Agregar los productos a la factura
+        y = 600  # Posición vertical inicial
+        pdf.drawString(50, 620, "PROUCTO")
+        pdf.drawString(150, 620, "FINCA")
+        pdf.drawString(225, 620, "CANTIDAD UNIDAD")
+        pdf.drawString(375, 620, "ESTADO")
+        pdf.drawString(450, 620, "PRECIO UNIDAD")
+
+        for producto in self.productos:
+            pdf.drawString(50, y, producto["region"])
+            pdf.drawString(150, y, str(producto["finca"]))
+            pdf.drawString(225, y, str(producto["cantidadUnidad"]))
+            pdf.drawString(375, y, str(producto["estado"]))
+            pdf.drawString(450, y, str(producto["precioUnidad"]))
+            y -= 20
+
+        # Calcular el total de la factura
+        total = 0
+        print(self.productos)
+        for producto in self.productos:
+            total = float(producto["precioUnidad"]) * int(producto["cantidadUnidad"])
+            total = + total
+        print(total)
+        # Agregar el total a la factura
+        pdf.drawString(400, y - 20, "Total: " + str(total))
+        print("error")
+        # Guardar el documento PDF
+        pdf.save()
+        webbrowser.open_new("contizacion.pdf")
+
+        # FACTURA
+        # METODO AGREGAR COTIZACION BOTON
+
+    def agregarFacturaUno(self):
+        region = self.comboBox.currentText()
+        finca = self.lineEdit_3.text()
+        cantidadUnidad = self.lineEdit_4.text()
+        estado = self.comboBox_2.currentText()
+        precioUnidad = self.lineEdit_6.text()
+        self.productos.append({"region": region,
+                               "finca": finca,
+                               "cantidadUnidad": cantidadUnidad,
+                               "estado": estado,
+                               "precioUnidad": precioUnidad})
+        # TODO
+        # lIMPIAR TEXT
+
+    def realizarFactura(self):
+        now = datetime.now()
+        formato = now.strftime('%d - %m - %Y')
+
+        # Crear un nuevo documento PDF
+        pdf = canvas.Canvas("factura.pdf")
         # Configurar el estilo del texto
         pdf.setFont("Helvetica", 12)
 
@@ -482,84 +553,33 @@ class VentanaPrincipal(QMainWindow):
         pdf.drawString(100, 680, "Dirección: " + cliente_direccion)
         # Agregar los datos de la factura
         pdf.drawString(400, 700, "Factura #001")
-        pdf.drawString(400, 680, "Fecha: 15/04/2023")
+        pdf.drawString(400, 680, f"Fecha: {formato}")
         # Agregar los productos a la factura
         y = 600  # Posición vertical inicial
+        pdf.drawString(50, 620, "PROUCTO")
+        pdf.drawString(150, 620, "FINCA")
+        pdf.drawString(225, 620, "CANTIDAD UNIDAD")
+        pdf.drawString(375, 620, "ESTADO")
+        pdf.drawString(450, 620, "PRECIO UNIDAD")
+
         for producto in self.productos:
-            pdf.drawString(100, y, producto["region"])
-            pdf.drawString(200, y, str(producto["finca"]))
-            pdf.drawString(300, y, str(producto["cantidadUnidad"]))
-            pdf.drawString(400, y, str(producto["estado"]))
-            pdf.drawString(500, y, str(producto["precioUnidad"]))
+            pdf.drawString(50, y, producto["region"])
+            pdf.drawString(150, y, str(producto["finca"]))
+            pdf.drawString(225, y, str(producto["cantidadUnidad"]))
+            pdf.drawString(375, y, str(producto["estado"]))
+            pdf.drawString(450, y, str(producto["precioUnidad"]))
             y -= 20
+
         # Calcular el total de la factura
         total = 0
         print(self.productos)
         for producto in self.productos:
             total = float(producto["precioUnidad"]) * int(producto["cantidadUnidad"])
             total = + total
+        print(total)
         # Agregar el total a la factura
         pdf.drawString(400, y - 20, "Total: " + str(total))
+        print("error")
         # Guardar el documento PDF
         pdf.save()
-        webbrowser.open_new("cotizacion.pdf")
-
-        #FACTURA
-        # METODO AGREGAR COTIZACION BOTON
-        def agregarFacturaUno(self):
-            region = self.regionAcCombobx_3.currentText()
-            finca = self.fincaAcText_3.text()
-            cantidadUnidad = self.cantidadAcText_3.text()
-            estado = self.estadoAcText_3.currentText()
-            precioUnidad = self.lineEdit_5.text()
-            self.productos.append({"region": region,
-                                   "finca": finca,
-                                   "cantidadUnidad": cantidadUnidad,
-                                   "estado": estado,
-                                   "precioUnidad": precioUnidad})
-            # TODO
-            # lIMPIAR TEXT
-
-        def realizarFactura(self):
-            # Crear un nuevo documento PDF
-            pdf = canvas.Canvas("factura.pdf")
-            print("1")
-            # Configurar el estilo del texto
-            pdf.setFont("Helvetica", 12)
-
-            # Agregar los datos del cliente
-            cliente_nombre = "Juan Perez"
-            cliente_direccion = "Calle 123"
-            pdf.drawString(100, 700, "Cliente: " + cliente_nombre)
-            pdf.drawString(100, 680, "Dirección: " + cliente_direccion)
-            print("2")
-            # Agregar los datos de la factura
-            pdf.drawString(400, 700, "Factura #001")
-            pdf.drawString(400, 680, "Fecha: 15/04/2023")
-            print("3")
-            # Agregar los productos a la factura
-            y = 600  # Posición vertical inicial
-            print("4")
-            for producto in self.productos:
-                print("Inicio for")
-                pdf.drawString(100, y, producto["region"])
-                pdf.drawString(200, y, str(producto["finca"]))
-                pdf.drawString(300, y, str(producto["cantidadUnidad"]))
-                pdf.drawString(400, y, str(producto["estado"]))
-                pdf.drawString(500, y, str(producto["precioUnidad"]))
-                y -= 20
-                print("Final for")
-            print("fuera for")
-            # Calcular el total de la factura
-            total = 0
-            print(self.productos)
-            for producto in self.productos:
-                total = float(producto["precioUnidad"]) * int(producto["cantidadUnidad"])
-                total = + total
-            print(total)
-            # Agregar el total a la factura
-            pdf.drawString(400, y - 20, "Total: " + str(total))
-            print("error")
-            # Guardar el documento PDF
-            pdf.save()
-            webbrowser.open_new("factura.pdf")
+        webbrowser.open_new("factura.pdf")
