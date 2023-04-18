@@ -1,5 +1,5 @@
 from PyQt5.uic import loadUi
-from PyQt5.QtWidgets import QMainWindow, QTableWidget, QTableWidgetItem, QMessageBox
+from PyQt5.QtWidgets import *
 import sql_structures
 import pandas as pdf
 import webbrowser
@@ -113,6 +113,38 @@ class VentanaPrincipal(QMainWindow):
 
         # AGREGAR FACTURA AL ARRAY
         self.agregarFactura.clicked.connect(self.agregarFacturaUno)
+
+        # Agregar mobiliario
+        self.agregarmobiliario.clicked.connect(self.add_mobiliario)
+        self.cargar_mobiliario.clicked.connect(self.carga_mobiliario)
+
+    def add_mobiliario(self):
+        date = str(self.calendar.selectedDate())
+        date_split = date.split("(")
+        Str = date_split[1]
+        lenght = len(date_split[1])
+        calendario = Str[:lenght - 1]
+
+        date = str(self.ultserv.date())
+        date_split = date.split("(")
+        Str = date_split[1]
+        lenght = len(date_split[1])
+        ult = Str[:lenght - 1]
+
+        date = str(self.proxser.date())
+        date_split = date.split("(")
+        Str = date_split[1]
+        lenght = len(date_split[1])
+        prox = Str[:lenght - 1]
+        try:
+            mobiliario = sql_structures.SqlDataBase_mobiliario(self.ag_maquina.currentText(),
+                                           ult,
+                                           prox,
+                                           calendario)
+
+            mobiliario.management('add_mobiliario')
+        except Exception as e:
+            print(e)
 
     def new_user(self):
         usuarios = sql_structures.SqlDataBase_usuarios(self.info_usuario.text(),
@@ -324,6 +356,21 @@ class VentanaPrincipal(QMainWindow):
                 self.tableWidget_usuarios.setItem(i, 0, QTableWidgetItem(str(dato[i - 1][1])))
                 self.tableWidget_usuarios.setItem(i, 1, QTableWidgetItem(str(dato[i - 1][2])))
                 self.tableWidget_usuarios.setItem(i, 2, QTableWidgetItem(str(dato[i - 1][3])))
+
+        except Exception as e:
+            print(e)
+
+    def carga_mobiliario(self):
+        try:
+            mana = sql_structures.Manager()
+            dato = mana.print_table('mobiliario')
+            self.tableWidget_6.setRowCount(len(dato))
+
+            for i in range(len(dato)):
+                self.tableWidget_6.setItem(i, 0, QTableWidgetItem(str(dato[i - 1][1])))
+                self.tableWidget_6.setItem(i, 1, QTableWidgetItem(str(dato[i - 1][2])))
+                self.tableWidget_6.setItem(i, 2, QTableWidgetItem(str(dato[i - 1][3])))
+                self.tableWidget_6.setItem(i, 3, QTableWidgetItem(str(dato[i - 1][4])))
 
         except Exception as e:
             print(e)
