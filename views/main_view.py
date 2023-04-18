@@ -47,6 +47,7 @@ class VentanaPrincipal(QMainWindow):
         self.btn_agregar_I.clicked.connect(self.show_page_compras)
         self.btn_actualizar_I.clicked.connect(self.show_page_compras_a)
         self.btn_eliminar_I.clicked.connect(self.show_page_compras_e)
+        self.btn_detalles_venta.clicked.connect(self.show_page_detalles_venta)
         # Volver
         self.btn_volver_I.clicked.connect(self.show_page_inventario)
         self.btn_volver_I_2.clicked.connect(self.show_page_inventario)
@@ -456,6 +457,9 @@ class VentanaPrincipal(QMainWindow):
 
     def show_page_eliminar_catacion(self):
         self.stackedWidget.setCurrentWidget(self.page_catacion_eliminar)
+
+    def show_page_detalles_venta(self):
+        self.stackedWidget.setCurrentWidget(self.page_detalles_venta)
 
     # COTIZACION
     # METODO AGREGAR COTIZACION BOTON
