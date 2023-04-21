@@ -5,9 +5,9 @@ import numbers
 class Manager:
     def __init__(self):
         self.database_user = 'root'
-        # self.database_password = 'I.gt.MPW.2023.U'
+        self.database_password = 'I.gt.MPW.2023.U'
         # self.database_password = 'andree2332'
-        self.database_password = 'Marco.andres23'
+        # self.database_password = 'Marco.andres23'
         self.database_host = '127.0.0.1'
         self.database_database = 'mydb'
 
@@ -173,7 +173,9 @@ class Manager:
             # Execute a INSERT query
 
             query = f"INSERT INTO {table_name} VALUES ({input_data})"
+
             print(query)
+
             self.cursor.execute(query)
 
             self.cnx.commit()

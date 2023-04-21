@@ -3,3 +3,4 @@ mysql-connector-python~=8.0.32
 pandas~=1.5.3
 pdfrw~=0.4
 mysql~=0.0.3
+reportlab~=3.6.12

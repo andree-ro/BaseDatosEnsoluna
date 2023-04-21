@@ -53,17 +53,19 @@ class SqlDataBase_usuarios:
 			raise Exception('Datos invalidos')
 
 	def new_user(self):
-		# self.validate()
+		self.validate()
 
-		self.set_permisos()
+		# self.set_permisos()
+
 		# falta utilizar libreria para cifrar
 		password = self.password
+		print(f"contra: {password}")
 		encrypted = encrip.encrypt(offset, password, key)
+		print(f"encriptao: {encrypted}")
 		data_list = [self.name, self.role, encrypted, self.permiso_id]
 
 
 		management.insert_into_table(table_name, table_data, data_list)
-		print(encrypted)
 
 	def set_column_name(self):
 		if self.column == 'Usuario':

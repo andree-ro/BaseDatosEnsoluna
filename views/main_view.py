@@ -48,6 +48,7 @@ class VentanaPrincipal(QMainWindow):
         self.btn_actualizar_I.clicked.connect(self.show_page_compras_a)
         self.btn_eliminar_I.clicked.connect(self.show_page_compras_e)
         self.btn_detalles_venta.clicked.connect(self.show_page_detalles_venta)
+
         # Volver
         self.btn_volver_I.clicked.connect(self.show_page_inventario)
         self.btn_volver_I_2.clicked.connect(self.show_page_inventario)
@@ -63,9 +64,9 @@ class VentanaPrincipal(QMainWindow):
         # Usuarios
         # self.cargar_usuarios.clicked.connect(self.loaddata)
         self.btn_administrar.clicked.connect(self.show_page_usuarios_admin)
-        self.btn_agregar_usuarios.clicked.connect(self.new_user)
-        self.btn_eliminar_usuarios.clicked.connect(self.delete_user)
-        self.btn_actualizar_usuarios.clicked.connect(self.update_user)
+        # self.btn_agregar_usuarios.clicked.connect(self.new_user)
+        # self.btn_eliminar_usuarios.clicked.connect(self.delete_user)
+        # self.btn_actualizar_usuarios.clicked.connect(self.update_user)
         # Inicio sesion
         # self.btn_iniciar_sesion.clicked.connect(self.iniciar_sesion)
 
@@ -349,7 +350,7 @@ class VentanaPrincipal(QMainWindow):
     def carga_usuario(self):
         try:
             mana = sql_structures.Manager()
-            dato = mana.print_table('Usuarios')
+            dato = mana.print_table('usuarios')
             self.tableWidget_usuarios.setRowCount(len(dato))
 
             for i in range(len(dato)):
