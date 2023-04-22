@@ -225,6 +225,48 @@ class VentanaPrincipal(QMainWindow):
         except Exception as e:
             print(e)
 
+    def nueva_venta(self):
+        try:
+            region = self.comboBox.currentText()
+            finca = self.lineEdit_3.text()
+
+            data = ['id', 'Estampa', 'Color', 'Tamaño']
+
+            manager = sql_structures.Manager()
+
+            if region == 'Huehuetenango':
+                self.idEmpaque = manager.get_id('Empacado', data, 'Turquesa')
+            elif region == 'San Marcos':
+                self.idEmpaque = manager.get_id('Empacado', data, 'Rojo')
+            elif region == 'Coban':
+                self.idEmpaque = manager.get_id('Empacado', data, 'Verde')
+            elif region == 'Acatenango':
+                self.idEmpaque = manager.get_id('Empacado', data, 'Naranja')
+            elif region == 'Antigua':
+                self.idEmpaque = manager.get_id('Empacado', data, 'Amarillo')
+            elif region == 'Nuevo Oriente':
+                self.idEmpaque = manager.get_id('Empacado', data, 'Morado')
+            elif region == 'Fraijanes':
+                self.idEmpaque = manager.get_id('Empacado', data, 'Celeste')
+            elif region == 'Atitlan':
+                self.idEmpaque = manager.get_id('Empacado', data, 'Azul')
+
+            columnsCafe = ['id', 'Region', 'Finca', 'Cantidad', 'Estado']
+            self.idCafe = manager.get_id('Cafe', columnsCafe, finca)
+
+            venta_d = sql_structures.Venta(self.regionCombobx.currentText(),
+                                         self.fincaText.text(),
+                                         int(self.cantidadText.text()),
+                                         self.total, float(self.lineEdit_6.text()), self.idEmpaque, self.idCafe, '')
+
+            venta_d.management('venta_cafe')
+
+            self.fincaText.clear()
+            self.cantidadText.clear()
+
+        except Exception as e:
+            print(e)
+
     def update_coffee(self):
         try:
             coffee = sql_structures.Coffee(self.regionAcCombobx.currentText(),
@@ -623,14 +665,13 @@ class VentanaPrincipal(QMainWindow):
             y -= 20
 
         # Calcular el total de la factura
-        total = 0
+        self.total = 0
         print(self.productos)
         for producto in self.productos:
-            total = float(producto["precioUnidad"]) * int(producto["cantidadUnidad"])
-            total = + total
-        print(total)
+            self.total = float(producto["precioUnidad"]) * int(producto["cantidadUnidad"])
+            self.total = + self.total
         # Agregar el total a la factura
-        pdf.drawString(400, y - 20, "Total: " + str(total))
+        pdf.drawString(400, y - 20, "Total: " + str(self.total))
         print("error")
         # Guardar el documento PDF
         pdf.save()

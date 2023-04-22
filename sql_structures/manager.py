@@ -5,8 +5,8 @@ import numbers
 class Manager:
     def __init__(self):
         self.database_user = 'root'
-        self.database_password = 'I.gt.MPW.2023.U'
-        # self.database_password = 'andree2332'
+        #self.database_password = 'I.gt.MPW.2023.U'
+        self.database_password = 'andree2332'
         # self.database_password = 'Marco.andres23'
         self.database_host = '127.0.0.1'
         self.database_database = 'mydb'
@@ -162,6 +162,38 @@ class Manager:
             self.connect()
 
             input_data = f"{id}, "
+
+            for i, value in enumerate(data_list):
+                if not (isinstance(value, numbers.Number)):
+                    input_data += f"'{value}', " if i != (len(data_list) - 1) else f"'{value}'"
+
+                else:
+                    input_data += f"{value}, " if i != (len(data_list) - 1) else f"{value}"
+
+            # Execute a INSERT query
+
+            query = f"INSERT INTO {table_name} VALUES ({input_data})"
+
+            print(query)
+
+            self.cursor.execute(query)
+
+            self.cnx.commit()
+
+            self.close()
+            return self.print_table(table_name)
+
+    def insert_into_table_NID(self, table_name, table_data, data_list):
+        try:
+            self.get_id(table_name, table_data, data_list)
+
+            raise Exception('Dato ya existente')
+
+        except:
+
+            self.connect()
+
+            input_data = f" "
 
             for i, value in enumerate(data_list):
                 if not (isinstance(value, numbers.Number)):

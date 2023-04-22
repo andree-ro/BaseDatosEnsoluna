@@ -3,6 +3,14 @@ from .manager import Manager
 # Falta poner el tipo
 columns_ingreso = ['id', 'Estampa', 'Color', 'Tamaño']
 
+# 1 rojo = San Marcos
+# 2 verde = Coban
+# 3 Turquesa = Huehue
+# 4 Naranja = acatenango
+# 5 amarillo = antigua
+# 6 morado = Nuevo Oriente
+# 7 celeste = Fraijanes
+# 8 azul = atitlan
 
 # columns = ['id', 'Region', 'Finca', 'Libras', 'Estado']
 
