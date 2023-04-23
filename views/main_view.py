@@ -12,7 +12,20 @@ from datetime import datetime
 # usuarios = sql_structures.SqlDataBase_usuarios()
 
 # TODO
-# - Agregar mensajes de confirmacion
+# Revisar modificacion y eliminacion de catacion
+# Revisar modificacion y eliminacion de usuarios
+# Componer encryptado de contraseñas
+# Falta triggers en ventas
+# Componer bloqueo de accesos interfaz
+# Limpiar campos de ingreso
+# Agregar al calendario mes y año
+# Agregar mensajes de confirmacion
+# Ordenar el codigo
+# Explicarnos el codigo
+# Componer ventas(Agregar nit, nombre e incrementar numero de factura y cotizacion)
+# Obtener fechas y no string (Javier)
+# Manual de usuario
+
 
 class VentanaPrincipal(QMainWindow):
     def __init__(self):
