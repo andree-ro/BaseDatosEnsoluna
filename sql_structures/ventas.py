@@ -1,21 +1,21 @@
 from .manager import Manager
 
 # Falta poner el tipo
-columns_venta = ['id', 'Region', 'Finca', 'Cantidad', 'Estado']
+columns_venta = ['id', 'Presentacion', 'Region', 'precioTotal', 'usuarios_id']
 columns_hasVenta = ['Venta_idVenta', 'Empacado_idEmpacado', 'Cafe_idCafe', 'cantidad', 'precioUnitario']
 
+
 class Venta:
-    def __init__(self, region, finca, cantidad, precioTotal, precioUnitario, idEmpacado, idCafe, estado, columna = None, valor = None):
+    def __init__(self, region, finca, cantidad, precioTotal, precioUnitario, idEmpacado, idCafe, columna = None, valor = None):
         # idVenta
-        self.region: str = region
-        self.finca: str = finca
-        self.cantidad: int = cantidad
-        self.estado: str = estado
-        self.precioUnitario: float = precioUnitario
+        self.region = region
+        self.finca = finca
+        self.cantidad = cantidad
+        self.precioUnitario = precioUnitario
         # self.idVenta: int = idVenta
-        self.idEmpacado: int = idEmpacado
-        self.precioTotal: float = precioTotal
-        self.idCafe: int = idCafe
+        self.idEmpacado = idEmpacado
+        self.precioTotal = precioTotal
+        self.idCafe = idCafe
         self.columna = columna
         self.valor = valor
 
@@ -42,7 +42,6 @@ class Venta:
         pass
 
     def venta_cafe(self):
-        data = ['id', 'Estampa', 'Color', 'Tamaño']
         # 1 rojo = San Marcos
         # 2 verde = Coban
         # 3 Turquesa = Huehue
@@ -51,13 +50,12 @@ class Venta:
         # 6 morado = Nuevo Oriente
         # 7 celeste = Fraijanes
         # 8 azul = atitlan
+        u_id = 1
+        libra = 'Libra'
 
         management = Manager()
-
-        color = ['rojo', 'verde', 'turquesa', 'naranja', 'amarillo', 'morado', 'celeste', 'azul']
-        # data_listVenta = [self.region, self.finca, self.cantidad, self.estado]
-        idEmpaque = management.get_id('Empacado', data, color, )
-        data_listVenta = [self.estado, self.region, self.precioTotal, self.estado]
-        data_listHasVenta = [self.idEmpacado, self.idCafe, self.cantidad, self.precioUnitario, 1]
-        management.insert_into_table('venta', columns_venta, data_listVenta)
-        management.insert_into_table_NID('venta_has_cafe', columns_hasVenta, data_listHasVenta)
+        print(self.region, self.precioTotal)
+        data_listVenta = [libra, self.region, self.precioTotal, u_id]
+        data_listHasVenta = [self.idEmpacado, self.idCafe, self.cantidad, self.precioUnitario]
+        management.insert_into_table('Venta', columns_venta, data_listVenta)
+        management.insert_into_table('Venta_has_Cafe', columns_hasVenta, data_listHasVenta)

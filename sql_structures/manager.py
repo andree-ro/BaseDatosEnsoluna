@@ -6,8 +6,8 @@ class Manager:
     def __init__(self):
         self.database_user = 'root'
         #self.database_password = 'I.gt.MPW.2023.U'
-        self.database_password = 'andree2332'
-        # self.database_password = 'Marco.andres23'
+        # self.database_password = 'andree2332'
+        self.database_password = 'Marco.andres23'
         self.database_host = '127.0.0.1'
         self.database_database = 'mydb'
 
@@ -141,6 +141,19 @@ class Manager:
 
             else:
                 query += f"{data} = {value} AND " if i != (len(data_list) - 1) else f"{data} = {value};"
+
+        self.cursor.execute(query)
+
+        rows = self.cursor.fetchall()
+
+        self.close()
+
+        return rows[0][0]
+
+    def get(self, table_name, table_data, values, data):
+        self.connect()
+
+        query = f"SELECT {table_data[0]} FROM {table_name} WHERE {data} = '{values}';"
 
         self.cursor.execute(query)
 

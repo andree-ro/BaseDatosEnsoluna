@@ -1,6 +1,7 @@
-from .manager import  Manager
+from .manager import Manager
 
 columns_ingreso = ['id', 'Aroma', 'Finca', 'Region', 'Altura', 'Sabor', 'Color', 'Puntuacion', 'usuarios_id']
+
 
 class Catacion:
     def __init__(self, aroma, finca, region, altura, sabor, color, puntuacion, columna = None, valor = None):
@@ -33,7 +34,7 @@ class Catacion:
     def catacion_update(self):
 
         management = Manager()
-        data_list = [self.aroma, self.finca, self.region, self.altura, self.sabor, self.color, float(self.puntuacion)]
+        data_list = [self.aroma, self.finca, self.region, self.altura, self.sabor, self.color, self.puntuacion, 1]
         management.update_table('Catacion', columns_ingreso, data_list, self.columna, self.valor)
 
     def catacion_ingreso(self):

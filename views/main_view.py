@@ -111,6 +111,7 @@ class VentanaPrincipal(QMainWindow):
 
         # GENERAR FACTURA
         self.realizado_facturacion.clicked.connect(self.realizarFactura)
+        self.realizado_facturacion.clicked.connect(self.nueva_venta)
 
         # AGREGAR FACTURA AL ARRAY
         self.agregarFactura.clicked.connect(self.agregarFacturaUno)
@@ -196,7 +197,7 @@ class VentanaPrincipal(QMainWindow):
                                            self.puntuacion_catacion.text(),
                                            self.columnaAcText_2.currentText(),
                                            self.valorAcText_2.text())
-        catacion.catacion_update()
+        catacion.management('update_catacion')
 
     def delete_catacion(self):
         catacion = sql_structures.Catacion(self.aroma_catacion.text(),
@@ -231,38 +232,44 @@ class VentanaPrincipal(QMainWindow):
             finca = self.lineEdit_3.text()
 
             data = ['id', 'Estampa', 'Color', 'Tamaño']
+            color = 'Color'
 
             manager = sql_structures.Manager()
+            print(region)
 
             if region == 'Huehuetenango':
-                self.idEmpaque = manager.get_id('Empacado', data, 'Turquesa')
+                self.idEmpaque = manager.get('Empacado', data, 'Turquesa', color)
             elif region == 'San Marcos':
-                self.idEmpaque = manager.get_id('Empacado', data, 'Rojo')
+                self.idEmpaque = manager.get('Empacado', data, 'Rojo', color)
             elif region == 'Coban':
-                self.idEmpaque = manager.get_id('Empacado', data, 'Verde')
+                self.idEmpaque = manager.get('Empacado', data, 'Verde', color)
             elif region == 'Acatenango':
-                self.idEmpaque = manager.get_id('Empacado', data, 'Naranja')
+                self.idEmpaque = manager.get('Empacado', data, 'Naranja', color)
             elif region == 'Antigua':
-                self.idEmpaque = manager.get_id('Empacado', data, 'Amarillo')
+                self.idEmpaque = manager.get('Empacado', data, 'Amarillo', color)
             elif region == 'Nuevo Oriente':
-                self.idEmpaque = manager.get_id('Empacado', data, 'Morado')
+                self.idEmpaque = manager.get('Empacado', data, 'Morado', color)
             elif region == 'Fraijanes':
-                self.idEmpaque = manager.get_id('Empacado', data, 'Celeste')
+                self.idEmpaque = manager.get('Empacado', data, 'Celeste', color)
             elif region == 'Atitlan':
-                self.idEmpaque = manager.get_id('Empacado', data, 'Azul')
+                self.idEmpaque = manager.get('Empacado', data, 'Azul', color)
+            print(region)
 
-            columnsCafe = ['id', 'Region', 'Finca', 'Cantidad', 'Estado']
-            self.idCafe = manager.get_id('Cafe', columnsCafe, finca)
+            columnsCafe = ['id', 'Region', 'Finca', 'Libras', 'Estado']
+            fin = 'Finca'
+            print(finca)
+            self.idCafe = manager.get('Cafe', columnsCafe, finca, fin)
+            print(finca)
+            print(self.idEmpaque, self.idCafe)
+            print(int(self.lineEdit_4.text()))
 
-            venta_d = sql_structures.Venta(self.regionCombobx.currentText(),
-                                         self.fincaText.text(),
-                                         int(self.cantidadText.text()),
-                                         self.total, float(self.lineEdit_6.text()), self.idEmpaque, self.idCafe, '')
+            venta_d = sql_structures.Venta(self.comboBox.currentText(),
+                                         self.lineEdit_3.text(),
+                                         int(self.lineEdit_4.text()),
+                                         self.total, self.lineEdit_6.text(), self.idEmpaque, self.idCafe)
 
             venta_d.management('venta_cafe')
 
-            self.fincaText.clear()
-            self.cantidadText.clear()
 
         except Exception as e:
             print(e)
@@ -294,8 +301,8 @@ class VentanaPrincipal(QMainWindow):
 
             coffee.management('delete_coffee')
 
-            self.fincaText.clear()
-            self.cantidadText.clear()
+            self.fincaElimText.clear()
+            self.cantidadElimText.clear()
 
         except Exception as e:
             print(e)
@@ -666,13 +673,11 @@ class VentanaPrincipal(QMainWindow):
 
         # Calcular el total de la factura
         self.total = 0
-        print(self.productos)
         for producto in self.productos:
             self.total = float(producto["precioUnidad"]) * int(producto["cantidadUnidad"])
             self.total = + self.total
         # Agregar el total a la factura
         pdf.drawString(400, y - 20, "Total: " + str(self.total))
-        print("error")
         # Guardar el documento PDF
         pdf.save()
         webbrowser.open_new("factura.pdf")

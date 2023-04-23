@@ -1,8 +1,8 @@
 from .manager import Manager
 
 # Falta poner el tipo
-columns_ingreso = ['id', 'Region', 'Finca', 'Cantidad', 'Estado']
-columns = ['id', 'Region', 'Finca', 'Cantidad', 'Estado']
+columns_ingreso = ['id', 'Region', 'Finca', 'Quintales', 'Estado']
+columns = ['id', 'Region', 'Finca', 'Libras', 'Estado']
 
 
 class Coffee:
@@ -41,17 +41,15 @@ class Coffee:
         libras = self.cantidad * 100
         lista = [self.region, self.finca, libras, self.estado]
 
-        if self.columna == 'Cantidad':
-            data = self.valor * 100
-            # management.update_table('Cafe', columns, lista, self.columna, data)
-            management.update_table('Cafe_ingreso', columns_ingreso, data_list, self.columna, self.valor)
-
-
+        if self.columna == 'Quintales':
+            data = int(self.valor) * 100
+            columna = 'Libras'
+            print(data, columna)
+            management.update_table('Cafe_ingreso',  columns_ingreso, data_list, self.columna, self.valor)
+            management.update_table('Cafe', columns, lista, columna, data)
         else:
-
-            # management.update_table('Cafe', columns, data_list, self.columna, self.valor)
             management.update_table('Cafe_ingreso', columns_ingreso, data_list, self.columna, self.valor)
-
+            management.update_table('Cafe', columns, lista, self.columna, self.valor)
 
     def cafe_ingreso(self):
 
@@ -68,9 +66,12 @@ class Coffee:
 
         management = Manager()
 
+        cantidad = self.cantidad * 100
+        data = [self.region, self.finca, cantidad, self.estado]
+
         data_list = [self.region, self.finca, self.cantidad, self.estado]
         management.delete_row('Cafe_ingreso', columns_ingreso, data_list)
-        management.delete_row('Cafe', columns, data_list)
+        management.delete_row('Cafe', columns, data)
 
     def __str__(self):
         return f"{self.region}, {self.finca}, {self.cantidad}, {self.estado}"

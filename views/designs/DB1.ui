@@ -4329,7 +4329,7 @@ font: 75 8pt &quot;Open Sans Semibold&quot;</string>
                       </property>
                       <item>
                        <property name="text">
-                        <string>Region</string>
+                        <string>Aroma</string>
                        </property>
                       </item>
                       <item>
@@ -4339,17 +4339,27 @@ font: 75 8pt &quot;Open Sans Semibold&quot;</string>
                       </item>
                       <item>
                        <property name="text">
-                        <string>Quintales</string>
+                        <string>Región</string>
                        </property>
                       </item>
                       <item>
                        <property name="text">
-                        <string>Estado</string>
+                        <string>Altura</string>
                        </property>
                       </item>
                       <item>
                        <property name="text">
-                        <string>Tipo</string>
+                        <string>Sabor</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>Color</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>Puntuación</string>
                        </property>
                       </item>
                      </widget>
