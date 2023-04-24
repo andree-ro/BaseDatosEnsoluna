@@ -81,145 +81,92 @@ class Manager:
     def auto_id(self, table_name, table_data):
         if not (self.is_empty(table_name)):
             self.connect()
-
             query = f"SELECT {table_data[0]} FROM {table_name} ORDER BY {table_data[0]} DESC;"
             self.cursor.execute(query)
-
             rows = self.cursor.fetchall()
-
             id = rows[0][0]
-
             self.close()
-
             return id + 1
-
         return 0
 
     def search_by_id(self, table_name, table_data, id_number):
         self.connect()
-
         query = f"SELECT * FROM {table_name} WHERE {table_data[0]} = {id_number}"
-
         self.cursor.execute(query)
-
         rows = self.cursor.fetchall()
-
         self.close()
-
         return rows[0]
 
     def get_id(self, table_name, table_data, data_list):
         self.connect()
-
         query = f"SELECT {table_data[0]} FROM {table_name} WHERE "
-
         for i, data in enumerate(table_data[1:]):
             value = data_list[i]
-
             if not (isinstance(value, numbers.Number)):
                 query += f"{data} = '{value}' AND " if i != (len(data_list) - 1) else f"{data} = '{value}';"
-
             else:
                 query += f"{data} = {value} AND " if i != (len(data_list) - 1) else f"{data} = {value};"
-
         self.cursor.execute(query)
-
         rows = self.cursor.fetchall()
-
         self.close()
-
         return rows[0][0]
 
     def get(self, table_name, table_data, values, data):
         self.connect()
-
         query = f"SELECT {table_data[0]} FROM {table_name} WHERE {data} = '{values}';"
-
         self.cursor.execute(query)
-
         rows = self.cursor.fetchall()
-
         self.close()
-
         return rows[0][0]
 
     def insert_into_table(self, table_name, table_data, data_list):
         try:
             self.get_id(table_name, table_data, data_list)
-
             raise Exception('Dato ya existente')
-
         except:
             id = self.auto_id(table_name, table_data)
-
             self.connect()
-
             input_data = f"{id}, "
-
             for i, value in enumerate(data_list):
                 if not (isinstance(value, numbers.Number)):
                     input_data += f"'{value}', " if i != (len(data_list) - 1) else f"'{value}'"
-
                 else:
                     input_data += f"{value}, " if i != (len(data_list) - 1) else f"{value}"
-
             # Execute a INSERT query
-
             query = f"INSERT INTO {table_name} VALUES ({input_data})"
-
             print(query)
-
             self.cursor.execute(query)
-
             self.cnx.commit()
-
             self.close()
             return self.print_table(table_name)
 
     def insert_into_table_NID(self, table_name, table_data, data_list):
         try:
             self.get_id(table_name, table_data, data_list)
-
             raise Exception('Dato ya existente')
-
         except:
-
             self.connect()
-
             input_data = f" "
-
             for i, value in enumerate(data_list):
                 if not (isinstance(value, numbers.Number)):
                     input_data += f"'{value}', " if i != (len(data_list) - 1) else f"'{value}'"
-
                 else:
                     input_data += f"{value}, " if i != (len(data_list) - 1) else f"{value}"
-
             # Execute a INSERT query
-
             query = f"INSERT INTO {table_name} VALUES ({input_data})"
-
             print(query)
-
             self.cursor.execute(query)
-
             self.cnx.commit()
-
             self.close()
             return self.print_table(table_name)
 
     def print_table(self, table_name):
         self.connect()
-
         # Execute a SELECT query
         query = f"SELECT * FROM {table_name};"
-
         self.cursor.execute(query)
-
         rows = self.cursor.fetchall()
-
         self.close()
-
         return rows
 
     def iniciar_ses(self, data):
@@ -249,8 +196,6 @@ class Manager:
         rows = self.cursor.fetchall()
         self.close()
         return rows[0][0]
-
-
 
     def __str__(self):
         return f"Usuario: {self.database_user}\nContrasenia: {self.database_password}" \

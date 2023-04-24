@@ -24,13 +24,10 @@ class Venta:
 
         if action == 'venta_cafe':
             self.venta_cafe()
-
         elif action == 'converse_coffee':
             pass
-
         elif action == 'update_coffee':
             self.cafe_update()
-
         elif action == 'delete_coffee':
             self.delete()
 

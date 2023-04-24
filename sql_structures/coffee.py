@@ -16,16 +16,12 @@ class Coffee:
 
     def management(self, action):
         self.validate()
-
         if action == 'buy_coffee':
             self.cafe_ingreso()
-
         elif action == 'converse_coffee':
             pass
-
         elif action == 'update_coffee':
             self.cafe_update()
-
         elif action == 'delete_coffee':
             self.delete()
 
@@ -37,7 +33,6 @@ class Coffee:
 
         management = Manager()
         data_list = [self.region, self.finca, self.cantidad, self.estado]
-
         libras = self.cantidad * 100
         lista = [self.region, self.finca, libras, self.estado]
 
@@ -54,21 +49,16 @@ class Coffee:
     def cafe_ingreso(self):
 
         management = Manager()
-
         data_list = [self.region, self.finca, self.cantidad, self.estado]
         management.insert_into_table('Cafe_ingreso', columns_ingreso, data_list)
-
         cantidad = self.cantidad * 100
         data = [self.region, self.finca, cantidad, self.estado]
         management.insert_into_table('Cafe', columns, data)
 
     def delete(self):
-
         management = Manager()
-
         cantidad = self.cantidad * 100
         data = [self.region, self.finca, cantidad, self.estado]
-
         data_list = [self.region, self.finca, self.cantidad, self.estado]
         management.delete_row('Cafe_ingreso', columns_ingreso, data_list)
         management.delete_row('Cafe', columns, data)

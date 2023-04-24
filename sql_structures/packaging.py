@@ -25,7 +25,6 @@ class Packaging:
 
     def management(self, action):
         self.validate()
-
         if action == 'buy_packaging':
             self.packaging_ingreso()
         elif action == 'update_packaging':

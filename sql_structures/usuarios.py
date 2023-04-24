@@ -1,9 +1,6 @@
 from .manager import Manager
 from encrypt import *
 
-
-
-
 table_name = 'usuarios'
 table_data = ['id', 'nombre', 'rol', 'contraseña', 'Permisos_id']
 
@@ -53,10 +50,7 @@ class SqlDataBase_usuarios:
 
 	def new_user(self):
 		self.validate()
-
 		data_list = [self.name, self.role, self.encrypted, self.permiso_id]
-
-
 		management.insert_into_table(table_name, table_data, data_list)
 
 	def set_column_name(self):
@@ -89,7 +83,6 @@ class SqlDataBase_usuarios:
 
 	def delete_user(self):
 		management.delete_id_row(table_name, table_data, self.id)
-
 
 	def __str__(self):
 		return f"name = {self.name}\npassword = {self.password}\nrole = {self.role}" \

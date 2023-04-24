@@ -17,13 +17,10 @@ class Catacion:
 
     def management(self, action):
         self.validate()
-
         if action == 'ing_catacion':
             self.catacion_ingreso()
-
         elif action == 'update_catacion':
             self.catacion_update()
-
         elif action == 'delete_catacion':
             self.delete()
 
@@ -32,19 +29,13 @@ class Catacion:
             raise Exception('Datos invalidos')
 
     def catacion_update(self):
-        print('adios')
-
         management = Manager()
-        print('adios')
         data_list = [self.aroma, self.finca, self.region, self.altura, self.sabor, self.color, self.puntuacion, 0]
-        print('adios')
         management.update_table('Catacion', columns_ingreso, data_list, self.columna, self.valor)
-        print('adios')
 
     def catacion_ingreso(self):
         try:
             management = Manager()
-
             data_list = [self.aroma, self.finca, self.region, self.altura, self.sabor, self.color, self.puntuacion, 0]
             management.insert_into_table('Catacion', columns_ingreso, data_list)
         except Exception as e:
@@ -52,8 +43,6 @@ class Catacion:
             print(e)
 
     def delete(self):
-
         management = Manager()
-
         data_list = [self.aroma, self.finca, self.region, self.altura, self.sabor, self.color, self.puntuacion, 0]
         management.delete_row('Catacion', columns_ingreso, data_list)
