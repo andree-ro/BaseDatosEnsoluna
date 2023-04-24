@@ -8,7 +8,6 @@ management = Manager()
 
 
 class SqlDataBase_mobiliario:
-
 	def __init__(self, maquina, ultimo_servicio, proximo_servicio, fecha_adquisicion, column = None, data = None, id = None):
 		self.maquina = maquina
 		self.ultimo_servicio = ultimo_servicio

@@ -50,7 +50,7 @@ class Venta:
         # 6 morado = Nuevo Oriente
         # 7 celeste = Fraijanes
         # 8 azul = atitlan
-        u_id = 1
+        u_id = 0
         libra = 'Libra'
 
         management = Manager()

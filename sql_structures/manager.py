@@ -44,57 +44,37 @@ class Manager:
 
     def is_empty(self, table_name):
         self.connect()
-
         query = f"SELECT COUNT(*) FROM {table_name};"
         self.cursor.execute(query)
-
         row = self.cursor.fetchall()
-
         self.close()
-
         return True if row[0][0] == 0 else False
 
     def delete_id_row(self, table_name, table_data, id):
         self.connect()
-
         query = f"DELETE FROM {table_name} WHERE ({table_data[0]} = {id});"
         self.cursor.execute(query)
-
         self.cnx.commit()
-
         self.close()
-
         return self.print_table(table_name)
 
     def delete_row(self, table_name, table_data, data_list):
         id = self.get_id(table_name, table_data, data_list)
-
         self.connect()
-
         query = f"DELETE FROM {table_name} WHERE ({table_data[0]} = {id});"
-
         self.cursor.execute(query)
-
         self.cnx.commit()
-
         self.close()
-
         return self.print_table(table_name)
 
     def update_table(self, table_name, table_data, data_list, column, data):
         id = self.get_id(table_name, table_data, data_list)
-
         self.connect()
-
         data = f"'{data}'" if not (isinstance(data, numbers.Number)) else f"{data}"
-
         # Execute a INSERT query
         query = f"UPDATE {table_name} SET {column} = {data} WHERE ({table_data[0]} = {id})"
-
         self.cursor.execute(query)
-
         self.cnx.commit()
-
         self.close()
         return self.print_table(table_name)
 

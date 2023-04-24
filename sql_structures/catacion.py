@@ -5,13 +5,13 @@ columns_ingreso = ['id', 'Aroma', 'Finca', 'Region', 'Altura', 'Sabor', 'Color',
 
 class Catacion:
     def __init__(self, aroma, finca, region, altura, sabor, color, puntuacion, columna = None, valor = None):
-        self.aroma: str = aroma
-        self.finca: str = finca
-        self.region: str = region
-        self.altura: str = altura
-        self.sabor: str = sabor
-        self.color: str = color
-        self.puntuacion: float = puntuacion
+        self.aroma = aroma
+        self.finca = finca
+        self.region = region
+        self.altura = altura
+        self.sabor = sabor
+        self.color = color
+        self.puntuacion = puntuacion
         self.columna = columna
         self.valor = valor
 
@@ -32,16 +32,20 @@ class Catacion:
             raise Exception('Datos invalidos')
 
     def catacion_update(self):
+        print('adios')
 
         management = Manager()
-        data_list = [self.aroma, self.finca, self.region, self.altura, self.sabor, self.color, self.puntuacion, 1]
+        print('adios')
+        data_list = [self.aroma, self.finca, self.region, self.altura, self.sabor, self.color, self.puntuacion, 0]
+        print('adios')
         management.update_table('Catacion', columns_ingreso, data_list, self.columna, self.valor)
+        print('adios')
 
     def catacion_ingreso(self):
         try:
             management = Manager()
 
-            data_list = [self.aroma, self.finca, self.region, self.altura, self.sabor, self.color, self.puntuacion, 1]
+            data_list = [self.aroma, self.finca, self.region, self.altura, self.sabor, self.color, self.puntuacion, 0]
             management.insert_into_table('Catacion', columns_ingreso, data_list)
         except Exception as e:
             'ERROR'
