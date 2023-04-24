@@ -8,8 +8,7 @@ management = Manager()
 
 
 class SqlDataBase_mobiliario:
-
-	def __init__(self, maquina, ultimo_servicio, proximo_servicio , fecha_adquisicion, column = None, data = None, id = None):
+	def __init__(self, maquina, ultimo_servicio, proximo_servicio, fecha_adquisicion, column = None, data = None, id = None):
 		self.maquina = maquina
 		self.ultimo_servicio = ultimo_servicio
 		self.proximo_servicio = proximo_servicio
@@ -17,12 +16,10 @@ class SqlDataBase_mobiliario:
 		self.column = column
 		self.data = data
 		self.id = id
-
 		self.data_list = [self.maquina, self.ultimo_servicio, self.proximo_servicio, self.fecha_adquisicion]
 
 	def management(self, action):
 		self.validate()
-
 		if action == 'add_mobiliario':
 			self.new_mobiliario()
 
@@ -32,9 +29,7 @@ class SqlDataBase_mobiliario:
 
 	def new_mobiliario(self):
 		# self.validate()
-
 		data_list = [self.maquina, self.ultimo_servicio, self.proximo_servicio, self.fecha_adquisicion]
-
 		management.insert_into_table(table_name, table_data, data_list)
 
 	def __str__(self):

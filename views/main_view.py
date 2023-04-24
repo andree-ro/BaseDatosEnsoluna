@@ -12,15 +12,29 @@ from datetime import datetime
 # usuarios = sql_structures.SqlDataBase_usuarios()
 
 # TODO
-# - Agregar mensajes de confirmacion
+# Falta triggers en ventas (Pablo)
+# Componer bloqueo de accesos interfaz (Juan Diego)
+# Agregar al calendario mes y año (Juan Diego)
+
+
+# Limpiar campos de ingreso
+# Agregar mensajes de confirmacion
+# Componer ventas(Agregar nit, nombre e incrementar numero de factura y cotizacion)
+
+# Obtener fechas y no string (Javier)
+# Ordenar el codigo
+# Manual de usuario
+# Explicarnos el codigo
+
 
 class VentanaPrincipal(QMainWindow):
     def __init__(self):
         super(VentanaPrincipal, self).__init__()
         loadUi('views/designs/DB1.ui', self)
         self.productos = []
+        self.total = 0
         self.frame_menu.hide()
-        # self.btn_menu.hide()
+        self.btn_menu.hide()
         self.btn_menu_2.hide()
         self.btn_menu_3.hide()
         self.btn_menu_5.hide()
@@ -111,6 +125,7 @@ class VentanaPrincipal(QMainWindow):
 
         # GENERAR FACTURA
         self.realizado_facturacion.clicked.connect(self.realizarFactura)
+        #self.realizado_facturacion.clicked.connect(self.nueva_venta)
 
         # AGREGAR FACTURA AL ARRAY
         self.agregarFactura.clicked.connect(self.agregarFacturaUno)
@@ -119,19 +134,20 @@ class VentanaPrincipal(QMainWindow):
         self.agregarmobiliario.clicked.connect(self.add_mobiliario)
         self.cargar_mobiliario.clicked.connect(self.carga_mobiliario)
 
+        # Detalle venta
+        self.cargar_usuarios_2.clicked.connect(self.carga_venta)
+
     def add_mobiliario(self):
         date = str(self.calendar.selectedDate())
         date_split = date.split("(")
         Str = date_split[1]
         lenght = len(date_split[1])
         calendario = Str[:lenght - 1]
-
         date = str(self.ultserv.date())
         date_split = date.split("(")
         Str = date_split[1]
         lenght = len(date_split[1])
         ult = Str[:lenght - 1]
-
         date = str(self.proxser.date())
         date_split = date.split("(")
         Str = date_split[1]
@@ -142,7 +158,6 @@ class VentanaPrincipal(QMainWindow):
                                            ult,
                                            prox,
                                            calendario)
-
             mobiliario.management('add_mobiliario')
         except Exception as e:
             print(e)
@@ -151,9 +166,7 @@ class VentanaPrincipal(QMainWindow):
         usuarios = sql_structures.SqlDataBase_usuarios(self.info_usuario.text(),
                                                        self.info_contrasena.text(),
                                                        self.info_rol.currentText())
-
         usuarios.new_user()
-
         self.info_usuario.clear()
         self.info_contrasena.clear()
 
@@ -161,19 +174,17 @@ class VentanaPrincipal(QMainWindow):
         usuarios = sql_structures.SqlDataBase_usuarios(self.info_usuario_a.text(),
                                                        self.info_contrasena_a.text(),
                                                        self.info_rol_a.currentText(),
-                                                       self.info_rol_a_columna.currentText(),
-                                                       self.info_usuario_a_valor.text())
-
+                                                       self.combo_edit.currentText(),
+                                                       self.Info_edit.text())
         usuarios.update_user()
-
         self.info_usuario_a.clear()
         self.info_contrasena_a.clear()
-        self.info_usuario_a_valor.clear()
+        self.Info_edit.clear()
 
     def delete_user(self):
         usuarios = sql_structures.SqlDataBase_usuarios('', '', '', '', '', self.info_usuario_e.text())
-
         usuarios.delete_user()
+        self.info_usuario_e.clear()
 
     def new_catacion(self):
         catacion = sql_structures.Catacion(self.aroma_catacion.text(),
@@ -183,31 +194,51 @@ class VentanaPrincipal(QMainWindow):
                                            self.sabor_catacion.text(),
                                            self.color_catacion.text(),
                                            self.puntuacion_catacion.text())
-
         catacion.management('ing_catacion')
+        self.aroma_catacion.clear()
+        self.finca_catacion.clear()
+        self.altura_catacion.clear()
+        self.sabor_catacion.clear()
+        self.color_catacion.clear()
+        self.puntuacion_catacion.clear()
 
     def update_catacion(self):
-        catacion = sql_structures.Catacion(self.aroma_catacion.text(),
-                                           self.finca_catacion.text(),
-                                           self.region_catacion.currentText(),
-                                           self.altura_catacion.text(),
-                                           self.sabor_catacion.text(),
-                                           self.color_catacion.text(),
-                                           self.puntuacion_catacion.text(),
-                                           self.columnaAcText_2.currentText(),
-                                           self.valorAcText_2.text())
-        catacion.catacion_update()
+        try:
+            catacion = sql_structures.Catacion(self.aroma_catacion_2.text(),
+                                               self.finca_catacion_2.text(),
+                                               self.region_catacion_2.currentText(),
+                                               self.altura_catacion_2.text(),
+                                               self.sabor_catacion_2.text(),
+                                               self.color_catacion_2.text(),
+                                               self.puntuacion_catacion_2.text(),
+                                               self.columnaAcText_2.currentText(),
+                                               self.valorAcText_2.text())
+            catacion.management('update_catacion')
+            self.aroma_catacion_2.clear()
+            self.finca_catacion_2.clear()
+            self.altura_catacion_2.clear()
+            self.sabor_catacion_2.clear()
+            self.color_catacion_2.clear()
+            self.puntuacion_catacion_2.clear()
+            self.valorAcText_2.clear()
+        except Exception as e:
+            print(e)
 
     def delete_catacion(self):
-        catacion = sql_structures.Catacion(self.aroma_catacion.text(),
-                                           self.finca_catacion.text(),
-                                           self.region_catacion.currentText(),
-                                           self.altura_catacion.text(),
-                                           self.sabor_catacion.text(),
-                                           self.color_catacion.text(),
-                                           self.puntuacion_catacion.text())
-
-        catacion.delete()
+        catacion = sql_structures.Catacion(self.aroma_catacion_3.text(),
+                                           self.finca_catacion_3.text(),
+                                           self.region_catacion_3.currentText(),
+                                           self.altura_catacion_3.text(),
+                                           self.sabor_catacion_3.text(),
+                                           self.color_catacion_3.text(),
+                                           self.puntuacion_catacion_3.text())
+        catacion.management('delete_catacion')
+        self.aroma_catacion_3.clear()
+        self.finca_catacion_3.clear()
+        self.altura_catacion_3.clear()
+        self.sabor_catacion_3.clear()
+        self.color_catacion_3.clear()
+        self.puntuacion_catacion_3.clear()
 
     # METODOS/FUNCIONES CLASE COFFEE
     def buy_coffee(self):
@@ -216,9 +247,7 @@ class VentanaPrincipal(QMainWindow):
                                            self.fincaText.text(),
                                            int(self.cantidadText.text()),
                                            self.estadoCombobx.currentText())
-
             coffee.management('buy_coffee')
-
             self.fincaText.clear()
             self.cantidadText.clear()
 
@@ -233,13 +262,10 @@ class VentanaPrincipal(QMainWindow):
                                            self.estadoAcText.currentText(),
                                            self.columnaAcText.currentText(),
                                            self.valorAcText.text())
-
             coffee.management('update_coffee')
-
-            self.fincaText.clear()
-            self.cantidadText.clear()
+            self.fincaAcText.clear()
+            self.cantidadAcText.clear()
             self.valorAcText.clear()
-
         except Exception as e:
             print(e)
 
@@ -249,12 +275,9 @@ class VentanaPrincipal(QMainWindow):
                                            self.fincaElimText.text(),
                                            int(self.cantidadElimText.text()),
                                            self.estadoElimComboBx.currentText())
-
             coffee.management('delete_coffee')
-
-            self.fincaText.clear()
-            self.cantidadText.clear()
-
+            self.fincaElimText.clear()
+            self.cantidadElimText.clear()
         except Exception as e:
             print(e)
 
@@ -264,13 +287,10 @@ class VentanaPrincipal(QMainWindow):
             coffee = sql_structures.Packaging(self.stickerText.text(),
                                               self.colorBolsaText.text(),
                                               self.tamanioText.text())
-
             coffee.management('buy_packaging')
-
-            self.colorBolsaText.clear()
             self.stickerText.clear()
+            self.colorBolsaText.clear()
             self.tamanioText.clear()
-
         except Exception as e:
             print(e)
 
@@ -282,14 +302,11 @@ class VentanaPrincipal(QMainWindow):
                 self.tamanioAcText.text(),
                 self.columnaAcEmCombobx.currentText(),
                 self.valorAcEmText.text())
-
             coffee.management('update_packaging')
-
-            self.colorAcText.clear()
             self.stickerAcText.clear()
+            self.colorAcText.clear()
             self.tamanioAcText.clear()
             self.valorAcEmText.clear()
-
         except Exception as e:
             print(e)
 
@@ -298,13 +315,10 @@ class VentanaPrincipal(QMainWindow):
             coffee = sql_structures.Packaging(self.stickerElimText.text(),
                                               self.colorElimText.text(),
                                               self.tamanioElimText.text())
-
             coffee.management('delete_packaging')
-
             self.stickerElimText.clear()
             self.colorElimText.clear()
             self.tamanioElimText.clear()
-
         except Exception as e:
             print(e)
 
@@ -314,7 +328,6 @@ class VentanaPrincipal(QMainWindow):
             dato = mana.print_table('Cafe')
             dato2 = mana.print_table('Empacado')
             self.tableWidget.setRowCount(len(dato))
-
             for i in range(len(dato)):
                 self.tableWidget.setItem(i, 0, QTableWidgetItem(str(dato[i - 1][1])))
                 self.tableWidget.setItem(i, 1, QTableWidgetItem(str(dato[i - 1][2])))
@@ -334,7 +347,6 @@ class VentanaPrincipal(QMainWindow):
             mana = sql_structures.Manager()
             dato = mana.print_table('Catacion')
             self.tableWidget_5.setRowCount(len(dato))
-
             for i in range(len(dato)):
                 self.tableWidget_5.setItem(i, 0, QTableWidgetItem(str(dato[i - 1][1])))
                 self.tableWidget_5.setItem(i, 1, QTableWidgetItem(str(dato[i - 1][2])))
@@ -343,7 +355,6 @@ class VentanaPrincipal(QMainWindow):
                 self.tableWidget_5.setItem(i, 4, QTableWidgetItem(str(dato[i - 1][5])))
                 self.tableWidget_5.setItem(i, 5, QTableWidgetItem(str(dato[i - 1][6])))
                 self.tableWidget_5.setItem(i, 6, QTableWidgetItem(str(dato[i - 1][7])))
-
         except Exception as e:
             print(e)
 
@@ -352,12 +363,10 @@ class VentanaPrincipal(QMainWindow):
             mana = sql_structures.Manager()
             dato = mana.print_table('usuarios')
             self.tableWidget_usuarios.setRowCount(len(dato))
-
             for i in range(len(dato)):
                 self.tableWidget_usuarios.setItem(i, 0, QTableWidgetItem(str(dato[i - 1][1])))
                 self.tableWidget_usuarios.setItem(i, 1, QTableWidgetItem(str(dato[i - 1][2])))
                 self.tableWidget_usuarios.setItem(i, 2, QTableWidgetItem(str(dato[i - 1][3])))
-
         except Exception as e:
             print(e)
 
@@ -366,13 +375,29 @@ class VentanaPrincipal(QMainWindow):
             mana = sql_structures.Manager()
             dato = mana.print_table('mobiliario')
             self.tableWidget_6.setRowCount(len(dato))
-
             for i in range(len(dato)):
                 self.tableWidget_6.setItem(i, 0, QTableWidgetItem(str(dato[i - 1][1])))
                 self.tableWidget_6.setItem(i, 1, QTableWidgetItem(str(dato[i - 1][2])))
                 self.tableWidget_6.setItem(i, 2, QTableWidgetItem(str(dato[i - 1][3])))
                 self.tableWidget_6.setItem(i, 3, QTableWidgetItem(str(dato[i - 1][4])))
+        except Exception as e:
+            print(e)
 
+    def carga_venta(self):
+        try:
+            mana = sql_structures.Manager()
+            dato = mana.print_table('Venta')
+            dato1 = mana.print_table('Venta_has_Cafe')
+            self.tableWidget_usuarios_2.setRowCount(len(dato))
+            self.tableWidget_usuarios_2.setRowCount(len(dato1))
+            for i in range(len(dato)):
+                self.tableWidget_usuarios_2.setItem(i, 0, QTableWidgetItem(str(dato[i][0])))
+                self.tableWidget_usuarios_2.setItem(i, 1, QTableWidgetItem(str(dato[i][2])))
+                self.tableWidget_usuarios_2.setItem(i, 2, QTableWidgetItem(str(dato[i][1])))
+                self.tableWidget_usuarios_2.setItem(i, 5, QTableWidgetItem(str(dato[i][3])))
+            for i in range(len(dato1)):
+                self.tableWidget_usuarios_2.setItem(i, 3, QTableWidgetItem(str(dato1[i][3])))
+                self.tableWidget_usuarios_2.setItem(i, 4, QTableWidgetItem(str(dato1[i][4])))
         except Exception as e:
             print(e)
 
@@ -398,7 +423,6 @@ class VentanaPrincipal(QMainWindow):
         a = ""
         offset = 8
         encrypted = ""
-
         usuario_comprobacion = self.lineEdit_usuarios.text()
         usuario = sql_structures.Manager()
         rol = usuario.iniciar_ses(usuario_comprobacion)
@@ -408,22 +432,21 @@ class VentanaPrincipal(QMainWindow):
         if contrasena_comprobacion == c:
             t = True
             if rol == 1:
-                self.menu_show(t)
-                self.btn_menu.show()
+                self.menu_show()
             elif rol == 2:
-                self.menu_show(t)
+                self.menu_show()
                 self.btn_inventario.hide()
                 self.btn_mobiliario.hide()
                 self.btn_catacion.hide()
                 self.btn_usuario.hide()
             elif rol == 3:
-                self.menu_show(t)
+                self.menu_show()
                 self.btn_ventas.hide()
                 self.btn_mobiliario.hide()
                 self.btn_catacion.hide()
                 self.btn_usuario.hide()
             elif rol == 4:
-                self.menu_show(t)
+                self.menu_show()
                 self.btn_inventario.hide()
                 self.btn_mobiliario.hide()
                 self.btn_ventas.hide()
@@ -433,14 +456,10 @@ class VentanaPrincipal(QMainWindow):
         else:
             QMessageBox.about(self, 'Aviso', 'Contraseña incorrecta!')
 
-    def menu_show(self, t):
+    def menu_show(self):
         self.btn_menu.hide()
         self.btn_menu_2.show()
-        if t == True:
-            self.frame_menu.show()
-        else:
-            pass
-            # self.frame_menu.hide()
+        self.frame_menu.show()
 
     def menu_hide(self):
         self.btn_menu.show()
@@ -528,12 +547,10 @@ class VentanaPrincipal(QMainWindow):
     def realizarCotizacion(self):
         now = datetime.now()
         formato = now.strftime('%d - %m - %Y')
-
         # Crear un nuevo documento PDF
         pdf = canvas.Canvas("contizacion.pdf")
         # Configurar el estilo del texto
         pdf.setFont("Helvetica", 12)
-
         # Agregar los datos del cliente
         cliente_nombre = "Juan Perez"
         cliente_direccion = "Calle 123"
@@ -549,7 +566,6 @@ class VentanaPrincipal(QMainWindow):
         pdf.drawString(225, 620, "CANTIDAD UNIDAD")
         pdf.drawString(375, 620, "ESTADO")
         pdf.drawString(450, 620, "PRECIO UNIDAD")
-
         for producto in self.productos:
             pdf.drawString(50, y, producto["region"])
             pdf.drawString(150, y, str(producto["finca"]))
@@ -557,7 +573,6 @@ class VentanaPrincipal(QMainWindow):
             pdf.drawString(375, y, str(producto["estado"]))
             pdf.drawString(450, y, str(producto["precioUnidad"]))
             y -= 20
-
         # Calcular el total de la factura
         total = 0
         print(self.productos)
@@ -571,7 +586,6 @@ class VentanaPrincipal(QMainWindow):
         # Guardar el documento PDF
         pdf.save()
         webbrowser.open_new("contizacion.pdf")
-
         # FACTURA
         # METODO AGREGAR COTIZACION BOTON
 
@@ -586,6 +600,42 @@ class VentanaPrincipal(QMainWindow):
                                "cantidadUnidad": cantidadUnidad,
                                "estado": estado,
                                "precioUnidad": precioUnidad})
+        try:
+            region = self.comboBox.currentText()
+            finca = self.lineEdit_3.text()
+            data = ['id', 'Estampa', 'Color', 'Tamaño']
+            color = 'Color'
+            manager = sql_structures.Manager()
+            print(region)
+            if region == 'Huehuetenango':
+                self.idEmpaque = manager.get('Empacado', data, 'Turquesa', color)
+            elif region == 'San Marcos':
+                self.idEmpaque = manager.get('Empacado', data, 'Rojo', color)
+            elif region == 'Coban':
+                self.idEmpaque = manager.get('Empacado', data, 'Verde', color)
+            elif region == 'Acatenango':
+                self.idEmpaque = manager.get('Empacado', data, 'Naranja', color)
+            elif region == 'Antigua':
+                self.idEmpaque = manager.get('Empacado', data, 'Amarillo', color)
+            elif region == 'Nuevo Oriente':
+                self.idEmpaque = manager.get('Empacado', data, 'Morado', color)
+            elif region == 'Fraijanes':
+                self.idEmpaque = manager.get('Empacado', data, 'Celeste', color)
+            elif region == 'Atitlan':
+                self.idEmpaque = manager.get('Empacado', data, 'Azul', color)
+            columnsCafe = ['id', 'Region', 'Finca', 'Libras', 'Estado']
+            fin = 'Finca'
+            self.idCafe = manager.get('Cafe', columnsCafe, finca, fin)
+            total = 0
+            total = int(self.lineEdit_4.text()) * int(self.lineEdit_6.text())
+            venta_d = sql_structures.Venta(self.comboBox.currentText(),
+                                         self.lineEdit_3.text(),
+                                         int(self.lineEdit_4.text()),
+                                         total, self.lineEdit_6.text(), self.idEmpaque, self.idCafe)
+            venta_d.management('venta_cafe')
+        except Exception as e:
+            print(e)
+
         # TODO
         # lIMPIAR TEXT
 
@@ -623,15 +673,16 @@ class VentanaPrincipal(QMainWindow):
             y -= 20
 
         # Calcular el total de la factura
-        total = 0
-        print(self.productos)
+
+
         for producto in self.productos:
             total = float(producto["precioUnidad"]) * int(producto["cantidadUnidad"])
-            total = + total
-        print(total)
+            self.total = total + self.total
         # Agregar el total a la factura
-        pdf.drawString(400, y - 20, "Total: " + str(total))
-        print("error")
+        print('Hola')
+        pdf.drawString(400, y - 20, "Total: " + str(self.total))
         # Guardar el documento PDF
+        print('Hola')
         pdf.save()
+        print('Hola')
         webbrowser.open_new("factura.pdf")

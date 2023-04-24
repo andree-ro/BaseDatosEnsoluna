@@ -1,9 +1,6 @@
 from .manager import Manager
 from encrypt import *
 
-
-
-
 table_name = 'usuarios'
 table_data = ['id', 'nombre', 'rol', 'contraseña', 'Permisos_id']
 
@@ -24,14 +21,13 @@ class SqlDataBase_usuarios:
 		self.name = name
 		self.password = password
 		self.role = role
-
 		self.column = column
 		self.data = data
 		self.id = id
-
+		self.encrypted = encrip.encrypt(offset, self.password, key)
 		self.permiso_id = self.set_permisos() if self.role != '' else ''
 
-		self.data_list = [self.name, self.role, self.password, self.permiso_id]
+		self.data_list = [self.name, self.role, self.encrypted, self.permiso_id]
 
 	def set_permisos(self):
 		if self.role == 'Administrador':
@@ -54,17 +50,7 @@ class SqlDataBase_usuarios:
 
 	def new_user(self):
 		self.validate()
-
-		# self.set_permisos()
-
-		# falta utilizar libreria para cifrar
-		password = self.password
-		print(f"contra: {password}")
-		encrypted = encrip.encrypt(offset, password, key)
-		print(f"encriptao: {encrypted}")
-		data_list = [self.name, self.role, encrypted, self.permiso_id]
-
-
+		data_list = [self.name, self.role, self.encrypted, self.permiso_id]
 		management.insert_into_table(table_name, table_data, data_list)
 
 	def set_column_name(self):
@@ -75,38 +61,28 @@ class SqlDataBase_usuarios:
 			self.column = 'contraseña'
 
 	def update_user(self):
-		self.validate()
-
 		self.set_permisos()
-
-		if self.column != 'Rol':
-			self.set_column_name()
-
+		if self.column == 'nombre':
+			management.update_table(table_name, table_data, self.data_list, self.column, self.data)
+		elif self.column == 'contraseña':
+			encry = encrip.encrypt(offset, self.data, key)
+			management.update_table(table_name, table_data, self.data_list, self.column, encry)
 		else:
 			self.column = 'Permisos_id'
-
-			tmp = self.data
-			tmp2 = self.role
-
+			aux = self.data
+			aux2 = self.role
 			self.role = self.data
-
 			self.data = self.set_permisos()
-
-			self.role = tmp2
-
+			self.role = aux2
+			print(self.data, self.role)
 			management.update_table(table_name, table_data, self.data_list, self.column, self.data)
-
 			self.column = 'rol'
-
 			self.data_list[3] = self.data
-
-			self.data = tmp
-
-		management.update_table(table_name, table_data, self.data_list, self.column, self.data)
+			self.data = aux
+			management.update_table(table_name, table_data, self.data_list, self.column, self.data)
 
 	def delete_user(self):
 		management.delete_id_row(table_name, table_data, self.id)
-
 
 	def __str__(self):
 		return f"name = {self.name}\npassword = {self.password}\nrole = {self.role}" \
