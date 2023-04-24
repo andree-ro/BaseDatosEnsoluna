@@ -433,24 +433,20 @@ class VentanaPrincipal(QMainWindow):
             t = True
             if rol == 1:
                 self.menu_show()
-                self.btn_menu.show()
             elif rol == 2:
                 self.menu_show()
-                self.btn_menu.show()
                 self.btn_inventario.hide()
                 self.btn_mobiliario.hide()
                 self.btn_catacion.hide()
                 self.btn_usuario.hide()
             elif rol == 3:
                 self.menu_show()
-                self.btn_menu.show()
                 self.btn_ventas.hide()
                 self.btn_mobiliario.hide()
                 self.btn_catacion.hide()
                 self.btn_usuario.hide()
             elif rol == 4:
                 self.menu_show()
-                self.btn_menu.show()
                 self.btn_inventario.hide()
                 self.btn_mobiliario.hide()
                 self.btn_ventas.hide()
