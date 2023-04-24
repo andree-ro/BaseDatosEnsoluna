@@ -34,7 +34,7 @@ class VentanaPrincipal(QMainWindow):
         self.productos = []
         self.total = 0
         self.frame_menu.hide()
-        # self.btn_menu.hide()
+        self.btn_menu.hide()
         self.btn_menu_2.hide()
         self.btn_menu_3.hide()
         self.btn_menu_5.hide()
@@ -432,22 +432,25 @@ class VentanaPrincipal(QMainWindow):
         if contrasena_comprobacion == c:
             t = True
             if rol == 1:
-                self.menu_show(t)
+                self.menu_show()
                 self.btn_menu.show()
             elif rol == 2:
-                self.menu_show(t)
+                self.menu_show()
+                self.btn_menu.show()
                 self.btn_inventario.hide()
                 self.btn_mobiliario.hide()
                 self.btn_catacion.hide()
                 self.btn_usuario.hide()
             elif rol == 3:
-                self.menu_show(t)
+                self.menu_show()
+                self.btn_menu.show()
                 self.btn_ventas.hide()
                 self.btn_mobiliario.hide()
                 self.btn_catacion.hide()
                 self.btn_usuario.hide()
             elif rol == 4:
-                self.menu_show(t)
+                self.menu_show()
+                self.btn_menu.show()
                 self.btn_inventario.hide()
                 self.btn_mobiliario.hide()
                 self.btn_ventas.hide()
@@ -457,14 +460,10 @@ class VentanaPrincipal(QMainWindow):
         else:
             QMessageBox.about(self, 'Aviso', 'Contraseña incorrecta!')
 
-    def menu_show(self, t):
+    def menu_show(self):
         self.btn_menu.hide()
         self.btn_menu_2.show()
-        if t == True:
-            self.frame_menu.show()
-        else:
-            pass
-            # self.frame_menu.hide()
+        self.frame_menu.show()
 
     def menu_hide(self):
         self.btn_menu.show()
