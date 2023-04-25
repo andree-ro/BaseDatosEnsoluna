@@ -47,7 +47,6 @@ class Coffee:
             management.update_table('Cafe', columns, lista, self.columna, self.valor)
 
     def cafe_ingreso(self):
-
         management = Manager()
         data_list = [self.region, self.finca, self.cantidad, self.estado]
         management.insert_into_table('Cafe_ingreso', columns_ingreso, data_list)

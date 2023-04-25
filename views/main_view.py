@@ -12,8 +12,6 @@ from datetime import datetime
 # usuarios = sql_structures.SqlDataBase_usuarios()
 
 # TODO
-# Falta triggers en ventas (Pablo)
-# Componer bloqueo de accesos interfaz (Juan Diego)
 # Agregar al calendario mes y año (Juan Diego)
 
 
@@ -31,6 +29,12 @@ class VentanaPrincipal(QMainWindow):
     def __init__(self):
         super(VentanaPrincipal, self).__init__()
         loadUi('views/designs/DB1.ui', self)
+
+        # DENME CHANCE!!!
+
+        # ATENCION A CLICK EN TABLA
+        self.tableWidget_usuarios.cellClicked.connect(self.pirulin)
+
         self.productos = []
         self.total = 0
         self.frame_menu.hide()
@@ -136,6 +140,13 @@ class VentanaPrincipal(QMainWindow):
 
         # Detalle venta
         self.cargar_usuarios_2.clicked.connect(self.carga_venta)
+
+    def pirulin(self, row, column):
+        if column == 1:
+            print('HOLA MUNDO!')
+
+        else:
+            print('OTRA COSA!')
 
     def add_mobiliario(self):
         date = str(self.calendar.selectedDate())
@@ -606,7 +617,7 @@ class VentanaPrincipal(QMainWindow):
             data = ['id', 'Estampa', 'Color', 'Tamaño']
             color = 'Color'
             manager = sql_structures.Manager()
-            print(region)
+            # print(region)
             if region == 'Huehuetenango':
                 self.idEmpaque = manager.get('Empacado', data, 'Turquesa', color)
             elif region == 'San Marcos':
@@ -623,9 +634,12 @@ class VentanaPrincipal(QMainWindow):
                 self.idEmpaque = manager.get('Empacado', data, 'Celeste', color)
             elif region == 'Atitlan':
                 self.idEmpaque = manager.get('Empacado', data, 'Azul', color)
+            print('hola1')
             columnsCafe = ['id', 'Region', 'Finca', 'Libras', 'Estado']
             fin = 'Finca'
+            print(finca)
             self.idCafe = manager.get('Cafe', columnsCafe, finca, fin)
+            print('hola3')
             total = 0
             total = int(self.lineEdit_4.text()) * int(self.lineEdit_6.text())
             venta_d = sql_structures.Venta(self.comboBox.currentText(),
@@ -679,10 +693,10 @@ class VentanaPrincipal(QMainWindow):
             total = float(producto["precioUnidad"]) * int(producto["cantidadUnidad"])
             self.total = total + self.total
         # Agregar el total a la factura
-        print('Hola')
+        # print('Hola')
         pdf.drawString(400, y - 20, "Total: " + str(self.total))
         # Guardar el documento PDF
-        print('Hola')
+        # print('Hola')
         pdf.save()
-        print('Hola')
+        # print('Hola')
         webbrowser.open_new("factura.pdf")

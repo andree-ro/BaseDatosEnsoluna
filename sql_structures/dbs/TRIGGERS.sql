@@ -3,10 +3,10 @@ DELIMITER //
 -- cuando se hace una venta, reducir existencias
 DROP TRIGGER IF EXISTS reducir_existencias_inventario//
 
-CREATE TRIGGER reducir_existencias_inventario BEFORE INSERT ON Venta FOR EACH ROW
+CREATE TRIGGER reducir_existencias_inventario BEFORE INSERT ON Venta_has_Cafe FOR EACH ROW
 BEGIN
-	UPDATE Cafe SET Libras = Libras - (SELECT cantidad FROM Venta_has_Cafe WHERE Venta_idVenta = NEW.id)
-    WHERE id = (SELECT Cafe_idCafe FROM Venta_has_Cafe WHERE Venta_idVenta = NEW.id);
+	UPDATE Cafe SET Libras = Libras - NEW.cantidad
+    WHERE id = NEW.Cafe_idCafe;
 
 END//
 

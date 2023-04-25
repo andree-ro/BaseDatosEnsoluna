@@ -5,9 +5,9 @@ import numbers
 class Manager:
     def __init__(self):
         self.database_user = 'root'
-        #self.database_password = 'I.gt.MPW.2023.U'
+        self.database_password = 'I.gt.MPW.2023.U'
         # self.database_password = 'andree2332'
-        self.database_password = 'Marco.andres23'
+        # self.database_password = 'Marco.andres23'
         self.database_host = '127.0.0.1'
         self.database_database = 'mydb'
 
@@ -67,6 +67,16 @@ class Manager:
         self.close()
         return self.print_table(table_name)
 
+    def update_table_with_id(self, table_name, table_data, column, data, id):
+        self.connect()
+        data = f"'{data}'" if not (isinstance(data, numbers.Number)) else f"{data}"
+        # Execute a INSERT query
+        query = f"UPDATE {table_name} SET {column} = {data} WHERE ({table_data[0]} = {id})"
+        self.cursor.execute(query)
+        self.cnx.commit()
+        self.close()
+        return self.print_table(table_name)
+
     def update_table(self, table_name, table_data, data_list, column, data):
         id = self.get_id(table_name, table_data, data_list)
         self.connect()
@@ -114,6 +124,7 @@ class Manager:
     def get(self, table_name, table_data, values, data):
         self.connect()
         query = f"SELECT {table_data[0]} FROM {table_name} WHERE {data} = '{values}';"
+        print(query)
         self.cursor.execute(query)
         rows = self.cursor.fetchall()
         self.close()

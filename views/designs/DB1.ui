@@ -1612,6 +1612,12 @@ font: 75 10pt &quot;Open Sans Semibold&quot;</string>
                       <property name="orientation">
                        <enum>Qt::Horizontal</enum>
                       </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>0</width>
+                        <height>0</height>
+                       </size>
+                      </property>
                      </spacer>
                     </item>
                     <item>
