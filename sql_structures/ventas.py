@@ -35,9 +35,6 @@ class Venta:
         if self.region == '--Seleccionar--' and self.finca == '' and self.cantidad < 0 and self.estado == '--Seleccionar--':
             raise Exception('Datos invalidos')
 
-    def update_inventario(self):
-        pass
-
     def venta_cafe(self):
         # 1 rojo = San Marcos
         # 2 verde = Coban

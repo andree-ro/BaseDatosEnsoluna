@@ -6,16 +6,17 @@ columns = ['id', 'Region', 'Finca', 'Libras', 'Estado']
 
 
 class Coffee:
-    def __init__(self, region, finca, cantidad, estado, columna = None, valor = None):
+    def __init__(self, region, finca, cantidad, estado, columna=None, valor=None, id=None):
         self.region: str = region
         self.finca: str = finca
         self.cantidad: int = cantidad
         self.estado: str = estado
         self.columna = columna
         self.valor = valor
+        self.id = id
 
     def management(self, action):
-        self.validate()
+        # self.validate()
         if action == 'buy_coffee':
             self.cafe_ingreso()
         elif action == 'converse_coffee':
@@ -30,21 +31,16 @@ class Coffee:
             raise Exception('Datos invalidos')
 
     def cafe_update(self):
-
         management = Manager()
-        data_list = [self.region, self.finca, self.cantidad, self.estado]
-        libras = self.cantidad * 100
-        lista = [self.region, self.finca, libras, self.estado]
-
         if self.columna == 'Quintales':
             data = int(self.valor) * 100
             columna = 'Libras'
             print(data, columna)
-            management.update_table('Cafe_ingreso',  columns_ingreso, data_list, self.columna, self.valor)
-            management.update_table('Cafe', columns, lista, columna, data)
+            management.update_table_with_id('Cafe_ingreso', columns_ingreso, self.columna, self.valor, self.id)
+            management.update_table_with_id('Cafe', columns, columna, data, self.id)
         else:
-            management.update_table('Cafe_ingreso', columns_ingreso, data_list, self.columna, self.valor)
-            management.update_table('Cafe', columns, lista, self.columna, self.valor)
+            management.update_table_with_id('Cafe_ingreso', columns_ingreso, self.columna, self.valor, self.id)
+            management.update_table_with_id('Cafe', columns, self.columna, self.valor, self.id)
 
     def cafe_ingreso(self):
         management = Manager()
@@ -56,11 +52,11 @@ class Coffee:
 
     def delete(self):
         management = Manager()
-        cantidad = self.cantidad * 100
-        data = [self.region, self.finca, cantidad, self.estado]
-        data_list = [self.region, self.finca, self.cantidad, self.estado]
-        management.delete_row('Cafe_ingreso', columns_ingreso, data_list)
-        management.delete_row('Cafe', columns, data)
+        # cantidad = self.cantidad * 100
+        # data = [self.region, self.finca, cantidad, self.estado]
+        # data_list = [self.region, self.finca, self.cantidad, self.estado]
+        management.delete_id_row('Cafe_ingreso', columns_ingreso, self.id)
+        management.delete_id_row('Cafe', columns, self.id)
 
     def __str__(self):
         return f"{self.region}, {self.finca}, {self.cantidad}, {self.estado}"

@@ -4,7 +4,7 @@ columns_ingreso = ['id', 'Aroma', 'Finca', 'Region', 'Altura', 'Sabor', 'Color',
 
 
 class Catacion:
-    def __init__(self, aroma, finca, region, altura, sabor, color, puntuacion, columna = None, valor = None):
+    def __init__(self, aroma, finca, region, altura, sabor, color, puntuacion, columna = None, valor = None, id = None):
         self.aroma = aroma
         self.finca = finca
         self.region = region
@@ -14,9 +14,10 @@ class Catacion:
         self.puntuacion = puntuacion
         self.columna = columna
         self.valor = valor
+        self.id = id
 
     def management(self, action):
-        self.validate()
+        # self.validate()
         if action == 'ing_catacion':
             self.catacion_ingreso()
         elif action == 'update_catacion':
@@ -30,8 +31,7 @@ class Catacion:
 
     def catacion_update(self):
         management = Manager()
-        data_list = [self.aroma, self.finca, self.region, self.altura, self.sabor, self.color, self.puntuacion, 0]
-        management.update_table('Catacion', columns_ingreso, data_list, self.columna, self.valor)
+        management.update_table_with_id('Catacion', columns_ingreso, self.columna, self.valor, self.id)
 
     def catacion_ingreso(self):
         try:

@@ -13,9 +13,6 @@ from datetime import datetime
 
 # TODO
 # Agregar al calendario mes y año (Juan Diego)
-
-
-# Limpiar campos de ingreso
 # Agregar mensajes de confirmacion
 # Componer ventas(Agregar nit, nombre e incrementar numero de factura y cotizacion)
 
@@ -30,10 +27,12 @@ class VentanaPrincipal(QMainWindow):
         super(VentanaPrincipal, self).__init__()
         loadUi('views/designs/DB1.ui', self)
 
-        # DENME CHANCE!!!
 
         # ATENCION A CLICK EN TABLA
-        self.tableWidget_usuarios.cellClicked.connect(self.pirulin)
+        self.fila = 0
+        self.tableWidget.cellClicked.connect(self.mostrarFila_c)
+        self.tableWidget_2.cellClicked.connect(self.mostrarFila_e)
+
 
         self.productos = []
         self.total = 0
@@ -64,7 +63,8 @@ class VentanaPrincipal(QMainWindow):
         self.btn_ensoluna.clicked.connect(self.show_page_inicio)
         self.btn_agregar_I.clicked.connect(self.show_page_compras)
         self.btn_actualizar_I.clicked.connect(self.show_page_compras_a)
-        self.btn_eliminar_I.clicked.connect(self.show_page_compras_e)
+        self.btn_eliminar_I.clicked.connect(self.delete_coffee)
+        self.btn_eliminar_2.clicked.connect(self.delete_packaging)
         self.btn_detalles_venta.clicked.connect(self.show_page_detalles_venta)
 
         # Volver
@@ -141,12 +141,53 @@ class VentanaPrincipal(QMainWindow):
         # Detalle venta
         self.cargar_usuarios_2.clicked.connect(self.carga_venta)
 
-    def pirulin(self, row, column):
-        if column == 1:
-            print('HOLA MUNDO!')
+    def mostrarFila_e(self, row, column):
+        manager = sql_structures.Manager()
+        item = self.tableWidget_2.item(row, column)
+        value = item.text()
+        columns_ingreso = ['id', 'Estampa', 'Color', 'Tamaño']
 
-        else:
-            print('OTRA COSA!')
+        # Obtener el nombre de la columna
+        header_item = self.tableWidget_2.horizontalHeaderItem(column)
+        column_name = header_item.text()
+
+        # Realizar la búsqueda en la base de datos según la columna correspondiente
+        if column_name == 'Bolsa-Color':
+            self.id_e = manager.get('Empacado', columns_ingreso, value, 'Estampa')
+        elif column_name == 'Sticker-Región':
+            self.id_e = manager.get('Empacado', columns_ingreso, value, 'Color')
+        elif column_name == 'Tamaño':
+            self.id_e = manager.get('Empacado', columns_ingreso, value, 'Tamaño')
+
+        print(value)
+        print(column_name)
+        print(self.id_e)
+
+    def mostrarFila_c(self, row, column):
+        manager = sql_structures.Manager()
+        item = self.tableWidget.item(row, column)
+        value = item.text()
+        columns_ingreso = ['id', 'Region', 'Finca', 'Libras', 'Estado']
+
+        # Obtener el nombre de la columna
+        header_item = self.tableWidget.horizontalHeaderItem(column)
+        column_name = header_item.text()
+
+        # Realizar la búsqueda en la base de datos según la columna correspondiente
+        if column_name == 'Región':
+            self.id_c = manager.get('Cafe', columns_ingreso, value, 'Region')
+        elif column_name == 'Finca':
+            self.id_c = manager.get('Cafe', columns_ingreso, value, 'Finca')
+        elif column_name == 'Cantidad':
+            self.id_c = manager.get('Cafe', columns_ingreso, value, 'Libras')
+        elif column_name == 'Estado':
+            self.id_c = manager.get('Cafe', columns_ingreso, value, 'Estado')
+        # elif column_name == 'Tipo':
+        #     self.id_c = manager.get('Cafe', columns_ingreso, value, 'Tamaño')
+
+        print(value)
+        print(column_name)
+        print(self.id_c)
 
     def add_mobiliario(self):
         date = str(self.calendar.selectedDate())
@@ -215,22 +256,18 @@ class VentanaPrincipal(QMainWindow):
 
     def update_catacion(self):
         try:
-            catacion = sql_structures.Catacion(self.aroma_catacion_2.text(),
-                                               self.finca_catacion_2.text(),
-                                               self.region_catacion_2.currentText(),
-                                               self.altura_catacion_2.text(),
-                                               self.sabor_catacion_2.text(),
-                                               self.color_catacion_2.text(),
-                                               self.puntuacion_catacion_2.text(),
+            catacion = sql_structures.Catacion('',
+                                               '',
+                                               '',
+                                               '',
+                                               '',
+                                               '',
+                                               '',
                                                self.columnaAcText_2.currentText(),
-                                               self.valorAcText_2.text())
+                                               self.valorAcText_2.text(),
+                                               self.aroma_catacion_2.text())
             catacion.management('update_catacion')
             self.aroma_catacion_2.clear()
-            self.finca_catacion_2.clear()
-            self.altura_catacion_2.clear()
-            self.sabor_catacion_2.clear()
-            self.color_catacion_2.clear()
-            self.puntuacion_catacion_2.clear()
             self.valorAcText_2.clear()
         except Exception as e:
             print(e)
@@ -267,28 +304,29 @@ class VentanaPrincipal(QMainWindow):
 
     def update_coffee(self):
         try:
-            coffee = sql_structures.Coffee(self.regionAcCombobx.currentText(),
-                                           self.fincaAcText.text(),
-                                           int(self.cantidadAcText.text()),
-                                           self.estadoAcText.currentText(),
+            coffee = sql_structures.Coffee('',
+                                           '',
+                                           '',
+                                           '',
                                            self.columnaAcText.currentText(),
-                                           self.valorAcText.text())
+                                           self.valorAcText.text(), int(self.fincaAcText.text()))
             coffee.management('update_coffee')
             self.fincaAcText.clear()
-            self.cantidadAcText.clear()
             self.valorAcText.clear()
         except Exception as e:
             print(e)
 
     def delete_coffee(self):
         try:
-            coffee = sql_structures.Coffee(self.regionElimComboBx.currentText(),
-                                           self.fincaElimText.text(),
-                                           int(self.cantidadElimText.text()),
-                                           self.estadoElimComboBx.currentText())
+            coffee = sql_structures.Coffee('',
+                                           '',
+                                           '',
+                                           '',
+                                           '',
+                                           '',
+                                           self.id_c)
             coffee.management('delete_coffee')
             self.fincaElimText.clear()
-            self.cantidadElimText.clear()
         except Exception as e:
             print(e)
 
@@ -308,28 +346,29 @@ class VentanaPrincipal(QMainWindow):
     def update_packaging(self):
         try:
             coffee = sql_structures.Packaging(
-                self.stickerAcText.text(),
-                self.colorAcText.text(),
-                self.tamanioAcText.text(),
+                '',
+                '',
+                '',
                 self.columnaAcEmCombobx.currentText(),
-                self.valorAcEmText.text())
+                self.valorAcEmText.text(),
+                self.colorAcText.text())
             coffee.management('update_packaging')
-            self.stickerAcText.clear()
+
             self.colorAcText.clear()
-            self.tamanioAcText.clear()
             self.valorAcEmText.clear()
         except Exception as e:
             print(e)
 
     def delete_packaging(self):
         try:
-            coffee = sql_structures.Packaging(self.stickerElimText.text(),
-                                              self.colorElimText.text(),
-                                              self.tamanioElimText.text())
+            coffee = sql_structures.Packaging('',
+                                              '',
+                                              '',
+                                              '',
+                                              '',
+                                              self.id_e)
             coffee.management('delete_packaging')
-            self.stickerElimText.clear()
             self.colorElimText.clear()
-            self.tamanioElimText.clear()
         except Exception as e:
             print(e)
 
@@ -552,8 +591,9 @@ class VentanaPrincipal(QMainWindow):
                                "cantidadUnidad": cantidadUnidad,
                                "estado": estado,
                                "precioUnidad": precioUnidad})
-        # TODO
-        # lIMPIAR TEXT
+        self.fincaAcText_3.clear()
+        self.cantidadAcText_3.clear()
+        self.lineEdit_5.clear()
 
     def realizarCotizacion(self):
         now = datetime.now()
@@ -634,7 +674,6 @@ class VentanaPrincipal(QMainWindow):
                 self.idEmpaque = manager.get('Empacado', data, 'Celeste', color)
             elif region == 'Atitlan':
                 self.idEmpaque = manager.get('Empacado', data, 'Azul', color)
-            print('hola1')
             columnsCafe = ['id', 'Region', 'Finca', 'Libras', 'Estado']
             fin = 'Finca'
             print(finca)
@@ -649,6 +688,10 @@ class VentanaPrincipal(QMainWindow):
             venta_d.management('venta_cafe')
         except Exception as e:
             print(e)
+
+        self.lineEdit_3.clear()
+        self.lineEdit_4.clear()
+        self.lineEdit_6.clear()
 
         # TODO
         # lIMPIAR TEXT

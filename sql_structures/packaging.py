@@ -16,15 +16,15 @@ columns_ingreso = ['id', 'Estampa', 'Color', 'Tamaño']
 
 
 class Packaging:
-    def __init__(self, estampa, color, tamanio, columna=None, valor=None):
+    def __init__(self, estampa, color, tamanio, columna=None, valor=None, id = None):
         self.estampa: str = estampa
         self.color: str = color
         self.tamanio: int = tamanio
         self.columna = columna
         self.valor = valor
-
+        self.id = id
     def management(self, action):
-        self.validate()
+        # self.validate()
         if action == 'buy_packaging':
             self.packaging_ingreso()
         elif action == 'update_packaging':
@@ -38,8 +38,7 @@ class Packaging:
 
     def packaging_update(self):
         management = Manager()
-        data_list = [self.estampa, self.color, self.tamanio]
-        management.update_table('Empacado', columns_ingreso, data_list, self.columna, self.valor)
+        management.update_table_with_id('Empacado', columns_ingreso, self.columna, self.valor, self.id)
 
     def packaging_ingreso(self):
         management = Manager()
@@ -48,8 +47,8 @@ class Packaging:
 
     def packaging_delete(self):
         management = Manager()
-        data_list = [self.estampa, self.color, self.tamanio]
-        management.delete_row('Empacado', columns_ingreso, data_list)
+        # data_list = [self.estampa, self.color, self.tamanio]
+        management.delete_id_row('Empacado', columns_ingreso, self.id)
 
     def __str__(self):
         return f"{self.estampa}, {self.color}, {self.tamanio}"
