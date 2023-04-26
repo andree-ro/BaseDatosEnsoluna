@@ -2,7 +2,7 @@ from .manager import Manager
 from encrypt import *
 
 table_name = 'mobiliario'
-table_data = ['idMoviliario', 'maquina', 'ultimo_servicio', 'proximo_servicio', 'fecha_adquisicion']
+table_data = ['id', 'maquina', 'ultimo_servicio', 'proximo_servicio', 'fecha_adquisicion']
 
 management = Manager()
 

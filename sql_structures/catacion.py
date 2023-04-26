@@ -43,6 +43,9 @@ class Catacion:
             print(e)
 
     def delete(self):
+
         management = Manager()
-        data_list = [self.aroma, self.finca, self.region, self.altura, self.sabor, self.color, self.puntuacion, 0]
-        management.delete_row('Catacion', columns_ingreso, data_list)
+
+        # data_list = [self.aroma, self.finca, self.region, self.altura, self.sabor, self.color, self.puntuacion, 0]
+        management.delete_id_row('Catacion', columns_ingreso, self.id)
+

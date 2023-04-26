@@ -32,6 +32,7 @@ class VentanaPrincipal(QMainWindow):
         self.fila = 0
         self.tableWidget.cellClicked.connect(self.mostrarFila_c)
         self.tableWidget_2.cellClicked.connect(self.mostrarFila_e)
+        self.tableWidget_5.cellClicked.connect(self.mostrarFila_cat)
 
 
         self.productos = []
@@ -78,7 +79,7 @@ class VentanaPrincipal(QMainWindow):
         # catacion
         self.btn_agregar_C.clicked.connect(self.show_page_agregar_catacion)
         self.btn_actualizar_C.clicked.connect(self.show_page_actualizar_catacion)
-        self.btn_eliminar_C.clicked.connect(self.show_page_eliminar_catacion)
+        self.btn_eliminar_C.clicked.connect(self.delete_catacion)
         # Usuarios
         # self.cargar_usuarios.clicked.connect(self.loaddata)
         self.btn_administrar.clicked.connect(self.show_page_usuarios_admin)
@@ -189,6 +190,38 @@ class VentanaPrincipal(QMainWindow):
         print(column_name)
         print(self.id_c)
 
+    def mostrarFila_cat(self, row, column):
+        manager = sql_structures.Manager()
+        item = self.tableWidget_5.item(row, column)
+        value = item.text()
+        columns_ingreso = ['id', 'Aroma', 'Finca', 'Region', 'Altura', 'Sabor', 'Color', 'Puntuacion']
+
+        # Obtener el nombre de la columna
+        header_item = self.tableWidget_5.horizontalHeaderItem(column)
+        column_name = header_item.text()
+
+        # Realizar la búsqueda en la base de datos según la columna correspondiente
+        if column_name == 'Aroma':
+            self.id_cat = manager.get('Catacion', columns_ingreso, value, 'Aroma')
+        elif column_name == 'Finca':
+            self.id_cat = manager.get('Catacion', columns_ingreso, value, 'Finca')
+        elif column_name == 'Región':
+            self.id_cat = manager.get('Catacion', columns_ingreso, value, 'Region')
+        elif column_name == 'Altura':
+            self.id_cat = manager.get('Catacion', columns_ingreso, value, 'Altura')
+        elif column_name == 'Sabor':
+            self.id_cat = manager.get('Catacion', columns_ingreso, value, 'Sabor')
+        elif column_name == 'Color':
+            self.id_cat = manager.get('Catacion', columns_ingreso, value, 'Color')
+        elif column_name == 'Puntuación':
+            self.id_cat = manager.get('Catacion', columns_ingreso, value, 'Puntuacion')
+        # elif column_name == 'Tipo':
+        #     self.id_c = manager.get('Cafe', columns_ingreso, value, 'Tamaño')
+
+        print(value)
+        print(column_name)
+        print(self.id_cat)
+
     def add_mobiliario(self):
         date = str(self.calendar.selectedDate())
         date_split = date.split("(")
@@ -211,48 +244,70 @@ class VentanaPrincipal(QMainWindow):
                                            prox,
                                            calendario)
             mobiliario.management('add_mobiliario')
+            QMessageBox.about(self, 'Aviso', 'Agregado correctamente!')
         except Exception as e:
             print(e)
+            QMessageBox.about(self, 'Aviso', 'Error de agregado!')
 
     def new_user(self):
-        usuarios = sql_structures.SqlDataBase_usuarios(self.info_usuario.text(),
-                                                       self.info_contrasena.text(),
-                                                       self.info_rol.currentText())
-        usuarios.new_user()
-        self.info_usuario.clear()
-        self.info_contrasena.clear()
+        try :
+            usuarios = sql_structures.SqlDataBase_usuarios(self.info_usuario.text(),
+                                                           self.info_contrasena.text(),
+                                                           self.info_rol.currentText())
+            usuarios.new_user()
+            self.info_usuario.clear()
+            self.info_contrasena.clear()
+            QMessageBox.about(self, 'Aviso', 'Agregado correctamente!')
+        except Exception as e:
+            print(e)
+            QMessageBox.about(self, 'Aviso', 'Error de agregado!')
 
     def update_user(self):
-        usuarios = sql_structures.SqlDataBase_usuarios(self.info_usuario_a.text(),
-                                                       self.info_contrasena_a.text(),
-                                                       self.info_rol_a.currentText(),
-                                                       self.combo_edit.currentText(),
-                                                       self.Info_edit.text())
-        usuarios.update_user()
-        self.info_usuario_a.clear()
-        self.info_contrasena_a.clear()
-        self.Info_edit.clear()
+        try:
+            usuarios = sql_structures.SqlDataBase_usuarios(self.info_usuario_a.text(),
+                                                           self.info_contrasena_a.text(),
+                                                           self.info_rol_a.currentText(),
+                                                           self.combo_edit.currentText(),
+                                                           self.Info_edit.text())
+            usuarios.update_user()
+            self.info_usuario_a.clear()
+            self.info_contrasena_a.clear()
+            self.Info_edit.clear()
+            QMessageBox.about(self, 'Aviso', 'Modificado correctamente!')
+        except Exception as e:
+            print(e)
+            QMessageBox.about(self, 'Aviso', 'Error al modificar!')
 
     def delete_user(self):
-        usuarios = sql_structures.SqlDataBase_usuarios('', '', '', '', '', self.info_usuario_e.text())
-        usuarios.delete_user()
-        self.info_usuario_e.clear()
+        try:
+            usuarios = sql_structures.SqlDataBase_usuarios('', '', '', '', '', self.info_usuario_e.text())
+            usuarios.delete_user()
+            self.info_usuario_e.clear()
+            QMessageBox.about(self, 'Aviso', 'Eliminado correctamente!')
+        except Exception as e:
+            print(e)
+            QMessageBox.about(self, 'Aviso', 'Error al eliminar!')
 
     def new_catacion(self):
-        catacion = sql_structures.Catacion(self.aroma_catacion.text(),
-                                           self.finca_catacion.text(),
-                                           self.region_catacion.currentText(),
-                                           self.altura_catacion.text(),
-                                           self.sabor_catacion.text(),
-                                           self.color_catacion.text(),
-                                           self.puntuacion_catacion.text())
-        catacion.management('ing_catacion')
-        self.aroma_catacion.clear()
-        self.finca_catacion.clear()
-        self.altura_catacion.clear()
-        self.sabor_catacion.clear()
-        self.color_catacion.clear()
-        self.puntuacion_catacion.clear()
+        try:
+            catacion = sql_structures.Catacion(self.aroma_catacion.text(),
+                                               self.finca_catacion.text(),
+                                               self.region_catacion.currentText(),
+                                               self.altura_catacion.text(),
+                                               self.sabor_catacion.text(),
+                                               self.color_catacion.text(),
+                                               self.puntuacion_catacion.text())
+            catacion.management('ing_catacion')
+            self.aroma_catacion.clear()
+            self.finca_catacion.clear()
+            self.altura_catacion.clear()
+            self.sabor_catacion.clear()
+            self.color_catacion.clear()
+            self.puntuacion_catacion.clear()
+            QMessageBox.about(self, 'Aviso', 'Agregado correctamente!')
+        except Exception as e:
+            print(e)
+            QMessageBox.about(self, 'Aviso', 'Error de agregado!')
 
     def update_catacion(self):
         try:
@@ -273,20 +328,23 @@ class VentanaPrincipal(QMainWindow):
             print(e)
 
     def delete_catacion(self):
-        catacion = sql_structures.Catacion(self.aroma_catacion_3.text(),
-                                           self.finca_catacion_3.text(),
-                                           self.region_catacion_3.currentText(),
-                                           self.altura_catacion_3.text(),
-                                           self.sabor_catacion_3.text(),
-                                           self.color_catacion_3.text(),
-                                           self.puntuacion_catacion_3.text())
-        catacion.management('delete_catacion')
-        self.aroma_catacion_3.clear()
-        self.finca_catacion_3.clear()
-        self.altura_catacion_3.clear()
-        self.sabor_catacion_3.clear()
-        self.color_catacion_3.clear()
-        self.puntuacion_catacion_3.clear()
+        try:
+            catacion = sql_structures.Catacion('',
+                                               '',
+                                               '',
+                                               '',
+                                               '',
+                                               '',
+                                               '',
+                                               '',
+                                               '',
+                                               self.id_cat)
+            catacion.management('delete_catacion')
+            self.finca_catacion_3.clear()
+            QMessageBox.about(self, 'Aviso', 'Eliminado correctamente!')
+        except Exception as e:
+            print(e)
+            QMessageBox.about(self, 'Aviso', 'Error al Eliminar!')
 
     # METODOS/FUNCIONES CLASE COFFEE
     def buy_coffee(self):
@@ -296,11 +354,14 @@ class VentanaPrincipal(QMainWindow):
                                            int(self.cantidadText.text()),
                                            self.estadoCombobx.currentText())
             coffee.management('buy_coffee')
+
             self.fincaText.clear()
             self.cantidadText.clear()
+            QMessageBox.about(self, 'Aviso', 'La compra se realizo con exito!')
 
         except Exception as e:
             print(e)
+            QMessageBox.about(self, 'Aviso', 'Compra fallida!')
 
     def update_coffee(self):
         try:
@@ -313,8 +374,10 @@ class VentanaPrincipal(QMainWindow):
             coffee.management('update_coffee')
             self.fincaAcText.clear()
             self.valorAcText.clear()
+            QMessageBox.about(self, 'Aviso', 'Se modifico con exito!')
         except Exception as e:
             print(e)
+            QMessageBox.about(self, 'Aviso', 'Modificacion fallida!')
 
     def delete_coffee(self):
         try:
@@ -327,8 +390,10 @@ class VentanaPrincipal(QMainWindow):
                                            self.id_c)
             coffee.management('delete_coffee')
             self.fincaElimText.clear()
+            QMessageBox.about(self, 'Aviso', 'Se elimino con exito!')
         except Exception as e:
             print(e)
+            QMessageBox.about(self, 'Aviso', 'Eliminacion fallida!')
 
     # METODOS/FUNCIONES CLASE PACKAGING
     def buy_packaging(self):
@@ -340,8 +405,10 @@ class VentanaPrincipal(QMainWindow):
             self.stickerText.clear()
             self.colorBolsaText.clear()
             self.tamanioText.clear()
+            QMessageBox.about(self, 'Aviso', 'La compra se realizo con exito!')
         except Exception as e:
             print(e)
+            QMessageBox.about(self, 'Aviso', 'Compra fallida!')
 
     def update_packaging(self):
         try:
@@ -356,8 +423,10 @@ class VentanaPrincipal(QMainWindow):
 
             self.colorAcText.clear()
             self.valorAcEmText.clear()
+            QMessageBox.about(self, 'Aviso', 'Se modifico con exito!')
         except Exception as e:
             print(e)
+            QMessageBox.about(self, 'Aviso', 'Modificacion fallida!')
 
     def delete_packaging(self):
         try:
@@ -369,8 +438,10 @@ class VentanaPrincipal(QMainWindow):
                                               self.id_e)
             coffee.management('delete_packaging')
             self.colorElimText.clear()
+            QMessageBox.about(self, 'Aviso', 'Se elimino con exito!')
         except Exception as e:
             print(e)
+            QMessageBox.about(self, 'Aviso', 'Eliminacion fallida!')
 
     def carga_cafe_empacado(self):
         try:
@@ -398,13 +469,13 @@ class VentanaPrincipal(QMainWindow):
             dato = mana.print_table('Catacion')
             self.tableWidget_5.setRowCount(len(dato))
             for i in range(len(dato)):
-                self.tableWidget_5.setItem(i, 0, QTableWidgetItem(str(dato[i - 1][1])))
-                self.tableWidget_5.setItem(i, 1, QTableWidgetItem(str(dato[i - 1][2])))
-                self.tableWidget_5.setItem(i, 2, QTableWidgetItem(str(dato[i - 1][3])))
-                self.tableWidget_5.setItem(i, 3, QTableWidgetItem(str(dato[i - 1][4])))
-                self.tableWidget_5.setItem(i, 4, QTableWidgetItem(str(dato[i - 1][5])))
-                self.tableWidget_5.setItem(i, 5, QTableWidgetItem(str(dato[i - 1][6])))
-                self.tableWidget_5.setItem(i, 6, QTableWidgetItem(str(dato[i - 1][7])))
+                self.tableWidget_5.setItem(i, 0, QTableWidgetItem(str(dato[i][1])))
+                self.tableWidget_5.setItem(i, 1, QTableWidgetItem(str(dato[i][2])))
+                self.tableWidget_5.setItem(i, 2, QTableWidgetItem(str(dato[i][3])))
+                self.tableWidget_5.setItem(i, 3, QTableWidgetItem(str(dato[i][4])))
+                self.tableWidget_5.setItem(i, 4, QTableWidgetItem(str(dato[i][5])))
+                self.tableWidget_5.setItem(i, 5, QTableWidgetItem(str(dato[i][6])))
+                self.tableWidget_5.setItem(i, 6, QTableWidgetItem(str(dato[i][7])))
         except Exception as e:
             print(e)
 
@@ -581,19 +652,24 @@ class VentanaPrincipal(QMainWindow):
     # COTIZACION
     # METODO AGREGAR COTIZACION BOTON
     def agregarCotizacionUno(self):
-        region = self.regionAcCombobx_3.currentText()
-        finca = self.fincaAcText_3.text()
-        cantidadUnidad = self.cantidadAcText_3.text()
-        estado = self.estadoAcText_3.currentText()
-        precioUnidad = self.lineEdit_5.text()
-        self.productos.append({"region": region,
-                               "finca": finca,
-                               "cantidadUnidad": cantidadUnidad,
-                               "estado": estado,
-                               "precioUnidad": precioUnidad})
-        self.fincaAcText_3.clear()
-        self.cantidadAcText_3.clear()
-        self.lineEdit_5.clear()
+        try:
+            region = self.regionAcCombobx_3.currentText()
+            finca = self.fincaAcText_3.text()
+            cantidadUnidad = self.cantidadAcText_3.text()
+            estado = self.estadoAcText_3.currentText()
+            precioUnidad = self.lineEdit_5.text()
+            self.productos.append({"region": region,
+                                   "finca": finca,
+                                   "cantidadUnidad": cantidadUnidad,
+                                   "estado": estado,
+                                   "precioUnidad": precioUnidad})
+            self.fincaAcText_3.clear()
+            self.cantidadAcText_3.clear()
+            self.lineEdit_5.clear()
+            QMessageBox.about(self, 'Aviso', 'Cotizacion realizada con exito!')
+        except Exception as e:
+            print(e)
+            QMessageBox.about(self, 'Aviso', 'Error en la cotizacion!')
 
     def realizarCotizacion(self):
         now = datetime.now()
@@ -686,8 +762,10 @@ class VentanaPrincipal(QMainWindow):
                                          int(self.lineEdit_4.text()),
                                          total, self.lineEdit_6.text(), self.idEmpaque, self.idCafe)
             venta_d.management('venta_cafe')
+            QMessageBox.about(self, 'Aviso', 'Se agrego correctamente!')
         except Exception as e:
             print(e)
+            QMessageBox.about(self, 'Aviso', 'Error al agregar!')
 
         self.lineEdit_3.clear()
         self.lineEdit_4.clear()
