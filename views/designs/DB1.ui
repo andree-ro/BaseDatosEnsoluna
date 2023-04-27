@@ -721,7 +721,7 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
           <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
          <property name="currentIndex">
-          <number>11</number>
+          <number>13</number>
          </property>
          <widget class="QWidget" name="page_usuario">
           <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -7709,69 +7709,81 @@ font: 75 12pt &quot;Open Sans Semibold&quot;</string>
                       <property name="frameShadow">
                        <enum>QFrame::Raised</enum>
                       </property>
-                      <layout class="QVBoxLayout" name="verticalLayout_77">
-                       <item>
-                        <widget class="QTableWidget" name="tableWidget_usuarios_2">
-                         <column>
-                          <property name="text">
-                           <string>No.</string>
+                      <widget class="QTableWidget" name="tableWidget_usuarios_2">
+                       <property name="geometry">
+                        <rect>
+                         <x>10</x>
+                         <y>10</y>
+                         <width>481</width>
+                         <height>541</height>
+                        </rect>
+                       </property>
+                       <column>
+                        <property name="text">
+                         <string>No.</string>
+                        </property>
+                       </column>
+                       <column>
+                        <property name="text">
+                         <string>Region</string>
+                        </property>
+                       </column>
+                       <column>
+                        <property name="text">
+                         <string>Presentacion</string>
+                        </property>
+                       </column>
+                       <column>
+                        <property name="text">
+                         <string>Precio total</string>
+                        </property>
+                       </column>
+                      </widget>
+                      <widget class="QFrame" name="frame_173">
+                       <property name="geometry">
+                        <rect>
+                         <x>10</x>
+                         <y>563</y>
+                         <width>850</width>
+                         <height>55</height>
+                        </rect>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>0</width>
+                         <height>50</height>
+                        </size>
+                       </property>
+                       <property name="frameShape">
+                        <enum>QFrame::StyledPanel</enum>
+                       </property>
+                       <property name="frameShadow">
+                        <enum>QFrame::Raised</enum>
+                       </property>
+                       <layout class="QHBoxLayout" name="horizontalLayout_103">
+                        <item>
+                         <spacer name="horizontalSpacer_38">
+                          <property name="orientation">
+                           <enum>Qt::Horizontal</enum>
                           </property>
-                         </column>
-                         <column>
-                          <property name="text">
-                           <string>Region</string>
+                          <property name="sizeHint" stdset="0">
+                           <size>
+                            <width>749</width>
+                            <height>20</height>
+                           </size>
                           </property>
-                         </column>
-                         <column>
-                          <property name="text">
-                           <string>Presentacion</string>
+                         </spacer>
+                        </item>
+                        <item>
+                         <widget class="QPushButton" name="cargar_usuarios_2">
+                          <property name="minimumSize">
+                           <size>
+                            <width>0</width>
+                            <height>35</height>
+                           </size>
                           </property>
-                         </column>
-                         <column>
-                          <property name="text">
-                           <string>Precio total</string>
-                          </property>
-                         </column>
-                        </widget>
-                       </item>
-                       <item>
-                        <widget class="QFrame" name="frame_173">
-                         <property name="minimumSize">
-                          <size>
-                           <width>0</width>
-                           <height>50</height>
-                          </size>
-                         </property>
-                         <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
-                         </property>
-                         <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
-                         </property>
-                         <layout class="QHBoxLayout" name="horizontalLayout_103">
-                          <item>
-                           <spacer name="horizontalSpacer_38">
-                            <property name="orientation">
-                             <enum>Qt::Horizontal</enum>
-                            </property>
-                            <property name="sizeHint" stdset="0">
-                             <size>
-                              <width>749</width>
-                              <height>20</height>
-                             </size>
-                            </property>
-                           </spacer>
-                          </item>
-                          <item>
-                           <widget class="QPushButton" name="cargar_usuarios_2">
-                            <property name="minimumSize">
-                             <size>
-                              <width>0</width>
-                              <height>35</height>
-                             </size>
-                            </property>
-                            <property name="styleSheet">
-                             <string notr="true">QFrame{
+                          <property name="styleSheet">
+                           <string notr="true">QFrame{
 background-color: rgb(51, 157, 255);
 }
 
@@ -7787,16 +7799,75 @@ background-color: rgb(209, 172, 127);
 font: 75 9pt  &quot;Open Sans Semibold&quot;
 }
 </string>
-                            </property>
-                            <property name="text">
-                             <string>Cargar</string>
-                            </property>
-                           </widget>
-                          </item>
-                         </layout>
-                        </widget>
-                       </item>
-                      </layout>
+                          </property>
+                          <property name="text">
+                           <string>Cargar</string>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </widget>
+                      <widget class="QTableWidget" name="tableWidget_usuarios_3">
+                       <property name="geometry">
+                        <rect>
+                         <x>500</x>
+                         <y>10</y>
+                         <width>591</width>
+                         <height>51</height>
+                        </rect>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>591</width>
+                         <height>541</height>
+                        </size>
+                       </property>
+                       <property name="verticalScrollBarPolicy">
+                        <enum>Qt::ScrollBarAlwaysOff</enum>
+                       </property>
+                       <property name="horizontalScrollBarPolicy">
+                        <enum>Qt::ScrollBarAlwaysOff</enum>
+                       </property>
+                       <property name="sizeAdjustPolicy">
+                        <enum>QAbstractScrollArea::AdjustIgnored</enum>
+                       </property>
+                       <property name="autoScroll">
+                        <bool>false</bool>
+                       </property>
+                       <property name="autoScrollMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="verticalScrollMode">
+                        <enum>QAbstractItemView::ScrollPerItem</enum>
+                       </property>
+                       <property name="horizontalScrollMode">
+                        <enum>QAbstractItemView::ScrollPerItem</enum>
+                       </property>
+                       <property name="rowCount">
+                        <number>1</number>
+                       </property>
+                       <row/>
+                       <column>
+                        <property name="text">
+                         <string>Cantidad</string>
+                        </property>
+                       </column>
+                       <column>
+                        <property name="text">
+                         <string>Precio Unitario</string>
+                        </property>
+                       </column>
+                       <column>
+                        <property name="text">
+                         <string>Finca</string>
+                        </property>
+                       </column>
+                       <column>
+                        <property name="text">
+                         <string>Cliente</string>
+                        </property>
+                       </column>
+                      </widget>
                      </widget>
                     </item>
                    </layout>

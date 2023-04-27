@@ -126,7 +126,9 @@ class Manager:
         query = f"SELECT {table_data[0]} FROM {table_name} WHERE {data} = '{values}';"
         print(query)
         self.cursor.execute(query)
+        print(query)
         rows = self.cursor.fetchall()
+        print(query)
         self.close()
         return rows[0][0]
 

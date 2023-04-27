@@ -9,6 +9,9 @@ from encrypt import *
 from reportlab.pdfgen import canvas
 from datetime import datetime
 
+from sql_structures import Manager
+
+
 # usuarios = sql_structures.SqlDataBase_usuarios()
 
 # TODO
@@ -30,9 +33,13 @@ class VentanaPrincipal(QMainWindow):
 
         # ATENCION A CLICK EN TABLA
         self.fila = 0
+        self.idFactura = 0
         self.tableWidget.cellClicked.connect(self.mostrarFila_c)
         self.tableWidget_2.cellClicked.connect(self.mostrarFila_e)
         self.tableWidget_5.cellClicked.connect(self.mostrarFila_cat)
+        self.tableWidget_usuarios_2.cellClicked.connect(self.mostrarFila_ventas)
+        self.tableWidget_usuarios_2.cellClicked.connect(self.carga_detalles)
+        self.agregarCotizacion_2.clicked.connect(self.agregarCliente)
 
 
         self.productos = []
@@ -141,6 +148,34 @@ class VentanaPrincipal(QMainWindow):
 
         # Detalle venta
         self.cargar_usuarios_2.clicked.connect(self.carga_venta)
+
+    def mostrarFila_ventas(self, row, column):
+        print('1')
+        manager = sql_structures.Manager()
+        print('2')
+        item = self.tableWidget_usuarios_2.item(row, column)
+        value = item.text()
+        columns_ingreso = ['id', 'Presentacion', 'Region', 'precioTotal', 'usuario_id']
+        print('3')
+
+        # Obtener el nombre de la columna
+        header_item = self.tableWidget_usuarios_2.horizontalHeaderItem(column)
+        column_name = header_item.text()
+        print('4')
+
+        # Realizar la búsqueda en la base de datos según la columna correspondiente
+        if column_name == 'No.':
+            self.id_v = manager.get('venta', columns_ingreso, value, 'id')
+        elif column_name == 'Region':
+            self.id_v = manager.get('venta', columns_ingreso, value, 'Region')
+        elif column_name == 'Presentacion':
+            self.id_v = manager.get('venta', columns_ingreso, value, 'Presentacion')
+        elif column_name == 'Precio Total':
+            self.id_v = manager.get('venta', columns_ingreso, value, 'PrecioTotal')
+
+        print(value)
+        print(column_name)
+        print(self.id_v)
 
     def mostrarFila_e(self, row, column):
         print('1')
@@ -524,10 +559,27 @@ class VentanaPrincipal(QMainWindow):
                 self.tableWidget_usuarios_2.setItem(i, 0, QTableWidgetItem(str(dato[i][0])))
                 self.tableWidget_usuarios_2.setItem(i, 1, QTableWidgetItem(str(dato[i][2])))
                 self.tableWidget_usuarios_2.setItem(i, 2, QTableWidgetItem(str(dato[i][1])))
-                self.tableWidget_usuarios_2.setItem(i, 5, QTableWidgetItem(str(dato[i][3])))
-            for i in range(len(dato1)):
-                self.tableWidget_usuarios_2.setItem(i, 3, QTableWidgetItem(str(dato1[i][3])))
-                self.tableWidget_usuarios_2.setItem(i, 4, QTableWidgetItem(str(dato1[i][4])))
+                self.tableWidget_usuarios_2.setItem(i, 3, QTableWidgetItem(str(dato[i][3])))
+        except Exception as e:
+            print(e)
+
+    def carga_detalles(self):
+        try:
+            mana = sql_structures.Manager()
+            dato = mana.print_table('factura')
+            dato2 = mana.print_table('Cafe')
+
+
+            dato1 = mana.print_table('Venta_has_Cafe')
+            self.tableWidget_usuarios_3.setRowCount(len(dato))
+            self.tableWidget_usuarios_3.setRowCount(len(dato2))
+            self.tableWidget_usuarios_3.setRowCount(len(dato1))
+
+            self.tableWidget_usuarios_3.setItem(0, 0, QTableWidgetItem(str(dato1[int(self.id_v)][3])))
+            self.tableWidget_usuarios_3.setItem(0, 1, QTableWidgetItem(str(dato1[int(self.id_v)][4])))
+            finca = dato1[int(self.id_v)][2]
+            self.tableWidget_usuarios_3.setItem(0, 2, QTableWidgetItem(str(dato2[int(finca)][2])))
+            self.tableWidget_usuarios_3.setItem(0, 3, QTableWidgetItem(str(dato[int(self.id_v)][2])))
         except Exception as e:
             print(e)
 
@@ -683,25 +735,26 @@ class VentanaPrincipal(QMainWindow):
     def realizarCotizacion(self):
         now = datetime.now()
         formato = now.strftime('%d - %m - %Y')
+
         # Crear un nuevo documento PDF
-        pdf = canvas.Canvas("contizacion.pdf")
+        pdf = canvas.Canvas(f"cotizacion{self.idFactura}.pdf")
         # Configurar el estilo del texto
         pdf.setFont("Helvetica", 12)
+
         # Agregar los datos del cliente
-        cliente_nombre = "Juan Perez"
-        cliente_direccion = "Calle 123"
+        cliente_nombre = str(self.fincaAcText_4.text())
+        cliente_direccion = str(self.fincaAcText_6.text())
         pdf.drawString(100, 700, "Cliente: " + cliente_nombre)
         pdf.drawString(100, 680, "Dirección: " + cliente_direccion)
-        # Agregar los datos de la factura
-        pdf.drawString(400, 700, "Cotizacion #001")
+        pdf.drawString(400, 700, f"Cotizacion: ---")
         pdf.drawString(400, 680, f"Fecha: {formato}")
-        # Agregar los productos a la factura
         y = 600  # Posición vertical inicial
         pdf.drawString(50, 620, "PROUCTO")
         pdf.drawString(150, 620, "FINCA")
         pdf.drawString(225, 620, "CANTIDAD UNIDAD")
         pdf.drawString(375, 620, "ESTADO")
         pdf.drawString(450, 620, "PRECIO UNIDAD")
+
         for producto in self.productos:
             pdf.drawString(50, y, producto["region"])
             pdf.drawString(150, y, str(producto["finca"]))
@@ -709,21 +762,17 @@ class VentanaPrincipal(QMainWindow):
             pdf.drawString(375, y, str(producto["estado"]))
             pdf.drawString(450, y, str(producto["precioUnidad"]))
             y -= 20
-        # Calcular el total de la factura
-        total = 0
-        print(self.productos)
+
         for producto in self.productos:
             total = float(producto["precioUnidad"]) * int(producto["cantidadUnidad"])
-            total = + total
-        print(total)
-        # Agregar el total a la factura
-        pdf.drawString(400, y - 20, "Total: " + str(total))
-        print("error")
-        # Guardar el documento PDF
+            self.total = total + self.total
+
+        pdf.drawString(400, y - 20, "Total: " + str(self.total))
         pdf.save()
-        webbrowser.open_new("contizacion.pdf")
-        # FACTURA
-        # METODO AGREGAR COTIZACION BOTON
+        factura = f"cotizacion{self.idFactura}.pdf"
+        webbrowser.open_new(factura)
+        self.productos.clear()
+        self.total = 0
 
     def agregarFacturaUno(self):
         region = self.comboBox.currentText()
@@ -783,24 +832,33 @@ class VentanaPrincipal(QMainWindow):
         # TODO
         # lIMPIAR TEXT
 
+    def agregarCliente(self):
+        management = Manager()
+        mana = sql_structures.Manager()
+        nombre = self.fincaAcText_4.text()
+        direccion = self.fincaAcText_6.text()
+        data_list = [direccion, nombre, 0]
+        columns_ingreso = ['id', 'Direccion', 'Cliente', 'Venta_id']
+        management.insert_into_table('factura', columns_ingreso, data_list)
+        self.idFac = mana.get('factura', columns_ingreso, nombre, 'Cliente')
+
     def realizarFactura(self):
+
         now = datetime.now()
         formato = now.strftime('%d - %m - %Y')
 
         # Crear un nuevo documento PDF
-        pdf = canvas.Canvas("factura.pdf")
+        pdf = canvas.Canvas(f"factura{self.idFactura}.pdf")
         # Configurar el estilo del texto
         pdf.setFont("Helvetica", 12)
 
         # Agregar los datos del cliente
-        cliente_nombre = "Juan Perez"
-        cliente_direccion = "Calle 123"
+        cliente_nombre = str(self.fincaAcText_4.text())
+        cliente_direccion = str(self.fincaAcText_6.text())
         pdf.drawString(100, 700, "Cliente: " + cliente_nombre)
         pdf.drawString(100, 680, "Dirección: " + cliente_direccion)
-        # Agregar los datos de la factura
-        pdf.drawString(400, 700, "Factura #001")
+        pdf.drawString(400, 700, f"Factura: {self.idFactura + self.idFac}")
         pdf.drawString(400, 680, f"Fecha: {formato}")
-        # Agregar los productos a la factura
         y = 600  # Posición vertical inicial
         pdf.drawString(50, 620, "PROUCTO")
         pdf.drawString(150, 620, "FINCA")
@@ -816,17 +874,13 @@ class VentanaPrincipal(QMainWindow):
             pdf.drawString(450, y, str(producto["precioUnidad"]))
             y -= 20
 
-        # Calcular el total de la factura
-
-
         for producto in self.productos:
             total = float(producto["precioUnidad"]) * int(producto["cantidadUnidad"])
             self.total = total + self.total
-        # Agregar el total a la factura
-        # print('Hola')
+
         pdf.drawString(400, y - 20, "Total: " + str(self.total))
-        # Guardar el documento PDF
-        # print('Hola')
         pdf.save()
-        # print('Hola')
-        webbrowser.open_new("factura.pdf")
+        factura = f"factura{self.idFactura}.pdf"
+        webbrowser.open_new(factura)
+        self.productos.clear()
+        self.total = 0
