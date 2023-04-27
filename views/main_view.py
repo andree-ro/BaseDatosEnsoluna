@@ -743,9 +743,11 @@ class VentanaPrincipal(QMainWindow):
 
         # Agregar los datos del cliente
         cliente_nombre = str(self.fincaAcText_4.text())
+        cliente_nit = str(self.fincaAcText_5.text())
         cliente_direccion = str(self.fincaAcText_6.text())
         pdf.drawString(100, 700, "Cliente: " + cliente_nombre)
-        pdf.drawString(100, 680, "Dirección: " + cliente_direccion)
+        pdf.drawString(100, 680, "NIT: " + cliente_nit)
+        pdf.drawString(100, 660, "Dirección: " + cliente_direccion)
         pdf.drawString(400, 700, f"Cotizacion: ---")
         pdf.drawString(400, 680, f"Fecha: {formato}")
         y = 600  # Posición vertical inicial
@@ -836,6 +838,7 @@ class VentanaPrincipal(QMainWindow):
         management = Manager()
         mana = sql_structures.Manager()
         nombre = self.fincaAcText_4.text()
+        # nit = self.fincaAcText_5.text()
         direccion = self.fincaAcText_6.text()
         data_list = [direccion, nombre, 0]
         columns_ingreso = ['id', 'Direccion', 'Cliente', 'Venta_id']
@@ -854,9 +857,11 @@ class VentanaPrincipal(QMainWindow):
 
         # Agregar los datos del cliente
         cliente_nombre = str(self.fincaAcText_4.text())
+        cliente_nit = str(self.fincaAcText_5.text())
         cliente_direccion = str(self.fincaAcText_6.text())
         pdf.drawString(100, 700, "Cliente: " + cliente_nombre)
-        pdf.drawString(100, 680, "Dirección: " + cliente_direccion)
+        pdf.drawString(100, 680, "NIT: " + cliente_nit)
+        pdf.drawString(100, 660, "Dirección: " + cliente_direccion)
         pdf.drawString(400, 700, f"Factura: {self.idFactura + self.idFac}")
         pdf.drawString(400, 680, f"Fecha: {formato}")
         y = 600  # Posición vertical inicial
