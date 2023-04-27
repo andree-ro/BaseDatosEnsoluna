@@ -1,7 +1,7 @@
 from .manager import Manager
 
 # Falta poner el tipo
-columns_ingreso = ['id', 'Estampa', 'Color', 'Tamaño']
+columns_ingreso = ['id', 'Estampa', 'Color', 'Tamaño', 'Cantidad']
 
 # 1 rojo = San Marcos
 # 2 verde = Coban
@@ -16,10 +16,11 @@ columns_ingreso = ['id', 'Estampa', 'Color', 'Tamaño']
 
 
 class Packaging:
-    def __init__(self, estampa, color, tamanio, columna=None, valor=None, id = None):
+    def __init__(self, estampa, color, tamanio, cantidad, columna=None, valor=None, id = None):
         self.estampa: str = estampa
         self.color: str = color
-        self.tamanio: int = tamanio
+        self.tamanio: str = tamanio
+        self.cantidad: int = cantidad
         self.columna = columna
         self.valor = valor
         self.id = id
@@ -42,7 +43,7 @@ class Packaging:
 
     def packaging_ingreso(self):
         management = Manager()
-        data_list = [self.estampa, self.color, self.tamanio]
+        data_list = [self.estampa, self.color, self.tamanio, self.cantidad]
         management.insert_into_table('Empacado', columns_ingreso, data_list)
 
     def packaging_delete(self):

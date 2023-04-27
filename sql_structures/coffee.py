@@ -1,16 +1,17 @@
 from .manager import Manager
 
 # Falta poner el tipo
-columns_ingreso = ['id', 'Region', 'Finca', 'Quintales', 'Estado']
-columns = ['id', 'Region', 'Finca', 'Libras', 'Estado']
+columns_ingreso = ['id', 'Region', 'Finca', 'Quintales', 'Estado', 'Tipo']
+columns = ['id', 'Region', 'Finca', 'Libras', 'Estado', 'Tipo']
 
 
 class Coffee:
-    def __init__(self, region, finca, cantidad, estado, columna=None, valor=None, id=None):
+    def __init__(self, region, finca, cantidad, estado, tipo, columna=None, valor=None, id=None):
         self.region: str = region
         self.finca: str = finca
         self.cantidad: int = cantidad
         self.estado: str = estado
+        self.tipo: str = tipo
         self.columna = columna
         self.valor = valor
         self.id = id
@@ -44,10 +45,10 @@ class Coffee:
 
     def cafe_ingreso(self):
         management = Manager()
-        data_list = [self.region, self.finca, self.cantidad, self.estado]
+        data_list = [self.region, self.finca, self.cantidad, self.estado, self.tipo]
         management.insert_into_table('Cafe_ingreso', columns_ingreso, data_list)
         cantidad = self.cantidad * 100
-        data = [self.region, self.finca, cantidad, self.estado]
+        data = [self.region, self.finca, cantidad, self.estado, self.tipo]
         management.insert_into_table('Cafe', columns, data)
 
     def delete(self):

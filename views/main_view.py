@@ -143,22 +143,28 @@ class VentanaPrincipal(QMainWindow):
         self.cargar_usuarios_2.clicked.connect(self.carga_venta)
 
     def mostrarFila_e(self, row, column):
+        print('1')
         manager = sql_structures.Manager()
+        print('2')
         item = self.tableWidget_2.item(row, column)
         value = item.text()
-        columns_ingreso = ['id', 'Estampa', 'Color', 'Tamaño']
+        columns_ingreso = ['id', 'Estampa', 'Color', 'Tamaño', 'Cantidad']
+        print('3')
 
         # Obtener el nombre de la columna
         header_item = self.tableWidget_2.horizontalHeaderItem(column)
         column_name = header_item.text()
+        print('4')
 
         # Realizar la búsqueda en la base de datos según la columna correspondiente
-        if column_name == 'Bolsa-Color':
+        if column_name == 'Sticker-Región':
             self.id_e = manager.get('Empacado', columns_ingreso, value, 'Estampa')
-        elif column_name == 'Sticker-Región':
+        elif column_name == 'Bolsa-Color':
             self.id_e = manager.get('Empacado', columns_ingreso, value, 'Color')
         elif column_name == 'Tamaño':
             self.id_e = manager.get('Empacado', columns_ingreso, value, 'Tamaño')
+        elif column_name == 'Cantidad':
+            self.id_e = manager.get('Empacado', columns_ingreso, value, 'Cantidad')
 
         print(value)
         print(column_name)
@@ -183,8 +189,8 @@ class VentanaPrincipal(QMainWindow):
             self.id_c = manager.get('Cafe', columns_ingreso, value, 'Libras')
         elif column_name == 'Estado':
             self.id_c = manager.get('Cafe', columns_ingreso, value, 'Estado')
-        # elif column_name == 'Tipo':
-        #     self.id_c = manager.get('Cafe', columns_ingreso, value, 'Tamaño')
+        elif column_name == 'Tipo':
+            self.id_c = manager.get('Cafe', columns_ingreso, value, 'Tipo')
 
         print(value)
         print(column_name)
@@ -352,7 +358,8 @@ class VentanaPrincipal(QMainWindow):
             coffee = sql_structures.Coffee(self.regionCombobx.currentText(),
                                            self.fincaText.text(),
                                            int(self.cantidadText.text()),
-                                           self.estadoCombobx.currentText())
+                                           self.estadoCombobx.currentText(),
+                                           self.tipoCombobx.currentText())
             coffee.management('buy_coffee')
 
             self.fincaText.clear()
@@ -400,7 +407,8 @@ class VentanaPrincipal(QMainWindow):
         try:
             coffee = sql_structures.Packaging(self.stickerText.text(),
                                               self.colorBolsaText.text(),
-                                              self.tamanioText.text())
+                                              self.tamanioText.text(),
+                                              self.lineEdit.text())
             coffee.management('buy_packaging')
             self.stickerText.clear()
             self.colorBolsaText.clear()
@@ -450,16 +458,17 @@ class VentanaPrincipal(QMainWindow):
             dato2 = mana.print_table('Empacado')
             self.tableWidget.setRowCount(len(dato))
             for i in range(len(dato)):
-                self.tableWidget.setItem(i, 0, QTableWidgetItem(str(dato[i - 1][1])))
-                self.tableWidget.setItem(i, 1, QTableWidgetItem(str(dato[i - 1][2])))
-                self.tableWidget.setItem(i, 2, QTableWidgetItem(str(dato[i - 1][3])))
-                self.tableWidget.setItem(i, 3, QTableWidgetItem(str(dato[i - 1][4])))
-                self.tableWidget.setItem(i, 4, QTableWidgetItem('Hola'))
+                self.tableWidget.setItem(i, 0, QTableWidgetItem(str(dato[i][1])))
+                self.tableWidget.setItem(i, 1, QTableWidgetItem(str(dato[i][2])))
+                self.tableWidget.setItem(i, 2, QTableWidgetItem(str(dato[i][3])))
+                self.tableWidget.setItem(i, 3, QTableWidgetItem(str(dato[i][4])))
+                self.tableWidget.setItem(i, 4, QTableWidgetItem(str(dato[i][5])))
             self.tableWidget_2.setRowCount(len(dato2))
             for x in range(len(dato2)):
-                self.tableWidget_2.setItem(x, 0, QTableWidgetItem(str(dato2[x - 1][1])))
-                self.tableWidget_2.setItem(x, 1, QTableWidgetItem(str(dato2[x - 1][2])))
-                self.tableWidget_2.setItem(x, 2, QTableWidgetItem(str(dato2[x - 1][3])))
+                self.tableWidget_2.setItem(x, 0, QTableWidgetItem(str(dato2[x][1])))
+                self.tableWidget_2.setItem(x, 1, QTableWidgetItem(str(dato2[x][2])))
+                self.tableWidget_2.setItem(x, 2, QTableWidgetItem(str(dato2[x][3])))
+                self.tableWidget_2.setItem(x, 3, QTableWidgetItem(str(dato2[x][4])))
         except Exception as e:
             print(e)
 
@@ -485,9 +494,9 @@ class VentanaPrincipal(QMainWindow):
             dato = mana.print_table('usuarios')
             self.tableWidget_usuarios.setRowCount(len(dato))
             for i in range(len(dato)):
-                self.tableWidget_usuarios.setItem(i, 0, QTableWidgetItem(str(dato[i - 1][1])))
-                self.tableWidget_usuarios.setItem(i, 1, QTableWidgetItem(str(dato[i - 1][2])))
-                self.tableWidget_usuarios.setItem(i, 2, QTableWidgetItem(str(dato[i - 1][3])))
+                self.tableWidget_usuarios.setItem(i, 0, QTableWidgetItem(str(dato[i][1])))
+                self.tableWidget_usuarios.setItem(i, 1, QTableWidgetItem(str(dato[i][2])))
+                self.tableWidget_usuarios.setItem(i, 2, QTableWidgetItem(str(dato[i][3])))
         except Exception as e:
             print(e)
 
@@ -497,10 +506,10 @@ class VentanaPrincipal(QMainWindow):
             dato = mana.print_table('mobiliario')
             self.tableWidget_6.setRowCount(len(dato))
             for i in range(len(dato)):
-                self.tableWidget_6.setItem(i, 0, QTableWidgetItem(str(dato[i - 1][1])))
-                self.tableWidget_6.setItem(i, 1, QTableWidgetItem(str(dato[i - 1][2])))
-                self.tableWidget_6.setItem(i, 2, QTableWidgetItem(str(dato[i - 1][3])))
-                self.tableWidget_6.setItem(i, 3, QTableWidgetItem(str(dato[i - 1][4])))
+                self.tableWidget_6.setItem(i, 0, QTableWidgetItem(str(dato[i][1])))
+                self.tableWidget_6.setItem(i, 1, QTableWidgetItem(str(dato[i][2])))
+                self.tableWidget_6.setItem(i, 2, QTableWidgetItem(str(dato[i][3])))
+                self.tableWidget_6.setItem(i, 3, QTableWidgetItem(str(dato[i][4])))
         except Exception as e:
             print(e)
 

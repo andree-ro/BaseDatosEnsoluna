@@ -2055,17 +2055,22 @@ font: 75 12pt &quot;Open Sans Semibold&quot;</string>
                      <widget class="QTableWidget" name="tableWidget_2">
                       <column>
                        <property name="text">
-                        <string>Bolsa-Color</string>
-                       </property>
-                      </column>
-                      <column>
-                       <property name="text">
                         <string>Sticker-Región</string>
                        </property>
                       </column>
                       <column>
                        <property name="text">
+                        <string>Bolsa-Color</string>
+                       </property>
+                      </column>
+                      <column>
+                       <property name="text">
                         <string>Tamaño</string>
+                       </property>
+                      </column>
+                      <column>
+                       <property name="text">
+                        <string>Cantidad</string>
                        </property>
                       </column>
                      </widget>
@@ -3204,28 +3209,43 @@ font: 75 10pt &quot;Open Sans Semibold&quot;</string>
                      <number>100</number>
                     </property>
                     <item>
-                     <spacer name="horizontalSpacer_18">
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
+                     <widget class="QLabel" name="label_17">
+                      <property name="text">
+                       <string>Cantidad</string>
                       </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>40</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                     </spacer>
+                     </widget>
                     </item>
                     <item>
-                     <widget class="QPushButton" name="empaquetadoComprarBTN">
-                      <property name="minimumSize">
-                       <size>
-                        <width>0</width>
-                        <height>35</height>
-                       </size>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">QFrame{
+                     <widget class="QLineEdit" name="lineEdit"/>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QFrame" name="frame_32">
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <widget class="QPushButton" name="empaquetadoComprarBTN">
+                    <property name="geometry">
+                     <rect>
+                      <x>370</x>
+                      <y>20</y>
+                      <width>75</width>
+                      <height>35</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>35</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QFrame{
 background-color: rgb(51, 157, 255);
 }
 
@@ -3241,23 +3261,11 @@ background-color: rgb(209, 172, 127);
 font: 75 9pt  &quot;Open Sans Semibold&quot;
 }
 </string>
-                      </property>
-                      <property name="text">
-                       <string>Agregar</string>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QFrame" name="frame_32">
-                   <property name="frameShape">
-                    <enum>QFrame::StyledPanel</enum>
-                   </property>
-                   <property name="frameShadow">
-                    <enum>QFrame::Raised</enum>
-                   </property>
+                    </property>
+                    <property name="text">
+                     <string>Agregar</string>
+                    </property>
+                   </widget>
                   </widget>
                  </item>
                  <item>
@@ -4837,7 +4845,7 @@ font: 75 12pt &quot;Open Sans Semibold&quot;</string>
 font: 75 10pt &quot;Open Sans Semibold&quot;</string>
                       </property>
                       <property name="text">
-                       <string>Color de bolsa</string>
+                       <string>Id</string>
                       </property>
                      </widget>
                     </item>
@@ -4899,6 +4907,11 @@ font: 75 10pt &quot;Open Sans Semibold&quot;</string>
                       <item>
                        <property name="text">
                         <string>Tamaño</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>Cantidad</string>
                        </property>
                       </item>
                      </widget>
