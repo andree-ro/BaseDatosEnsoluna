@@ -7655,7 +7655,7 @@ font: 75 9pt  &quot;Open Sans Semibold&quot;
 font: 75 12pt &quot;Open Sans Semibold&quot;</string>
                       </property>
                       <property name="text">
-                       <string>Detalles de ventas</string>
+                       <string>Ventas</string>
                       </property>
                       <property name="alignment">
                        <set>Qt::AlignCenter</set>
