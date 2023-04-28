@@ -17,6 +17,7 @@ from sql_structures import Manager
 # TODO
 # Agregar al calendario mes y año (Juan Diego)
 # Agregar mensajes de confirmacion
+
 # Componer ventas(Agregar nit, nombre e incrementar numero de factura y cotizacion)
 
 # Obtener fechas y no string (Javier)
@@ -254,7 +255,7 @@ class VentanaPrincipal(QMainWindow):
             self.id_cat = manager.get('Catacion', columns_ingreso, value, 'Sabor')
         elif column_name == 'Color':
             self.id_cat = manager.get('Catacion', columns_ingreso, value, 'Color')
-        elif column_name == 'Puntuación':
+        elif column_name == 'Puntuacion':
             self.id_cat = manager.get('Catacion', columns_ingreso, value, 'Puntuacion')
         # elif column_name == 'Tipo':
         #     self.id_c = manager.get('Cafe', columns_ingreso, value, 'Tamaño')
@@ -460,6 +461,7 @@ class VentanaPrincipal(QMainWindow):
                 '',
                 '',
                 '',
+                '',
                 self.columnaAcEmCombobx.currentText(),
                 self.valorAcEmText.text(),
                 self.colorAcText.text())
@@ -478,7 +480,7 @@ class VentanaPrincipal(QMainWindow):
                                               '',
                                               '',
                                               '',
-                                              '',
+                                              '','',
                                               self.id_e)
             coffee.management('delete_packaging')
             self.colorElimText.clear()
