@@ -36,14 +36,6 @@ class Venta:
             raise Exception('Datos invalidos')
 
     def venta_cafe(self):
-        # 1 rojo = San Marcos
-        # 2 verde = Coban
-        # 3 Turquesa = Huehue
-        # 4 Naranja = acatenango
-        # 5 amarillo = antigua
-        # 6 morado = Nuevo Oriente
-        # 7 celeste = Fraijanes
-        # 8 azul = atitlan
         u_id = 0
         libra = 'Libra'
 

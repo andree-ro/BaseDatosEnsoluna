@@ -32,7 +32,7 @@ class VentanaPrincipal(QMainWindow):
 
 
         # ATENCION A CLICK EN TABLA
-        self.fila = 0
+        self.aux: int = 0
         self.idFactura = 0
         self.tableWidget.cellClicked.connect(self.mostrarFila_c)
         self.tableWidget_2.cellClicked.connect(self.mostrarFila_e)
@@ -410,9 +410,9 @@ class VentanaPrincipal(QMainWindow):
             coffee = sql_structures.Coffee('',
                                            '',
                                            '',
-                                           '',
+                                           '', '',
                                            self.columnaAcText.currentText(),
-                                           self.valorAcText.text(), int(self.fincaAcText.text()))
+                                           self.valorAcText.text(), self.fincaAcText.text())
             coffee.management('update_coffee')
             self.fincaAcText.clear()
             self.valorAcText.clear()
@@ -424,6 +424,7 @@ class VentanaPrincipal(QMainWindow):
     def delete_coffee(self):
         try:
             coffee = sql_structures.Coffee('',
+                                           '',
                                            '',
                                            '',
                                            '',
@@ -605,39 +606,42 @@ class VentanaPrincipal(QMainWindow):
         a = ""
         offset = 8
         encrypted = ""
-        usuario_comprobacion = self.lineEdit_usuarios.text()
-        usuario = sql_structures.Manager()
-        rol = usuario.iniciar_ses(usuario_comprobacion)
-        contrasena_comprobacion = self.lineEdit_contrasena.text()
-        contrasena = usuario.iniciar_contra(usuario_comprobacion)
-        c = encrip.decrypt(offset, contrasena, key)
-        if contrasena_comprobacion == c:
-            t = True
-            if rol == 1:
-                self.menu_show()
-            elif rol == 2:
-                self.menu_show()
-                self.btn_inventario.hide()
-                self.btn_mobiliario.hide()
-                self.btn_catacion.hide()
-                self.btn_usuario.hide()
-            elif rol == 3:
-                self.menu_show()
-                self.btn_ventas.hide()
-                self.btn_mobiliario.hide()
-                self.btn_catacion.hide()
-                self.btn_usuario.hide()
-            elif rol == 4:
-                self.menu_show()
-                self.btn_inventario.hide()
-                self.btn_mobiliario.hide()
-                self.btn_ventas.hide()
-                self.btn_usuario.hide()
+        try:
+            usuario_comprobacion = self.lineEdit_usuarios.text()
+            usuario = sql_structures.Manager()
+            rol = usuario.iniciar_ses(usuario_comprobacion)
+            contrasena_comprobacion = self.lineEdit_contrasena.text()
+            contrasena = usuario.iniciar_contra(usuario_comprobacion)
+            c = encrip.decrypt(offset, contrasena, key)
+            if contrasena_comprobacion == c:
+                t = True
+                if rol == 1:
+                    self.menu_show()
+                elif rol == 2:
+                    self.menu_show()
+                    self.btn_inventario.hide()
+                    self.btn_mobiliario.hide()
+                    self.btn_catacion.hide()
+                    self.btn_usuario.hide()
+                elif rol == 3:
+                    self.menu_show()
+                    self.btn_ventas.hide()
+                    self.btn_mobiliario.hide()
+                    self.btn_catacion.hide()
+                    self.btn_usuario.hide()
+                elif rol == 4:
+                    self.menu_show()
+                    self.btn_inventario.hide()
+                    self.btn_mobiliario.hide()
+                    self.btn_ventas.hide()
+                    self.btn_usuario.hide()
+                else:
+                    QMessageBox.about(self, 'Aviso', 'Usuario incorrecto!')
             else:
-                QMessageBox.about(self, 'Aviso', 'Usuario incorrecto!')
-        else:
+                QMessageBox.about(self, 'Aviso', 'Contraseña incorrecta!')
+        except Exception as e:
+            print(e)
             QMessageBox.about(self, 'Aviso', 'Contraseña incorrecta!')
-
     def menu_show(self):
         self.btn_menu.hide()
         self.btn_menu_2.show()
@@ -782,18 +786,38 @@ class VentanaPrincipal(QMainWindow):
         cantidadUnidad = self.lineEdit_4.text()
         estado = self.comboBox_2.currentText()
         precioUnidad = self.lineEdit_6.text()
-        self.productos.append({"region": region,
-                               "finca": finca,
-                               "cantidadUnidad": cantidadUnidad,
-                               "estado": estado,
-                               "precioUnidad": precioUnidad})
+        if self.aux == 0:
+            self.productos.append({"region": region,
+                                       "finca": finca,
+                                       "cantidadUnidad": cantidadUnidad,
+                                       "estado": estado,
+                                       "precioUnidad": precioUnidad})
+        else:
+            encontrado = False
+            for p in self.productos:
+                if p["finca"] == finca:
+                    encontrado = True
+                    cantidadn = int(p['cantidadUnidad']) + int(cantidadUnidad)
+                    self.productos[self.productos.index(p)] = {"region": region,
+                                                                   "finca": finca,
+                                                                   "cantidadUnidad": cantidadn,
+                                                                   "estado": estado,
+                                                                   "precioUnidad": precioUnidad}
+                    break
+            if not encontrado:
+                self.productos.append({"region": region,
+                                           "finca": finca,
+                                           "cantidadUnidad": cantidadUnidad,
+                                           "estado": estado,
+                                           "precioUnidad": precioUnidad})
+
         try:
             region = self.comboBox.currentText()
             finca = self.lineEdit_3.text()
             data = ['id', 'Estampa', 'Color', 'Tamaño']
             color = 'Color'
             manager = sql_structures.Manager()
-            # print(region)
+                # print(region)
             if region == 'Huehuetenango':
                 self.idEmpaque = manager.get('Empacado', data, 'Turquesa', color)
             elif region == 'San Marcos':
@@ -812,17 +836,18 @@ class VentanaPrincipal(QMainWindow):
                 self.idEmpaque = manager.get('Empacado', data, 'Azul', color)
             columnsCafe = ['id', 'Region', 'Finca', 'Libras', 'Estado']
             fin = 'Finca'
-            print(finca)
             self.idCafe = manager.get('Cafe', columnsCafe, finca, fin)
             print('hola3')
             total = 0
             total = int(self.lineEdit_4.text()) * int(self.lineEdit_6.text())
             venta_d = sql_structures.Venta(self.comboBox.currentText(),
-                                         self.lineEdit_3.text(),
-                                         int(self.lineEdit_4.text()),
-                                         total, self.lineEdit_6.text(), self.idEmpaque, self.idCafe)
+                                               self.lineEdit_3.text(),
+                                               int(self.lineEdit_4.text()),
+                                               total, self.lineEdit_6.text(), self.idEmpaque, self.idCafe)
             venta_d.management('venta_cafe')
             QMessageBox.about(self, 'Aviso', 'Se agrego correctamente!')
+            self.aux += 1
+
         except Exception as e:
             print(e)
             QMessageBox.about(self, 'Aviso', 'Error al agregar!')
@@ -835,15 +860,20 @@ class VentanaPrincipal(QMainWindow):
         # lIMPIAR TEXT
 
     def agregarCliente(self):
-        management = Manager()
-        mana = sql_structures.Manager()
-        nombre = self.fincaAcText_4.text()
-        # nit = self.fincaAcText_5.text()
-        direccion = self.fincaAcText_6.text()
-        data_list = [direccion, nombre, 0]
-        columns_ingreso = ['id', 'Direccion', 'Cliente', 'Venta_id']
-        management.insert_into_table('factura', columns_ingreso, data_list)
-        self.idFac = mana.get('factura', columns_ingreso, nombre, 'Cliente')
+        try:
+            management = Manager()
+            mana = sql_structures.Manager()
+            nombre = self.fincaAcText_4.text()
+            # nit = self.fincaAcText_5.text()
+            direccion = self.fincaAcText_6.text()
+            data_list = [direccion, nombre, 0]
+            columns_ingreso = ['id', 'Direccion', 'Cliente', 'Venta_id']
+            management.insert_into_table('factura', columns_ingreso, data_list)
+            self.idFac = mana.get('factura', columns_ingreso, nombre, 'Cliente')
+            QMessageBox.about(self, 'Aviso', 'Se agrego correctamente!')
+        except Exception as e:
+            print(e)
+            QMessageBox.about(self, 'Aviso', 'Error al agregar!')
 
     def realizarFactura(self):
 
