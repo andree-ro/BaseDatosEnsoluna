@@ -5,3 +5,5 @@ from .packaging import Packaging
 from .catacion import Catacion
 from .mobiliario import SqlDataBase_mobiliario
 from .ventas import Venta
+from .transaccion import Transaccion
+# import conexion

@@ -11,21 +11,6 @@ from datetime import datetime
 
 from sql_structures import Manager
 
-
-# usuarios = sql_structures.SqlDataBase_usuarios()
-
-# TODO
-# Agregar al calendario mes y año (Juan Diego)
-# Agregar mensajes de confirmacion
-
-# Componer ventas(Agregar nit, nombre e incrementar numero de factura y cotizacion)
-
-# Obtener fechas y no string (Javier)
-# Ordenar el codigo
-# Manual de usuario
-# Explicarnos el codigo
-
-
 class VentanaPrincipal(QMainWindow):
     def __init__(self):
         super(VentanaPrincipal, self).__init__()
@@ -35,6 +20,7 @@ class VentanaPrincipal(QMainWindow):
         # ATENCION A CLICK EN TABLA
         self.aux: int = 0
         self.idFactura = 0
+        self.idReporte = 0
         self.tableWidget.cellClicked.connect(self.mostrarFila_c)
         self.tableWidget_2.cellClicked.connect(self.mostrarFila_e)
         self.tableWidget_5.cellClicked.connect(self.mostrarFila_cat)
@@ -42,7 +28,7 @@ class VentanaPrincipal(QMainWindow):
         self.tableWidget_usuarios_2.cellClicked.connect(self.carga_detalles)
         self.agregarCotizacion_2.clicked.connect(self.agregarCliente)
 
-
+        self.reportes = []
         self.productos = []
         self.total = 0
         self.frame_menu.hide()
@@ -149,6 +135,11 @@ class VentanaPrincipal(QMainWindow):
 
         # Detalle venta
         self.cargar_usuarios_2.clicked.connect(self.carga_venta)
+
+        # TRANSACCIONES
+        self.tablaTransacciones.cellClicked.connect(self.mostrarFilaTablaTransaccion)
+        # self.cargar_usuarios.clicked.connect(self.cargaTablaTransaccion)
+        self.generarReporteBTN.clicked.connect(self.realizarReporte)
 
     def mostrarFila_ventas(self, row, column):
         print('1')
@@ -287,6 +278,16 @@ class VentanaPrincipal(QMainWindow):
                                            calendario)
             mobiliario.management('add_mobiliario')
             QMessageBox.about(self, 'Aviso', 'Agregado correctamente!')
+            tran = sql_structures.Transaccion(str(datetime.now()),
+                                              self.usuario_comprobacion,
+                                              "Mobiliario",
+                                              "Confirmado",
+                                              "Nulo",
+                                              '',
+                                              '',
+                                              ''
+                                              )
+            tran.management("ingresar_transaccion")
         except Exception as e:
             print(e)
             QMessageBox.about(self, 'Aviso', 'Error de agregado!')
@@ -401,10 +402,21 @@ class VentanaPrincipal(QMainWindow):
             self.fincaText.clear()
             self.cantidadText.clear()
             QMessageBox.about(self, 'Aviso', 'La compra se realizo con exito!')
+            tran = sql_structures.Transaccion(str(datetime.now()),
+                                              self.usuario_comprobacion,
+                                              "Compras",
+                                              "Confirmado",
+                                              "Nulo",
+                                              '',
+                                              '',
+                                              ''
+                                              )
+            tran.management("ingresar_transaccion")
 
         except Exception as e:
             print(e)
             QMessageBox.about(self, 'Aviso', 'Compra fallida!')
+
 
     def update_coffee(self):
         try:
@@ -451,6 +463,16 @@ class VentanaPrincipal(QMainWindow):
             self.colorBolsaText.clear()
             self.tamanioText.clear()
             QMessageBox.about(self, 'Aviso', 'La compra se realizo con exito!')
+            tran = sql_structures.Transaccion(str(datetime.now()),
+                                              self.usuario_comprobacion,
+                                              "Compras Empaques",
+                                              "Confirmado",
+                                              "Nulo",
+                                              '',
+                                              '',
+                                              ''
+                                              )
+            tran.management("ingresar_transaccion")
         except Exception as e:
             print(e)
             QMessageBox.about(self, 'Aviso', 'Compra fallida!')
@@ -535,6 +557,18 @@ class VentanaPrincipal(QMainWindow):
                 self.tableWidget_usuarios.setItem(i, 0, QTableWidgetItem(str(dato[i][1])))
                 self.tableWidget_usuarios.setItem(i, 1, QTableWidgetItem(str(dato[i][2])))
                 self.tableWidget_usuarios.setItem(i, 2, QTableWidgetItem(str(dato[i][3])))
+
+            dato1 = mana.print_table('transaccion')
+            self.tablaTransacciones.setRowCount(len(dato1))
+            for i in range(len(dato1)):
+                self.tablaTransacciones.setItem(i, 0, QTableWidgetItem(str(dato1[i][1])))
+                self.tablaTransacciones.setItem(i, 1, QTableWidgetItem(str(dato1[i][2])))
+                self.tablaTransacciones.setItem(i, 2, QTableWidgetItem(str(dato1[i][3])))
+                self.tablaTransacciones.setItem(i, 3, QTableWidgetItem(str(dato1[i][4])))
+                self.tablaTransacciones.setItem(i, 4, QTableWidgetItem(str(dato1[i][5])))
+
+
+
         except Exception as e:
             print(e)
 
@@ -609,11 +643,11 @@ class VentanaPrincipal(QMainWindow):
         offset = 8
         encrypted = ""
         try:
-            usuario_comprobacion = self.lineEdit_usuarios.text()
+            self.usuario_comprobacion = self.lineEdit_usuarios.text()
             usuario = sql_structures.Manager()
-            rol = usuario.iniciar_ses(usuario_comprobacion)
+            rol = usuario.iniciar_ses(self.usuario_comprobacion)
             contrasena_comprobacion = self.lineEdit_contrasena.text()
-            contrasena = usuario.iniciar_contra(usuario_comprobacion)
+            contrasena = usuario.iniciar_contra(self.usuario_comprobacion)
             c = encrip.decrypt(offset, contrasena, key)
             if contrasena_comprobacion == c:
                 t = True
@@ -782,6 +816,72 @@ class VentanaPrincipal(QMainWindow):
         self.productos.clear()
         self.total = 0
 
+    def realizarReporte(self):
+        print('1')
+        now = datetime.now()
+        formato = now.strftime('%d - %m - %Y')
+        print('2')
+        # Crear un nuevo documento PDF
+        pdf = canvas.Canvas(f"Reporte{self.idReporte}.pdf")
+        # Configurar el estilo del texto
+        pdf.setFont("Helvetica", 12)
+        print('3')
+
+        # Agregar los datos del cliente
+        pdf.drawString(400, 700, f"Reporte: ---")
+        pdf.drawString(100, 700, f"Fecha: {formato}")
+        print('4')
+        y = 600  # Posición vertical inicial
+        mana = sql_structures.Manager()
+        dato1 = mana.print_table('transaccion')
+        print(dato1)
+        print('5')
+        for i in range(len(dato1)):
+            print('6')
+            hora = str(dato1[i][1])
+            usuario = str(dato1[i][2])
+            modulo = str(dato1[i][3])
+            estado = str(dato1[i][4])
+            error = str(dato1[i][5])
+            print('7')
+            self.reportes.append({"Hora": hora,
+                                  "Usuario": usuario,
+                                  "Modulo": modulo,
+                                  "Estado": estado,
+                                  "Error": error
+                                  })
+            print('8')
+
+        z = 650
+        x = 620
+        print('9')
+        for i in range(len(dato1)):
+            print('10')
+            pdf.drawString(50, z, f"Transaccion: {i + 1}")
+            pdf.drawString(50, x, "Hora")
+            pdf.drawString(220, x, "Usuario")
+            pdf.drawString(300, x, "Modulo")
+            pdf.drawString(375, x, "Estado")
+            pdf.drawString(450, x, "Error")
+            print('11')
+
+            print('13')
+            pdf.drawString(50, y, str(dato1[i][1]))
+            pdf.drawString(220, y, str(dato1[i][2]))
+            pdf.drawString(300, y, str(dato1[i][3]))
+            pdf.drawString(375, y, str(dato1[i][4]))
+            pdf.drawString(450, y, str(dato1[i][5]))
+            y -= 60
+            z -= 70
+            x -= 60
+
+        print('15')
+        pdf.save()
+        print('17')
+        reporte = f"reporte{self.idReporte}.pdf"
+        webbrowser.open_new(reporte)
+        self.reportes.clear()
+
     def agregarFacturaUno(self):
         region = self.comboBox.currentText()
         finca = self.lineEdit_3.text()
@@ -849,6 +949,16 @@ class VentanaPrincipal(QMainWindow):
             venta_d.management('venta_cafe')
             QMessageBox.about(self, 'Aviso', 'Se agrego correctamente!')
             self.aux += 1
+            tran = sql_structures.Transaccion(str(datetime.now()),
+                                              self.usuario_comprobacion,
+                                              "Facturacion",
+                                              "Confirmado",
+                                              "Nulo",
+                                              '',
+                                              '',
+                                              ''
+                                              )
+            tran.management("ingresar_transaccion")
 
         except Exception as e:
             print(e)
@@ -858,8 +968,6 @@ class VentanaPrincipal(QMainWindow):
         self.lineEdit_4.clear()
         self.lineEdit_6.clear()
 
-        # TODO
-        # lIMPIAR TEXT
 
     def agregarCliente(self):
         try:
@@ -921,3 +1029,28 @@ class VentanaPrincipal(QMainWindow):
         webbrowser.open_new(factura)
         self.productos.clear()
         self.total = 0
+
+    def mostrarFilaTablaTransaccion(self, row, column):
+        item = self.transaccionesTabla.item(row, column)
+        value = item.text()
+        columns_ingreso = ['id', 'Hora', 'Usuario', 'Modulo', 'Estado', 'Error']
+        # Obtener el nombre de la columna
+        header_item = self.transaccionesTabla.horizontalHeaderItem(column)
+        column_name = header_item.text()
+        # Realizar la búsqueda en la base de datos según la columna correspondiente
+        if column_name == 'Hora':
+            self.id_t = self.manager.get('transaccion', columns_ingreso, value, 'Hora')
+            self.cm = 'Hora'
+        elif column_name == 'Usuario':
+            self.id_t = self.manager.get('transaccion', columns_ingreso, value, 'Usuario')
+            self.cm = 'Usuario'
+        elif column_name == 'Modulo':
+            self.id_t = self.manager.get('transaccion', columns_ingreso, value, 'Modulo')
+            self.cm = 'Modulo'
+        elif column_name == 'Estado':
+            self.id_t = self.manager.get('transaccion', columns_ingreso, value, 'Estado')
+            self.cm = 'Estado'
+        elif column_name == 'Error':
+            self.id_t = self.manager.get('transaccion', columns_ingreso, value, 'Error')
+            self.cm = 'Error'
+
