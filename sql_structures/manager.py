@@ -13,7 +13,7 @@ def get_db_connection(user, password, database):
         global connection
         if connection is None:
             connection = mysql.connector.connect(
-                host="127.0.0.1", user=user, password=password, database=database, port=3306
+                host="192.168.1.150", user=user, password=password, database=database, port=3306
             )
             print("Conexion creada por primera vez:", database)
         else:
@@ -27,9 +27,9 @@ def get_db_connection(user, password, database):
 class Manager:
     def __init__(self):
         #self.database_user = 'Javier'
-        self.database_user = 'root'
+        self.database_user = 'juan'
         # self.database_password = 'I.gt.MPW.2023.U'
-        self.database_password = 'andree2332'
+        self.database_password = '1234'
         #self.database_password = 'Marco.andres23'
         # self.database_password = '1234'
         # self.database_password = '1234'
@@ -197,8 +197,8 @@ class Manager:
         # self.close()
         return rows[0][0]
 
-    def transaction(self, level):
-        self.conexion.start_transaction("", level, "")
+    def transaction(self):
+        self.conexion.start_transaction("", "serializable", "")
         self.conexion.autocommit = False
 
     def commi(self):
