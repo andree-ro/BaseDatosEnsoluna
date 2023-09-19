@@ -288,9 +288,15 @@ class VentanaPrincipal(QMainWindow):
                                               ''
                                               )
             tran.management("ingresar_transaccion")
+            conf = True
+            manager = sql_structures.Manager()
+            manager.verification(conf)
         except Exception as e:
             print(e)
             QMessageBox.about(self, 'Aviso', 'Error de agregado!')
+            conf = False
+            manager = sql_structures.Manager()
+            manager.verification(conf)
 
     def new_user(self):
         try :
@@ -301,9 +307,15 @@ class VentanaPrincipal(QMainWindow):
             self.info_usuario.clear()
             self.info_contrasena.clear()
             QMessageBox.about(self, 'Aviso', 'Agregado correctamente!')
+            conf = True
+            manager = sql_structures.Manager()
+            manager.verification(conf)
         except Exception as e:
             print(e)
             QMessageBox.about(self, 'Aviso', 'Error de agregado!')
+            conf = False
+            manager = sql_structures.Manager()
+            manager.verification(conf)
 
     def update_user(self):
         try:
@@ -317,9 +329,15 @@ class VentanaPrincipal(QMainWindow):
             self.info_contrasena_a.clear()
             self.Info_edit.clear()
             QMessageBox.about(self, 'Aviso', 'Modificado correctamente!')
+            conf = True
+            manager = sql_structures.Manager()
+            manager.verification(conf)
         except Exception as e:
             print(e)
             QMessageBox.about(self, 'Aviso', 'Error al modificar!')
+            conf = False
+            manager = sql_structures.Manager()
+            manager.verification(conf)
 
     def delete_user(self):
         try:
@@ -327,9 +345,15 @@ class VentanaPrincipal(QMainWindow):
             usuarios.delete_user()
             self.info_usuario_e.clear()
             QMessageBox.about(self, 'Aviso', 'Eliminado correctamente!')
+            conf = True
+            manager = sql_structures.Manager()
+            manager.verification(conf)
         except Exception as e:
             print(e)
             QMessageBox.about(self, 'Aviso', 'Error al eliminar!')
+            conf = False
+            manager = sql_structures.Manager()
+            manager.verification(conf)
 
     def new_catacion(self):
         try:
@@ -348,9 +372,15 @@ class VentanaPrincipal(QMainWindow):
             self.color_catacion.clear()
             self.puntuacion_catacion.clear()
             QMessageBox.about(self, 'Aviso', 'Agregado correctamente!')
+            conf = True
+            manager = sql_structures.Manager()
+            manager.verification(conf)
         except Exception as e:
             print(e)
             QMessageBox.about(self, 'Aviso', 'Error de agregado!')
+            conf = False
+            manager = sql_structures.Manager()
+            manager.verification(conf)
 
     def update_catacion(self):
         try:
@@ -385,9 +415,15 @@ class VentanaPrincipal(QMainWindow):
             catacion.management('delete_catacion')
             self.finca_catacion_3.clear()
             QMessageBox.about(self, 'Aviso', 'Eliminado correctamente!')
+            conf = True
+            manager = sql_structures.Manager()
+            manager.verification(conf)
         except Exception as e:
             print(e)
             QMessageBox.about(self, 'Aviso', 'Error al Eliminar!')
+            conf = False
+            manager = sql_structures.Manager()
+            manager.verification(conf)
 
     # METODOS/FUNCIONES CLASE COFFEE
     def buy_coffee(self):
@@ -412,11 +448,16 @@ class VentanaPrincipal(QMainWindow):
                                               ''
                                               )
             tran.management("ingresar_transaccion")
+            conf = True
+            manager = sql_structures.Manager()
+            manager.verification(conf)
 
         except Exception as e:
             print(e)
             QMessageBox.about(self, 'Aviso', 'Compra fallida!')
-
+            conf = False
+            manager = sql_structures.Manager()
+            manager.verification(conf)
 
     def update_coffee(self):
         try:
@@ -430,9 +471,15 @@ class VentanaPrincipal(QMainWindow):
             self.fincaAcText.clear()
             self.valorAcText.clear()
             QMessageBox.about(self, 'Aviso', 'Se modifico con exito!')
+            conf = True
+            manager = sql_structures.Manager()
+            manager.verification(conf)
         except Exception as e:
             print(e)
             QMessageBox.about(self, 'Aviso', 'Modificacion fallida!')
+            conf = False
+            manager = sql_structures.Manager()
+            manager.verification(conf)
 
     def delete_coffee(self):
         try:
@@ -447,9 +494,15 @@ class VentanaPrincipal(QMainWindow):
             coffee.management('delete_coffee')
             self.fincaElimText.clear()
             QMessageBox.about(self, 'Aviso', 'Se elimino con exito!')
+            conf = True
+            manager = sql_structures.Manager()
+            manager.verification(conf)
         except Exception as e:
             print(e)
             QMessageBox.about(self, 'Aviso', 'Eliminacion fallida!')
+            conf = False
+            manager = sql_structures.Manager()
+            manager.verification(conf)
 
     # METODOS/FUNCIONES CLASE PACKAGING
     def buy_packaging(self):
@@ -473,9 +526,15 @@ class VentanaPrincipal(QMainWindow):
                                               ''
                                               )
             tran.management("ingresar_transaccion")
+            conf = True
+            manager = sql_structures.Manager()
+            manager.verification(conf)
         except Exception as e:
             print(e)
             QMessageBox.about(self, 'Aviso', 'Compra fallida!')
+            conf = False
+            manager = sql_structures.Manager()
+            manager.verification(conf)
 
     def update_packaging(self):
         try:
@@ -492,9 +551,15 @@ class VentanaPrincipal(QMainWindow):
             self.colorAcText.clear()
             self.valorAcEmText.clear()
             QMessageBox.about(self, 'Aviso', 'Se modifico con exito!')
+            conf = True
+            manager = sql_structures.Manager()
+            manager.verification(conf)
         except Exception as e:
             print(e)
             QMessageBox.about(self, 'Aviso', 'Modificacion fallida!')
+            conf = False
+            manager = sql_structures.Manager()
+            manager.verification(conf)
 
     def delete_packaging(self):
         try:
@@ -507,9 +572,15 @@ class VentanaPrincipal(QMainWindow):
             coffee.management('delete_packaging')
             self.colorElimText.clear()
             QMessageBox.about(self, 'Aviso', 'Se elimino con exito!')
+            conf = True
+            manager = sql_structures.Manager()
+            manager.verification(conf)
         except Exception as e:
             print(e)
             QMessageBox.about(self, 'Aviso', 'Eliminacion fallida!')
+            conf = False
+            manager = sql_structures.Manager()
+            manager.verification(conf)
 
     def carga_cafe_empacado(self):
         try:

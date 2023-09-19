@@ -76,6 +76,12 @@ class Manager:
         # self.close()
         return self.print_table(table_name)
 
+    def verification(self, conf):
+        if conf is True:
+            self.commi()
+        elif conf is False:
+            self.rollB()
+
     def update_table(self, table_name, table_data, data_list, column, data):
         id = self.get_id(table_name, table_data, data_list)
         data = f"'{data}'" if not (isinstance(data, numbers.Number)) else f"{data}"
