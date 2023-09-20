@@ -21,7 +21,7 @@ def get_db_connection(user, password, database):
 class Manager:
     def __init__(self):
         self.database_user = 'root'
-        self.database_password = '1234'
+        self.database_password = 'Marco.andres23'
         #self.database_host = '192.168.1.150'
         self.database_database = 'mydb'
         self.conexion = get_db_connection(self.database_user, self.database_password, self.database_database)

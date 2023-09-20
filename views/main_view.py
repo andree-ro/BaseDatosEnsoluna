@@ -154,13 +154,13 @@ class VentanaPrincipal(QMainWindow):
             coffee.management('buy_coffee')
             conf = True
             self.manager.verification(conf)
-
             self.fincaText.clear()
             self.cantidadText.clear()
             QMessageBox.about(self, 'Aviso', 'La compra se realizo con exito!')
             tran = sql_structures.Transaccion(str(datetime.now()),
                                               self.usuario_comprobacion,
                                               "Compras",
+                                              "Ingreso",
                                               "Confirmado",
                                               "Nulo",
                                               '',
@@ -177,6 +177,19 @@ class VentanaPrincipal(QMainWindow):
             conf = False
             manager = sql_structures.Manager()
             manager.verification(conf)
+            tran = sql_structures.Transaccion(str(datetime.now()),
+                                              self.usuario_comprobacion,
+                                              "Compras",
+                                              "Ingreso",
+                                              "Denegado",
+                                              "Error",
+                                              '',
+                                              '',
+                                              ''
+                                              )
+            tran.management("ingresar_transaccion")
+            conf = True
+            self.manager.verification(conf)
 
     def update_coffee(self):
         try:
@@ -193,12 +206,39 @@ class VentanaPrincipal(QMainWindow):
             conf = True
             manager = sql_structures.Manager()
             manager.verification(conf)
+            tran = sql_structures.Transaccion(str(datetime.now()),
+                                              self.usuario_comprobacion,
+                                              "Compras",
+                                              "Actualizacion",
+                                              "Confirmado",
+                                              "Nulo",
+                                              '',
+                                              '',
+                                              ''
+                                              )
+            tran.management("ingresar_transaccion")
+            conf = True
+            self.manager.verification(conf)
         except Exception as e:
             print(e)
             QMessageBox.about(self, 'Aviso', 'Modificacion fallida!')
             conf = False
             manager = sql_structures.Manager()
             manager.verification(conf)
+            tran = sql_structures.Transaccion(str(datetime.now()),
+                                              self.usuario_comprobacion,
+                                              "Compras",
+                                              "Actualizacion",
+                                              "Confirmado",
+                                              "Error",
+                                              '',
+                                              '',
+                                              ''
+                                              )
+            tran.management("ingresar_transaccion")
+            conf = True
+            self.manager.verification(conf)
+
 
     def delete_coffee(self):
         try:
@@ -216,12 +256,38 @@ class VentanaPrincipal(QMainWindow):
             conf = True
             manager = sql_structures.Manager()
             manager.verification(conf)
+            tran = sql_structures.Transaccion(str(datetime.now()),
+                                              self.usuario_comprobacion,
+                                              "Compras",
+                                              "Eliminar",
+                                              "Confirmado",
+                                              "Nulo",
+                                              '',
+                                              '',
+                                              ''
+                                              )
+            tran.management("ingresar_transaccion")
+            conf = True
+            self.manager.verification(conf)
         except Exception as e:
             print(e)
             QMessageBox.about(self, 'Aviso', 'Eliminacion fallida!')
             conf = False
             manager = sql_structures.Manager()
             manager.verification(conf)
+            tran = sql_structures.Transaccion(str(datetime.now()),
+                                              self.usuario_comprobacion,
+                                              "Compras",
+                                              "Eliminar",
+                                              "Denegado",
+                                              "Error",
+                                              '',
+                                              '',
+                                              ''
+                                              )
+            tran.management("ingresar_transaccion")
+            conf = True
+            self.manager.verification(conf)
 
     # METODOS/FUNCIONES CLASE PACKAGING
     def buy_packaging(self):
@@ -235,9 +301,13 @@ class VentanaPrincipal(QMainWindow):
             self.colorBolsaText.clear()
             self.tamanioText.clear()
             QMessageBox.about(self, 'Aviso', 'La compra se realizo con exito!')
+            conf = True
+            manager = sql_structures.Manager()
+            manager.verification(conf)
             tran = sql_structures.Transaccion(str(datetime.now()),
                                               self.usuario_comprobacion,
                                               "Compras Empaques",
+                                              "Ingreso",
                                               "Confirmado",
                                               "Nulo",
                                               '',
@@ -254,6 +324,21 @@ class VentanaPrincipal(QMainWindow):
             conf = False
             manager = sql_structures.Manager()
             manager.verification(conf)
+            tran = sql_structures.Transaccion(str(datetime.now()),
+                                              self.usuario_comprobacion,
+                                              "Compras Empaques",
+                                              "Ingreso",
+                                              "Denegado",
+                                              "Error",
+                                              '',
+                                              '',
+                                              ''
+                                              )
+            tran.management("ingresar_transaccion")
+            conf = True
+            manager = sql_structures.Manager()
+            manager.verification(conf)
+
 
     def update_packaging(self):
         try:
@@ -273,12 +358,38 @@ class VentanaPrincipal(QMainWindow):
             conf = True
             manager = sql_structures.Manager()
             manager.verification(conf)
+            tran = sql_structures.Transaccion(str(datetime.now()),
+                                              self.usuario_comprobacion,
+                                              "Compras",
+                                              "Actualizacion",
+                                              "Confirmado",
+                                              "Nulo",
+                                              '',
+                                              '',
+                                              ''
+                                              )
+            tran.management("ingresar_transaccion")
+            conf = True
+            self.manager.verification(conf)
         except Exception as e:
             print(e)
             QMessageBox.about(self, 'Aviso', 'Modificacion fallida!')
             conf = False
             manager = sql_structures.Manager()
             manager.verification(conf)
+            tran = sql_structures.Transaccion(str(datetime.now()),
+                                              self.usuario_comprobacion,
+                                              "Compras",
+                                              "Actualizacion",
+                                              "Denegado",
+                                              "Error",
+                                              '',
+                                              '',
+                                              ''
+                                              )
+            tran.management("ingresar_transaccion")
+            conf = True
+            self.manager.verification(conf)
 
     def delete_packaging(self):
         try:
@@ -294,12 +405,38 @@ class VentanaPrincipal(QMainWindow):
             conf = True
             manager = sql_structures.Manager()
             manager.verification(conf)
+            tran = sql_structures.Transaccion(str(datetime.now()),
+                                              self.usuario_comprobacion,
+                                              "Compras",
+                                              "Eliminar",
+                                              "Confirmado",
+                                              "Nulo",
+                                              '',
+                                              '',
+                                              ''
+                                              )
+            tran.management("ingresar_transaccion")
+            conf = True
+            self.manager.verification(conf)
         except Exception as e:
             print(e)
             QMessageBox.about(self, 'Aviso', 'Eliminacion fallida!')
             conf = False
             manager = sql_structures.Manager()
             manager.verification(conf)
+            tran = sql_structures.Transaccion(str(datetime.now()),
+                                              self.usuario_comprobacion,
+                                              "Compras",
+                                              "Eliminar",
+                                              "Denegado",
+                                              "Error",
+                                              '',
+                                              '',
+                                              ''
+                                              )
+            tran.management("ingresar_transaccion")
+            conf = True
+            self.manager.verification(conf)
 
     # METODOS/FUNCIONES CLASE VENTAS
     def agregarCliente(self):
@@ -314,9 +451,41 @@ class VentanaPrincipal(QMainWindow):
             management.insert_into_table('factura', columns_ingreso, data_list)
             self.idFac = mana.get('factura', columns_ingreso, nombre, 'Cliente')
             QMessageBox.about(self, 'Aviso', 'Se agrego correctamente!')
+            conf = True
+            self.manager.verification(conf)
+            tran = sql_structures.Transaccion(str(datetime.now()),
+                                              self.usuario_comprobacion,
+                                              "Ventas",
+                                              "Agregar",
+                                              "Confirmado",
+                                              "Nulo",
+                                              '',
+                                              '',
+                                              ''
+                                              )
+            tran.management("ingresar_transaccion")
+            conf = True
+            self.manager.verification(conf)
+
+
         except Exception as e:
             print(e)
             QMessageBox.about(self, 'Aviso', 'Error al agregar!')
+            conf = False
+            self.manager.verification(conf)
+            tran = sql_structures.Transaccion(str(datetime.now()),
+                                              self.usuario_comprobacion,
+                                              "Ventas",
+                                              "Agregar",
+                                              "Denegado",
+                                              "Error",
+                                              '',
+                                              '',
+                                              ''
+                                              )
+            tran.management("ingresar_transaccion")
+            conf = True
+            self.manager.verification(conf)
 
     # METODOS/FUNCIONES CLASE CATACION
     def new_catacion(self):
@@ -361,8 +530,12 @@ class VentanaPrincipal(QMainWindow):
             catacion.management('update_catacion')
             self.aroma_catacion_2.clear()
             self.valorAcText_2.clear()
+            conf = True
+            self.manager.verification(conf)
         except Exception as e:
             print(e)
+            conf = False
+            self.manager.verification(conf)
 
     def delete_catacion(self):
         try:
@@ -413,9 +586,12 @@ class VentanaPrincipal(QMainWindow):
                                            calendario)
             mobiliario.management('add_mobiliario')
             QMessageBox.about(self, 'Aviso', 'Agregado correctamente!')
+            conf = True
+            self.manager.verification(conf)
             tran = sql_structures.Transaccion(str(datetime.now()),
                                               self.usuario_comprobacion,
                                               "Mobiliario",
+                                              "Agregar",
                                               "Confirmado",
                                               "Nulo",
                                               '',
@@ -424,12 +600,25 @@ class VentanaPrincipal(QMainWindow):
                                               )
             tran.management("ingresar_transaccion")
             conf = True
-            manager = sql_structures.Manager()
-            manager.verification(conf)
+            self.manager.verification(conf)
         except Exception as e:
             print(e)
             QMessageBox.about(self, 'Aviso', 'Error de agregado!')
             conf = False
+            manager = sql_structures.Manager()
+            manager.verification(conf)
+            tran = sql_structures.Transaccion(str(datetime.now()),
+                                              self.usuario_comprobacion,
+                                              "Mobiliario",
+                                              "Agregar",
+                                              "Denegado",
+                                              "Error",
+                                              '',
+                                              '',
+                                              ''
+                                              )
+            tran.management("ingresar_transaccion")
+            conf = True
             manager = sql_structures.Manager()
             manager.verification(conf)
 
