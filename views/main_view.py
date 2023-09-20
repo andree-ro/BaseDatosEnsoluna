@@ -31,6 +31,7 @@ class VentanaPrincipal(QMainWindow):
         self.reportes = []
         self.productos = []
         self.total = 0
+        self.n_n = 0
         self.manager = sql_structures.Manager()
         self.frame_menu.hide()
         self.btn_menu.hide()
@@ -734,8 +735,9 @@ class VentanaPrincipal(QMainWindow):
                 self.tablaTransacciones.setItem(i, 0, QTableWidgetItem(str(dato1[i][1])))
                 self.tablaTransacciones.setItem(i, 1, QTableWidgetItem(str(dato1[i][2])))
                 self.tablaTransacciones.setItem(i, 2, QTableWidgetItem(str(dato1[i][3])))
-                self.tablaTransacciones.setItem(i, 3, QTableWidgetItem(str(dato1[i][4])))
-                self.tablaTransacciones.setItem(i, 4, QTableWidgetItem(str(dato1[i][5])))
+                self.tablaTransacciones.setItem(i, 3, QTableWidgetItem(str(dato1[i][5])))
+                self.tablaTransacciones.setItem(i, 4, QTableWidgetItem(str(dato1[i][4])))
+                self.tablaTransacciones.setItem(i, 5, QTableWidgetItem(str(dato1[i][6])))
 
 
 
@@ -795,7 +797,7 @@ class VentanaPrincipal(QMainWindow):
     def mostrarFilaTablaTransaccion(self, row, column):
         item = self.transaccionesTabla.item(row, column)
         value = item.text()
-        columns_ingreso = ['id', 'Hora', 'Usuario', 'Modulo', 'Estado', 'Error']
+        columns_ingreso = ['id', 'Hora', 'Usuario', 'Modulo','Accion', 'Estado', 'Error']
         # Obtener el nombre de la columna
         header_item = self.transaccionesTabla.horizontalHeaderItem(column)
         column_name = header_item.text()
@@ -809,6 +811,9 @@ class VentanaPrincipal(QMainWindow):
         elif column_name == 'Modulo':
             self.id_t = self.manager.get('transaccion', columns_ingreso, value, 'Modulo')
             self.cm = 'Modulo'
+        elif column_name == 'Accion':
+            self.id_t = self.manager.get('transaccion', columns_ingreso, value, 'Accion')
+            self.cm = 'Accion'
         elif column_name == 'Estado':
             self.id_t = self.manager.get('transaccion', columns_ingreso, value, 'Estado')
             self.cm = 'Estado'
@@ -1157,12 +1162,14 @@ class VentanaPrincipal(QMainWindow):
             hora = str(dato1[i][1])
             usuario = str(dato1[i][2])
             modulo = str(dato1[i][3])
-            estado = str(dato1[i][4])
-            error = str(dato1[i][5])
+            accion = str(dato1[i][4])
+            estado = str(dato1[i][5])
+            error = str(dato1[i][6])
             print('7')
             self.reportes.append({"Hora": hora,
                                   "Usuario": usuario,
                                   "Modulo": modulo,
+                                  "Accion": accion,
                                   "Estado": estado,
                                   "Error": error
                                   })
@@ -1176,17 +1183,19 @@ class VentanaPrincipal(QMainWindow):
             pdf.drawString(50, z, f"Transaccion: {i + 1}")
             pdf.drawString(50, x, "Hora")
             pdf.drawString(220, x, "Usuario")
-            pdf.drawString(300, x, "Modulo")
-            pdf.drawString(375, x, "Estado")
-            pdf.drawString(450, x, "Error")
+            pdf.drawString(285, x, "Modulo")
+            pdf.drawString(360, x, "Accion")
+            pdf.drawString(425, x, "Estado")
+            pdf.drawString(500, x, "Error")
             print('11')
 
             print('13')
             pdf.drawString(50, y, str(dato1[i][1]))
             pdf.drawString(220, y, str(dato1[i][2]))
-            pdf.drawString(300, y, str(dato1[i][3]))
-            pdf.drawString(375, y, str(dato1[i][4]))
-            pdf.drawString(450, y, str(dato1[i][5]))
+            pdf.drawString(285, y, str(dato1[i][3]))
+            pdf.drawString(360, y, str(dato1[i][5]))
+            pdf.drawString(425, y, str(dato1[i][4]))
+            pdf.drawString(500, y, str(dato1[i][6]))
             y -= 60
             z -= 70
             x -= 60
