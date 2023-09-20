@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1125</width>
-    <height>678</height>
+    <height>786</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -846,7 +846,7 @@ font: 75 12pt &quot;Open Sans Semibold&quot;</string>
                       <property name="frameShadow">
                        <enum>QFrame::Raised</enum>
                       </property>
-                      <layout class="QVBoxLayout" name="verticalLayout_31">
+                      <layout class="QVBoxLayout" name="verticalLayout_77">
                        <item>
                         <widget class="QTableWidget" name="tableWidget_usuarios">
                          <property name="enabled">
@@ -870,7 +870,51 @@ font: 75 12pt &quot;Open Sans Semibold&quot;</string>
                         </widget>
                        </item>
                        <item>
+                        <widget class="QFrame" name="frame_59">
+                         <property name="frameShape">
+                          <enum>QFrame::StyledPanel</enum>
+                         </property>
+                         <property name="frameShadow">
+                          <enum>QFrame::Raised</enum>
+                         </property>
+                         <layout class="QVBoxLayout" name="verticalLayout_31">
+                          <item>
+                           <widget class="QLabel" name="label_74">
+                            <property name="minimumSize">
+                             <size>
+                              <width>0</width>
+                              <height>0</height>
+                             </size>
+                            </property>
+                            <property name="maximumSize">
+                             <size>
+                              <width>16777215</width>
+                              <height>16777215</height>
+                             </size>
+                            </property>
+                            <property name="styleSheet">
+                             <string notr="true">color: rgb(89, 31, 11);
+font: 75 12pt &quot;Open Sans Semibold&quot;</string>
+                            </property>
+                            <property name="text">
+                             <string>Reportes</string>
+                            </property>
+                            <property name="alignment">
+                             <set>Qt::AlignCenter</set>
+                            </property>
+                           </widget>
+                          </item>
+                         </layout>
+                        </widget>
+                       </item>
+                       <item>
                         <widget class="QTableWidget" name="tablaTransacciones">
+                         <attribute name="horizontalHeaderCascadingSectionResizes">
+                          <bool>false</bool>
+                         </attribute>
+                         <attribute name="horizontalHeaderDefaultSectionSize">
+                          <number>146</number>
+                         </attribute>
                          <column>
                           <property name="text">
                            <string>Hora</string>
@@ -884,6 +928,11 @@ font: 75 12pt &quot;Open Sans Semibold&quot;</string>
                          <column>
                           <property name="text">
                            <string>Modulo</string>
+                          </property>
+                         </column>
+                         <column>
+                          <property name="text">
+                           <string>Acción</string>
                           </property>
                          </column>
                          <column>
@@ -912,23 +961,30 @@ font: 75 12pt &quot;Open Sans Semibold&quot;</string>
                          <property name="frameShadow">
                           <enum>QFrame::Raised</enum>
                          </property>
-                         <widget class="QPushButton" name="cargar_usuarios">
-                          <property name="geometry">
-                           <rect>
-                            <x>650</x>
-                            <y>10</y>
-                            <width>91</width>
-                            <height>35</height>
-                           </rect>
-                          </property>
-                          <property name="minimumSize">
-                           <size>
-                            <width>0</width>
-                            <height>35</height>
-                           </size>
-                          </property>
-                          <property name="styleSheet">
-                           <string notr="true">QFrame{
+                         <layout class="QHBoxLayout" name="horizontalLayout_41">
+                          <item>
+                           <spacer name="horizontalSpacer_12">
+                            <property name="orientation">
+                             <enum>Qt::Horizontal</enum>
+                            </property>
+                            <property name="sizeHint" stdset="0">
+                             <size>
+                              <width>592</width>
+                              <height>20</height>
+                             </size>
+                            </property>
+                           </spacer>
+                          </item>
+                          <item>
+                           <widget class="QPushButton" name="cargar_usuarios">
+                            <property name="minimumSize">
+                             <size>
+                              <width>0</width>
+                              <height>35</height>
+                             </size>
+                            </property>
+                            <property name="styleSheet">
+                             <string notr="true">QFrame{
 background-color: rgb(51, 157, 255);
 }
 
@@ -944,30 +1000,50 @@ background-color: rgb(209, 172, 127);
 font: 75 9pt  &quot;Open Sans Semibold&quot;
 }
 </string>
-                          </property>
-                          <property name="text">
-                           <string>Cargar</string>
-                          </property>
-                         </widget>
-                         <widget class="QPushButton" name="generarReporteBTN">
-                          <property name="geometry">
-                           <rect>
-                            <x>750</x>
-                            <y>10</y>
-                            <width>91</width>
-                            <height>35</height>
-                           </rect>
-                          </property>
-                          <property name="minimumSize">
-                           <size>
-                            <width>0</width>
-                            <height>35</height>
-                           </size>
-                          </property>
-                          <property name="text">
-                           <string>Generar Reporte</string>
-                          </property>
-                         </widget>
+                            </property>
+                            <property name="text">
+                             <string>Cargar</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QPushButton" name="generarReporteBTN">
+                            <property name="minimumSize">
+                             <size>
+                              <width>150</width>
+                              <height>35</height>
+                             </size>
+                            </property>
+                            <property name="maximumSize">
+                             <size>
+                              <width>150</width>
+                              <height>16777215</height>
+                             </size>
+                            </property>
+                            <property name="styleSheet">
+                             <string notr="true">QFrame{
+background-color: rgb(51, 157, 255);
+}
+
+QPushButton{
+color: rgb(89, 31, 11);
+background-color: rgb(255, 255, 255);
+font: 75 9pt &quot;Open Sans Semibold&quot;
+}
+
+QPushButton:hover{
+color: rgb(255, 255, 255);
+background-color: rgb(209, 172, 127);
+font: 75 9pt  &quot;Open Sans Semibold&quot;
+}
+</string>
+                            </property>
+                            <property name="text">
+                             <string>Generar Reporte</string>
+                            </property>
+                           </widget>
+                          </item>
+                         </layout>
                         </widget>
                        </item>
                       </layout>
