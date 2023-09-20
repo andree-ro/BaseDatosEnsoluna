@@ -1,8 +1,7 @@
 import mysql.connector
-import threading
+# import threading
 
 connection = None
-
 
 # Función para obtener una conexión a la base de datos
 

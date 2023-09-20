@@ -31,6 +31,7 @@ class VentanaPrincipal(QMainWindow):
         self.reportes = []
         self.productos = []
         self.total = 0
+        self.manager = sql_structures.Manager()
         self.frame_menu.hide()
         self.btn_menu.hide()
         self.btn_menu_2.hide()
@@ -141,290 +142,7 @@ class VentanaPrincipal(QMainWindow):
         # self.cargar_usuarios.clicked.connect(self.cargaTablaTransaccion)
         self.generarReporteBTN.clicked.connect(self.realizarReporte)
 
-    def mostrarFila_ventas(self, row, column):
-        print('1')
-        manager = sql_structures.Manager()
-        print('2')
-        item = self.tableWidget_usuarios_2.item(row, column)
-        value = item.text()
-        columns_ingreso = ['id', 'Presentacion', 'Region', 'precioTotal', 'usuario_id']
-        print('3')
-
-        # Obtener el nombre de la columna
-        header_item = self.tableWidget_usuarios_2.horizontalHeaderItem(column)
-        column_name = header_item.text()
-        print('4')
-
-        # Realizar la búsqueda en la base de datos según la columna correspondiente
-        if column_name == 'No.':
-            self.id_v = manager.get('venta', columns_ingreso, value, 'id')
-        elif column_name == 'Region':
-            self.id_v = manager.get('venta', columns_ingreso, value, 'Region')
-        elif column_name == 'Presentacion':
-            self.id_v = manager.get('venta', columns_ingreso, value, 'Presentacion')
-        elif column_name == 'Precio Total':
-            self.id_v = manager.get('venta', columns_ingreso, value, 'PrecioTotal')
-
-        print(value)
-        print(column_name)
-        print(self.id_v)
-
-    def mostrarFila_e(self, row, column):
-        print('1')
-        manager = sql_structures.Manager()
-        print('2')
-        item = self.tableWidget_2.item(row, column)
-        value = item.text()
-        columns_ingreso = ['id', 'Estampa', 'Color', 'Tamaño', 'Cantidad']
-        print('3')
-
-        # Obtener el nombre de la columna
-        header_item = self.tableWidget_2.horizontalHeaderItem(column)
-        column_name = header_item.text()
-        print('4')
-
-        # Realizar la búsqueda en la base de datos según la columna correspondiente
-        if column_name == 'Sticker-Región':
-            self.id_e = manager.get('Empacado', columns_ingreso, value, 'Estampa')
-        elif column_name == 'Bolsa-Color':
-            self.id_e = manager.get('Empacado', columns_ingreso, value, 'Color')
-        elif column_name == 'Tamaño':
-            self.id_e = manager.get('Empacado', columns_ingreso, value, 'Tamaño')
-        elif column_name == 'Cantidad':
-            self.id_e = manager.get('Empacado', columns_ingreso, value, 'Cantidad')
-
-        print(value)
-        print(column_name)
-        print(self.id_e)
-
-    def mostrarFila_c(self, row, column):
-        manager = sql_structures.Manager()
-        item = self.tableWidget.item(row, column)
-        value = item.text()
-        columns_ingreso = ['id', 'Region', 'Finca', 'Libras', 'Estado']
-
-        # Obtener el nombre de la columna
-        header_item = self.tableWidget.horizontalHeaderItem(column)
-        column_name = header_item.text()
-
-        # Realizar la búsqueda en la base de datos según la columna correspondiente
-        if column_name == 'Región':
-            self.id_c = manager.get('Cafe', columns_ingreso, value, 'Region')
-        elif column_name == 'Finca':
-            self.id_c = manager.get('Cafe', columns_ingreso, value, 'Finca')
-        elif column_name == 'Cantidad':
-            self.id_c = manager.get('Cafe', columns_ingreso, value, 'Libras')
-        elif column_name == 'Estado':
-            self.id_c = manager.get('Cafe', columns_ingreso, value, 'Estado')
-        elif column_name == 'Tipo':
-            self.id_c = manager.get('Cafe', columns_ingreso, value, 'Tipo')
-
-        print(value)
-        print(column_name)
-        print(self.id_c)
-
-    def mostrarFila_cat(self, row, column):
-        manager = sql_structures.Manager()
-        item = self.tableWidget_5.item(row, column)
-        value = item.text()
-        columns_ingreso = ['id', 'Aroma', 'Finca', 'Region', 'Altura', 'Sabor', 'Color', 'Puntuacion']
-
-        # Obtener el nombre de la columna
-        header_item = self.tableWidget_5.horizontalHeaderItem(column)
-        column_name = header_item.text()
-
-        # Realizar la búsqueda en la base de datos según la columna correspondiente
-        if column_name == 'Aroma':
-            self.id_cat = manager.get('Catacion', columns_ingreso, value, 'Aroma')
-        elif column_name == 'Finca':
-            self.id_cat = manager.get('Catacion', columns_ingreso, value, 'Finca')
-        elif column_name == 'Región':
-            self.id_cat = manager.get('Catacion', columns_ingreso, value, 'Region')
-        elif column_name == 'Altura':
-            self.id_cat = manager.get('Catacion', columns_ingreso, value, 'Altura')
-        elif column_name == 'Sabor':
-            self.id_cat = manager.get('Catacion', columns_ingreso, value, 'Sabor')
-        elif column_name == 'Color':
-            self.id_cat = manager.get('Catacion', columns_ingreso, value, 'Color')
-        elif column_name == 'Puntuacion':
-            self.id_cat = manager.get('Catacion', columns_ingreso, value, 'Puntuacion')
-        # elif column_name == 'Tipo':
-        #     self.id_c = manager.get('Cafe', columns_ingreso, value, 'Tamaño')
-
-        print(value)
-        print(column_name)
-        print(self.id_cat)
-
-    def add_mobiliario(self):
-        date = str(self.calendar.selectedDate())
-        date_split = date.split("(")
-        Str = date_split[1]
-        lenght = len(date_split[1])
-        calendario = Str[:lenght - 1]
-        date = str(self.ultserv.date())
-        date_split = date.split("(")
-        Str = date_split[1]
-        lenght = len(date_split[1])
-        ult = Str[:lenght - 1]
-        date = str(self.proxser.date())
-        date_split = date.split("(")
-        Str = date_split[1]
-        lenght = len(date_split[1])
-        prox = Str[:lenght - 1]
-        try:
-            mobiliario = sql_structures.SqlDataBase_mobiliario(self.ag_maquina.currentText(),
-                                           ult,
-                                           prox,
-                                           calendario)
-            mobiliario.management('add_mobiliario')
-            QMessageBox.about(self, 'Aviso', 'Agregado correctamente!')
-            tran = sql_structures.Transaccion(str(datetime.now()),
-                                              self.usuario_comprobacion,
-                                              "Mobiliario",
-                                              "Confirmado",
-                                              "Nulo",
-                                              '',
-                                              '',
-                                              ''
-                                              )
-            tran.management("ingresar_transaccion")
-            conf = True
-            manager = sql_structures.Manager()
-            manager.verification(conf)
-        except Exception as e:
-            print(e)
-            QMessageBox.about(self, 'Aviso', 'Error de agregado!')
-            conf = False
-            manager = sql_structures.Manager()
-            manager.verification(conf)
-
-    def new_user(self):
-        try :
-            usuarios = sql_structures.SqlDataBase_usuarios(self.info_usuario.text(),
-                                                           self.info_contrasena.text(),
-                                                           self.info_rol.currentText())
-            usuarios.new_user()
-            self.info_usuario.clear()
-            self.info_contrasena.clear()
-            QMessageBox.about(self, 'Aviso', 'Agregado correctamente!')
-            conf = True
-            manager = sql_structures.Manager()
-            manager.verification(conf)
-        except Exception as e:
-            print(e)
-            QMessageBox.about(self, 'Aviso', 'Error de agregado!')
-            conf = False
-            manager = sql_structures.Manager()
-            manager.verification(conf)
-
-    def update_user(self):
-        try:
-            usuarios = sql_structures.SqlDataBase_usuarios(self.info_usuario_a.text(),
-                                                           self.info_contrasena_a.text(),
-                                                           self.info_rol_a.currentText(),
-                                                           self.combo_edit.currentText(),
-                                                           self.Info_edit.text())
-            usuarios.update_user()
-            self.info_usuario_a.clear()
-            self.info_contrasena_a.clear()
-            self.Info_edit.clear()
-            QMessageBox.about(self, 'Aviso', 'Modificado correctamente!')
-            conf = True
-            manager = sql_structures.Manager()
-            manager.verification(conf)
-        except Exception as e:
-            print(e)
-            QMessageBox.about(self, 'Aviso', 'Error al modificar!')
-            conf = False
-            manager = sql_structures.Manager()
-            manager.verification(conf)
-
-    def delete_user(self):
-        try:
-            usuarios = sql_structures.SqlDataBase_usuarios('', '', '', '', '', self.info_usuario_e.text())
-            usuarios.delete_user()
-            self.info_usuario_e.clear()
-            QMessageBox.about(self, 'Aviso', 'Eliminado correctamente!')
-            conf = True
-            manager = sql_structures.Manager()
-            manager.verification(conf)
-        except Exception as e:
-            print(e)
-            QMessageBox.about(self, 'Aviso', 'Error al eliminar!')
-            conf = False
-            manager = sql_structures.Manager()
-            manager.verification(conf)
-
-    def new_catacion(self):
-        try:
-            catacion = sql_structures.Catacion(self.aroma_catacion.text(),
-                                               self.finca_catacion.text(),
-                                               self.region_catacion.currentText(),
-                                               self.altura_catacion.text(),
-                                               self.sabor_catacion.text(),
-                                               self.color_catacion.text(),
-                                               self.puntuacion_catacion.text())
-            catacion.management('ing_catacion')
-            self.aroma_catacion.clear()
-            self.finca_catacion.clear()
-            self.altura_catacion.clear()
-            self.sabor_catacion.clear()
-            self.color_catacion.clear()
-            self.puntuacion_catacion.clear()
-            QMessageBox.about(self, 'Aviso', 'Agregado correctamente!')
-            conf = True
-            manager = sql_structures.Manager()
-            manager.verification(conf)
-        except Exception as e:
-            print(e)
-            QMessageBox.about(self, 'Aviso', 'Error de agregado!')
-            conf = False
-            manager = sql_structures.Manager()
-            manager.verification(conf)
-
-    def update_catacion(self):
-        try:
-            catacion = sql_structures.Catacion('',
-                                               '',
-                                               '',
-                                               '',
-                                               '',
-                                               '',
-                                               '',
-                                               self.columnaAcText_2.currentText(),
-                                               self.valorAcText_2.text(),
-                                               self.aroma_catacion_2.text())
-            catacion.management('update_catacion')
-            self.aroma_catacion_2.clear()
-            self.valorAcText_2.clear()
-        except Exception as e:
-            print(e)
-
-    def delete_catacion(self):
-        try:
-            catacion = sql_structures.Catacion('',
-                                               '',
-                                               '',
-                                               '',
-                                               '',
-                                               '',
-                                               '',
-                                               '',
-                                               '',
-                                               self.id_cat)
-            catacion.management('delete_catacion')
-            self.finca_catacion_3.clear()
-            QMessageBox.about(self, 'Aviso', 'Eliminado correctamente!')
-            conf = True
-            manager = sql_structures.Manager()
-            manager.verification(conf)
-        except Exception as e:
-            print(e)
-            QMessageBox.about(self, 'Aviso', 'Error al Eliminar!')
-            conf = False
-            manager = sql_structures.Manager()
-            manager.verification(conf)
-
+    # //////////////////////////////////////////////////////////////////////////////////////////
     # METODOS/FUNCIONES CLASE COFFEE
     def buy_coffee(self):
         try:
@@ -434,6 +152,8 @@ class VentanaPrincipal(QMainWindow):
                                            self.estadoCombobx.currentText(),
                                            self.tipoCombobx.currentText())
             coffee.management('buy_coffee')
+            conf = True
+            self.manager.verification(conf)
 
             self.fincaText.clear()
             self.cantidadText.clear()
@@ -449,8 +169,7 @@ class VentanaPrincipal(QMainWindow):
                                               )
             tran.management("ingresar_transaccion")
             conf = True
-            manager = sql_structures.Manager()
-            manager.verification(conf)
+            self.manager.verification(conf)
 
         except Exception as e:
             print(e)
@@ -567,7 +286,7 @@ class VentanaPrincipal(QMainWindow):
                                               '',
                                               '',
                                               '',
-                                              '','',
+                                              '', '',
                                               self.id_e)
             coffee.management('delete_packaging')
             self.colorElimText.clear()
@@ -582,6 +301,197 @@ class VentanaPrincipal(QMainWindow):
             manager = sql_structures.Manager()
             manager.verification(conf)
 
+    # METODOS/FUNCIONES CLASE VENTAS
+    def agregarCliente(self):
+        try:
+            management = Manager()
+            mana = sql_structures.Manager()
+            nombre = self.fincaAcText_4.text()
+            # nit = self.fincaAcText_5.text()
+            direccion = self.fincaAcText_6.text()
+            data_list = [direccion, nombre, 0]
+            columns_ingreso = ['id', 'Direccion', 'Cliente', 'Venta_id']
+            management.insert_into_table('factura', columns_ingreso, data_list)
+            self.idFac = mana.get('factura', columns_ingreso, nombre, 'Cliente')
+            QMessageBox.about(self, 'Aviso', 'Se agrego correctamente!')
+        except Exception as e:
+            print(e)
+            QMessageBox.about(self, 'Aviso', 'Error al agregar!')
+
+    # METODOS/FUNCIONES CLASE CATACION
+    def new_catacion(self):
+        try:
+            catacion = sql_structures.Catacion(self.aroma_catacion.text(),
+                                               self.finca_catacion.text(),
+                                               self.region_catacion.currentText(),
+                                               self.altura_catacion.text(),
+                                               self.sabor_catacion.text(),
+                                               self.color_catacion.text(),
+                                               self.puntuacion_catacion.text())
+            catacion.management('ing_catacion')
+            self.aroma_catacion.clear()
+            self.finca_catacion.clear()
+            self.altura_catacion.clear()
+            self.sabor_catacion.clear()
+            self.color_catacion.clear()
+            self.puntuacion_catacion.clear()
+            QMessageBox.about(self, 'Aviso', 'Agregado correctamente!')
+            conf = True
+            manager = sql_structures.Manager()
+            manager.verification(conf)
+        except Exception as e:
+            print(e)
+            QMessageBox.about(self, 'Aviso', 'Error de agregado!')
+            conf = False
+            manager = sql_structures.Manager()
+            manager.verification(conf)
+
+    def update_catacion(self):
+        try:
+            catacion = sql_structures.Catacion('',
+                                               '',
+                                               '',
+                                               '',
+                                               '',
+                                               '',
+                                               '',
+                                               self.columnaAcText_2.currentText(),
+                                               self.valorAcText_2.text(),
+                                               self.aroma_catacion_2.text())
+            catacion.management('update_catacion')
+            self.aroma_catacion_2.clear()
+            self.valorAcText_2.clear()
+        except Exception as e:
+            print(e)
+
+    def delete_catacion(self):
+        try:
+            catacion = sql_structures.Catacion('',
+                                               '',
+                                               '',
+                                               '',
+                                               '',
+                                               '',
+                                               '',
+                                               '',
+                                               '',
+                                               self.id_cat)
+            catacion.management('delete_catacion')
+            self.finca_catacion_3.clear()
+            QMessageBox.about(self, 'Aviso', 'Eliminado correctamente!')
+            conf = True
+            manager = sql_structures.Manager()
+            manager.verification(conf)
+        except Exception as e:
+            print(e)
+            QMessageBox.about(self, 'Aviso', 'Error al Eliminar!')
+            conf = False
+            manager = sql_structures.Manager()
+            manager.verification(conf)
+
+    # METODOS/FUNCIONES CLASE MOBILIARIO
+    def add_mobiliario(self):
+        date = str(self.calendar.selectedDate())
+        date_split = date.split("(")
+        Str = date_split[1]
+        lenght = len(date_split[1])
+        calendario = Str[:lenght - 1]
+        date = str(self.ultserv.date())
+        date_split = date.split("(")
+        Str = date_split[1]
+        lenght = len(date_split[1])
+        ult = Str[:lenght - 1]
+        date = str(self.proxser.date())
+        date_split = date.split("(")
+        Str = date_split[1]
+        lenght = len(date_split[1])
+        prox = Str[:lenght - 1]
+        try:
+            mobiliario = sql_structures.SqlDataBase_mobiliario(self.ag_maquina.currentText(),
+                                           ult,
+                                           prox,
+                                           calendario)
+            mobiliario.management('add_mobiliario')
+            QMessageBox.about(self, 'Aviso', 'Agregado correctamente!')
+            tran = sql_structures.Transaccion(str(datetime.now()),
+                                              self.usuario_comprobacion,
+                                              "Mobiliario",
+                                              "Confirmado",
+                                              "Nulo",
+                                              '',
+                                              '',
+                                              ''
+                                              )
+            tran.management("ingresar_transaccion")
+            conf = True
+            manager = sql_structures.Manager()
+            manager.verification(conf)
+        except Exception as e:
+            print(e)
+            QMessageBox.about(self, 'Aviso', 'Error de agregado!')
+            conf = False
+            manager = sql_structures.Manager()
+            manager.verification(conf)
+
+    # METODOS/FUNCIONES CLASE USURARIOS
+
+    def new_user(self):
+        try :
+            usuarios = sql_structures.SqlDataBase_usuarios(self.info_usuario.text(),
+                                                           self.info_contrasena.text(),
+                                                           self.info_rol.currentText())
+            usuarios.new_user()
+            self.info_usuario.clear()
+            self.info_contrasena.clear()
+            QMessageBox.about(self, 'Aviso', 'Agregado correctamente!')
+            conf = True
+            manager = sql_structures.Manager()
+            manager.verification(conf)
+        except Exception as e:
+            print(e)
+            QMessageBox.about(self, 'Aviso', 'Error de agregado!')
+            conf = False
+            manager = sql_structures.Manager()
+            manager.verification(conf)
+
+    def update_user(self):
+        try:
+            usuarios = sql_structures.SqlDataBase_usuarios(self.info_usuario_a.text(),
+                                                           self.info_contrasena_a.text(),
+                                                           self.info_rol_a.currentText(),
+                                                           self.combo_edit.currentText(),
+                                                           self.Info_edit.text())
+            usuarios.update_user()
+            self.info_usuario_a.clear()
+            self.info_contrasena_a.clear()
+            self.Info_edit.clear()
+            QMessageBox.about(self, 'Aviso', 'Modificado correctamente!')
+            conf = True
+            self.manager.verification(conf)
+        except Exception as e:
+            print(e)
+            QMessageBox.about(self, 'Aviso', 'Error al modificar!')
+            conf = False
+            self.manager.verification(conf)
+
+    def delete_user(self):
+        try:
+            usuarios = sql_structures.SqlDataBase_usuarios('', '', '', '', '', self.info_usuario_e.text())
+            usuarios.delete_user()
+            self.info_usuario_e.clear()
+            QMessageBox.about(self, 'Aviso', 'Eliminado correctamente!')
+            conf = True
+            manager = sql_structures.Manager()
+            manager.verification(conf)
+        except Exception as e:
+            print(e)
+            QMessageBox.about(self, 'Aviso', 'Error al eliminar!')
+            conf = False
+            manager = sql_structures.Manager()
+            manager.verification(conf)
+
+    # //////////////////////////////////////////////////////////////////////////////////////////
+    # METODOS/FUNCIONES CARGA EN TABLAS
     def carga_cafe_empacado(self):
         try:
             mana = sql_structures.Manager()
@@ -691,6 +601,416 @@ class VentanaPrincipal(QMainWindow):
         except Exception as e:
             print(e)
 
+    # //////////////////////////////////////////////////////////////////////////////////////////
+    # METODOS/FUNCIONES MOSTRAR TABLAS
+    def mostrarFilaTablaTransaccion(self, row, column):
+        item = self.transaccionesTabla.item(row, column)
+        value = item.text()
+        columns_ingreso = ['id', 'Hora', 'Usuario', 'Modulo', 'Estado', 'Error']
+        # Obtener el nombre de la columna
+        header_item = self.transaccionesTabla.horizontalHeaderItem(column)
+        column_name = header_item.text()
+        # Realizar la búsqueda en la base de datos según la columna correspondiente
+        if column_name == 'Hora':
+            self.id_t = self.manager.get('transaccion', columns_ingreso, value, 'Hora')
+            self.cm = 'Hora'
+        elif column_name == 'Usuario':
+            self.id_t = self.manager.get('transaccion', columns_ingreso, value, 'Usuario')
+            self.cm = 'Usuario'
+        elif column_name == 'Modulo':
+            self.id_t = self.manager.get('transaccion', columns_ingreso, value, 'Modulo')
+            self.cm = 'Modulo'
+        elif column_name == 'Estado':
+            self.id_t = self.manager.get('transaccion', columns_ingreso, value, 'Estado')
+            self.cm = 'Estado'
+        elif column_name == 'Error':
+            self.id_t = self.manager.get('transaccion', columns_ingreso, value, 'Error')
+            self.cm = 'Error'
+
+    def mostrarFila_ventas(self, row, column):
+        print('1')
+        manager = sql_structures.Manager()
+        print('2')
+        item = self.tableWidget_usuarios_2.item(row, column)
+        value = item.text()
+        columns_ingreso = ['id', 'Presentacion', 'Region', 'precioTotal', 'usuario_id']
+        print('3')
+
+        # Obtener el nombre de la columna
+        header_item = self.tableWidget_usuarios_2.horizontalHeaderItem(column)
+        column_name = header_item.text()
+        print('4')
+
+        # Realizar la búsqueda en la base de datos según la columna correspondiente
+        if column_name == 'No.':
+            self.id_v = manager.get('venta', columns_ingreso, value, 'id')
+        elif column_name == 'Region':
+            self.id_v = manager.get('venta', columns_ingreso, value, 'Region')
+        elif column_name == 'Presentacion':
+            self.id_v = manager.get('venta', columns_ingreso, value, 'Presentacion')
+        elif column_name == 'Precio Total':
+            self.id_v = manager.get('venta', columns_ingreso, value, 'PrecioTotal')
+
+        print(value)
+        print(column_name)
+        print(self.id_v)
+
+    def mostrarFila_e(self, row, column):
+        print('1')
+        manager = sql_structures.Manager()
+        print('2')
+        item = self.tableWidget_2.item(row, column)
+        value = item.text()
+        columns_ingreso = ['id', 'Estampa', 'Color', 'Tamaño', 'Cantidad']
+        print('3')
+
+        # Obtener el nombre de la columna
+        header_item = self.tableWidget_2.horizontalHeaderItem(column)
+        column_name = header_item.text()
+        print('4')
+
+        # Realizar la búsqueda en la base de datos según la columna correspondiente
+        if column_name == 'Sticker-Región':
+            self.id_e = manager.get('Empacado', columns_ingreso, value, 'Estampa')
+        elif column_name == 'Bolsa-Color':
+            self.id_e = manager.get('Empacado', columns_ingreso, value, 'Color')
+        elif column_name == 'Tamaño':
+            self.id_e = manager.get('Empacado', columns_ingreso, value, 'Tamaño')
+        elif column_name == 'Cantidad':
+            self.id_e = manager.get('Empacado', columns_ingreso, value, 'Cantidad')
+
+        print(value)
+        print(column_name)
+        print(self.id_e)
+
+    def mostrarFila_c(self, row, column):
+        manager = sql_structures.Manager()
+        item = self.tableWidget.item(row, column)
+        value = item.text()
+        columns_ingreso = ['id', 'Region', 'Finca', 'Libras', 'Estado']
+
+        # Obtener el nombre de la columna
+        header_item = self.tableWidget.horizontalHeaderItem(column)
+        column_name = header_item.text()
+
+        # Realizar la búsqueda en la base de datos según la columna correspondiente
+        if column_name == 'Región':
+            self.id_c = manager.get('Cafe', columns_ingreso, value, 'Region')
+        elif column_name == 'Finca':
+            self.id_c = manager.get('Cafe', columns_ingreso, value, 'Finca')
+        elif column_name == 'Cantidad':
+            self.id_c = manager.get('Cafe', columns_ingreso, value, 'Libras')
+        elif column_name == 'Estado':
+            self.id_c = manager.get('Cafe', columns_ingreso, value, 'Estado')
+        elif column_name == 'Tipo':
+            self.id_c = manager.get('Cafe', columns_ingreso, value, 'Tipo')
+
+        print(value)
+        print(column_name)
+        print(self.id_c)
+
+    def mostrarFila_cat(self, row, column):
+        manager = sql_structures.Manager()
+        item = self.tableWidget_5.item(row, column)
+        value = item.text()
+        columns_ingreso = ['id', 'Aroma', 'Finca', 'Region', 'Altura', 'Sabor', 'Color', 'Puntuacion']
+
+        # Obtener el nombre de la columna
+        header_item = self.tableWidget_5.horizontalHeaderItem(column)
+        column_name = header_item.text()
+
+        # Realizar la búsqueda en la base de datos según la columna correspondiente
+        if column_name == 'Aroma':
+            self.id_cat = manager.get('Catacion', columns_ingreso, value, 'Aroma')
+        elif column_name == 'Finca':
+            self.id_cat = manager.get('Catacion', columns_ingreso, value, 'Finca')
+        elif column_name == 'Región':
+            self.id_cat = manager.get('Catacion', columns_ingreso, value, 'Region')
+        elif column_name == 'Altura':
+            self.id_cat = manager.get('Catacion', columns_ingreso, value, 'Altura')
+        elif column_name == 'Sabor':
+            self.id_cat = manager.get('Catacion', columns_ingreso, value, 'Sabor')
+        elif column_name == 'Color':
+            self.id_cat = manager.get('Catacion', columns_ingreso, value, 'Color')
+        elif column_name == 'Puntuacion':
+            self.id_cat = manager.get('Catacion', columns_ingreso, value, 'Puntuacion')
+        # elif column_name == 'Tipo':
+        #     self.id_c = manager.get('Cafe', columns_ingreso, value, 'Tamaño')
+
+        print(value)
+        print(column_name)
+        print(self.id_cat)
+
+    # //////////////////////////////////////////////////////////////////////////////////////////
+    # COTIZACION
+    # METODO PARA REALIZAR COTIZACIION
+    def agregarCotizacionUno(self):
+        try:
+            region = self.regionAcCombobx_3.currentText()
+            finca = self.fincaAcText_3.text()
+            cantidadUnidad = self.cantidadAcText_3.text()
+            estado = self.estadoAcText_3.currentText()
+            precioUnidad = self.lineEdit_5.text()
+            self.productos.append({"region": region,
+                                   "finca": finca,
+                                   "cantidadUnidad": cantidadUnidad,
+                                   "estado": estado,
+                                   "precioUnidad": precioUnidad})
+            self.fincaAcText_3.clear()
+            self.cantidadAcText_3.clear()
+            self.lineEdit_5.clear()
+            QMessageBox.about(self, 'Aviso', 'Cotizacion realizada con exito!')
+        except Exception as e:
+            print(e)
+            QMessageBox.about(self, 'Aviso', 'Error en la cotizacion!')
+
+    def realizarCotizacion(self):
+        now = datetime.now()
+        formato = now.strftime('%d - %m - %Y')
+
+        # Crear un nuevo documento PDF
+        pdf = canvas.Canvas(f"cotizacion{self.idFactura}.pdf")
+        # Configurar el estilo del texto
+        pdf.setFont("Helvetica", 12)
+
+        # Agregar los datos del cliente
+        cliente_nombre = str(self.fincaAcText_4.text())
+        cliente_nit = str(self.fincaAcText_5.text())
+        cliente_direccion = str(self.fincaAcText_6.text())
+        pdf.drawString(100, 700, "Cliente: " + cliente_nombre)
+        pdf.drawString(100, 680, "NIT: " + cliente_nit)
+        pdf.drawString(100, 660, "Dirección: " + cliente_direccion)
+        pdf.drawString(400, 700, f"Cotizacion: ---")
+        pdf.drawString(400, 680, f"Fecha: {formato}")
+        y = 600  # Posición vertical inicial
+        pdf.drawString(50, 620, "PROUCTO")
+        pdf.drawString(150, 620, "FINCA")
+        pdf.drawString(225, 620, "CANTIDAD UNIDAD")
+        pdf.drawString(375, 620, "ESTADO")
+        pdf.drawString(450, 620, "PRECIO UNIDAD")
+
+        for producto in self.productos:
+            pdf.drawString(50, y, producto["region"])
+            pdf.drawString(150, y, str(producto["finca"]))
+            pdf.drawString(225, y, str(producto["cantidadUnidad"]))
+            pdf.drawString(375, y, str(producto["estado"]))
+            pdf.drawString(450, y, str(producto["precioUnidad"]))
+            y -= 20
+
+        for producto in self.productos:
+            total = float(producto["precioUnidad"]) * int(producto["cantidadUnidad"])
+            self.total = total + self.total
+
+        pdf.drawString(400, y - 20, "Total: " + str(self.total))
+        pdf.save()
+        factura = f"cotizacion{self.idFactura}.pdf"
+        webbrowser.open_new(factura)
+        self.productos.clear()
+        self.total = 0
+
+    # FRACTURA
+    # METODO PARA REALIZAR FACTURA
+    def agregarFacturaUno(self):
+        region = self.comboBox.currentText()
+        finca = self.lineEdit_3.text()
+        cantidadUnidad = self.lineEdit_4.text()
+        estado = self.comboBox_2.currentText()
+        precioUnidad = self.lineEdit_6.text()
+        if self.aux == 0:
+            self.productos.append({"region": region,
+                                   "finca": finca,
+                                   "cantidadUnidad": cantidadUnidad,
+                                   "estado": estado,
+                                   "precioUnidad": precioUnidad})
+        else:
+            encontrado = False
+            for p in self.productos:
+                if p["finca"] == finca:
+                    encontrado = True
+                    cantidadn = int(p['cantidadUnidad']) + int(cantidadUnidad)
+                    self.productos[self.productos.index(p)] = {"region": region,
+                                                               "finca": finca,
+                                                               "cantidadUnidad": cantidadn,
+                                                               "estado": estado,
+                                                               "precioUnidad": precioUnidad}
+                    break
+            if not encontrado:
+                self.productos.append({"region": region,
+                                       "finca": finca,
+                                       "cantidadUnidad": cantidadUnidad,
+                                       "estado": estado,
+                                       "precioUnidad": precioUnidad})
+
+        try:
+            region = self.comboBox.currentText()
+            finca = self.lineEdit_3.text()
+            data = ['id', 'Estampa', 'Color', 'Tamaño']
+            color = 'Color'
+            manager = sql_structures.Manager()
+            # print(region)
+            if region == 'Huehuetenango':
+                self.idEmpaque = manager.get('Empacado', data, 'Turquesa', color)
+            elif region == 'San Marcos':
+                self.idEmpaque = manager.get('Empacado', data, 'Rojo', color)
+            elif region == 'Coban':
+                self.idEmpaque = manager.get('Empacado', data, 'Verde', color)
+            elif region == 'Acatenango':
+                self.idEmpaque = manager.get('Empacado', data, 'Naranja', color)
+            elif region == 'Antigua':
+                self.idEmpaque = manager.get('Empacado', data, 'Amarillo', color)
+            elif region == 'Nuevo Oriente':
+                self.idEmpaque = manager.get('Empacado', data, 'Morado', color)
+            elif region == 'Fraijanes':
+                self.idEmpaque = manager.get('Empacado', data, 'Celeste', color)
+            elif region == 'Atitlan':
+                self.idEmpaque = manager.get('Empacado', data, 'Azul', color)
+            columnsCafe = ['id', 'Region', 'Finca', 'Libras', 'Estado']
+            fin = 'Finca'
+            self.idCafe = manager.get('Cafe', columnsCafe, finca, fin)
+            print('hola3')
+            total = 0
+            total = int(self.lineEdit_4.text()) * int(self.lineEdit_6.text())
+            venta_d = sql_structures.Venta(self.comboBox.currentText(),
+                                           self.lineEdit_3.text(),
+                                           int(self.lineEdit_4.text()),
+                                           total, self.lineEdit_6.text(), self.idEmpaque, self.idCafe)
+            venta_d.management('venta_cafe')
+            QMessageBox.about(self, 'Aviso', 'Se agrego correctamente!')
+            self.aux += 1
+            tran = sql_structures.Transaccion(str(datetime.now()),
+                                              self.usuario_comprobacion,
+                                              "Facturacion",
+                                              "Confirmado",
+                                              "Nulo",
+                                              '',
+                                              '',
+                                              ''
+                                              )
+            tran.management("ingresar_transaccion")
+
+        except Exception as e:
+            print(e)
+            QMessageBox.about(self, 'Aviso', 'Error al agregar!')
+
+        self.lineEdit_3.clear()
+        self.lineEdit_4.clear()
+        self.lineEdit_6.clear()
+
+    def realizarFactura(self):
+
+        now = datetime.now()
+        formato = now.strftime('%d - %m - %Y')
+
+        # Crear un nuevo documento PDF
+        pdf = canvas.Canvas(f"factura{self.idFactura}.pdf")
+        # Configurar el estilo del texto
+        pdf.setFont("Helvetica", 12)
+
+        # Agregar los datos del cliente
+        cliente_nombre = str(self.fincaAcText_4.text())
+        cliente_nit = str(self.fincaAcText_5.text())
+        cliente_direccion = str(self.fincaAcText_6.text())
+        pdf.drawString(100, 700, "Cliente: " + cliente_nombre)
+        pdf.drawString(100, 680, "NIT: " + cliente_nit)
+        pdf.drawString(100, 660, "Dirección: " + cliente_direccion)
+        pdf.drawString(400, 700, f"Factura: {self.idFactura + self.idFac}")
+        pdf.drawString(400, 680, f"Fecha: {formato}")
+        y = 600  # Posición vertical inicial
+        pdf.drawString(50, 620, "PROUCTO")
+        pdf.drawString(150, 620, "FINCA")
+        pdf.drawString(225, 620, "CANTIDAD UNIDAD")
+        pdf.drawString(375, 620, "ESTADO")
+        pdf.drawString(450, 620, "PRECIO UNIDAD")
+
+        for producto in self.productos:
+            pdf.drawString(50, y, producto["region"])
+            pdf.drawString(150, y, str(producto["finca"]))
+            pdf.drawString(225, y, str(producto["cantidadUnidad"]))
+            pdf.drawString(375, y, str(producto["estado"]))
+            pdf.drawString(450, y, str(producto["precioUnidad"]))
+            y -= 20
+
+        for producto in self.productos:
+            total = float(producto["precioUnidad"]) * int(producto["cantidadUnidad"])
+            self.total = total + self.total
+
+        pdf.drawString(400, y - 20, "Total: " + str(self.total))
+        pdf.save()
+        factura = f"factura{self.idFactura}.pdf"
+        webbrowser.open_new(factura)
+        self.productos.clear()
+        self.total = 0
+
+    # REPORTE
+    # METODO PARA REALIZAR REPORTE
+    def realizarReporte(self):
+        print('1')
+        now = datetime.now()
+        formato = now.strftime('%d - %m - %Y')
+        print('2')
+        # Crear un nuevo documento PDF
+        pdf = canvas.Canvas(f"Reporte{self.idReporte}.pdf")
+        # Configurar el estilo del texto
+        pdf.setFont("Helvetica", 12)
+        print('3')
+
+        # Agregar los datos del cliente
+        pdf.drawString(400, 700, f"Reporte: ---")
+        pdf.drawString(100, 700, f"Fecha: {formato}")
+        print('4')
+        y = 600  # Posición vertical inicial
+        mana = sql_structures.Manager()
+        dato1 = mana.print_table('transaccion')
+        print(dato1)
+        print('5')
+        for i in range(len(dato1)):
+            print('6')
+            hora = str(dato1[i][1])
+            usuario = str(dato1[i][2])
+            modulo = str(dato1[i][3])
+            estado = str(dato1[i][4])
+            error = str(dato1[i][5])
+            print('7')
+            self.reportes.append({"Hora": hora,
+                                  "Usuario": usuario,
+                                  "Modulo": modulo,
+                                  "Estado": estado,
+                                  "Error": error
+                                  })
+            print('8')
+
+        z = 650
+        x = 620
+        print('9')
+        for i in range(len(dato1)):
+            print('10')
+            pdf.drawString(50, z, f"Transaccion: {i + 1}")
+            pdf.drawString(50, x, "Hora")
+            pdf.drawString(220, x, "Usuario")
+            pdf.drawString(300, x, "Modulo")
+            pdf.drawString(375, x, "Estado")
+            pdf.drawString(450, x, "Error")
+            print('11')
+
+            print('13')
+            pdf.drawString(50, y, str(dato1[i][1]))
+            pdf.drawString(220, y, str(dato1[i][2]))
+            pdf.drawString(300, y, str(dato1[i][3]))
+            pdf.drawString(375, y, str(dato1[i][4]))
+            pdf.drawString(450, y, str(dato1[i][5]))
+            y -= 60
+            z -= 70
+            x -= 60
+
+        print('15')
+        pdf.save()
+        print('17')
+        reporte = f"reporte{self.idReporte}.pdf"
+        webbrowser.open_new(reporte)
+        self.reportes.clear()
+
+    #//////////////////////////////////////////////////////////////////////////////////////////
+    # METODOS/FUNCIONES DE INTERFAZ
     def minimizar(self):
         self.showMinimized()
 
@@ -749,6 +1069,7 @@ class VentanaPrincipal(QMainWindow):
         except Exception as e:
             print(e)
             QMessageBox.about(self, 'Aviso', 'Contraseña incorrecta!')
+
     def menu_show(self):
         self.btn_menu.hide()
         self.btn_menu_2.show()
@@ -820,308 +1141,3 @@ class VentanaPrincipal(QMainWindow):
 
     def show_page_detalles_venta(self):
         self.stackedWidget.setCurrentWidget(self.page_detalles_venta)
-
-    # COTIZACION
-    # METODO AGREGAR COTIZACION BOTON
-    def agregarCotizacionUno(self):
-        try:
-            region = self.regionAcCombobx_3.currentText()
-            finca = self.fincaAcText_3.text()
-            cantidadUnidad = self.cantidadAcText_3.text()
-            estado = self.estadoAcText_3.currentText()
-            precioUnidad = self.lineEdit_5.text()
-            self.productos.append({"region": region,
-                                   "finca": finca,
-                                   "cantidadUnidad": cantidadUnidad,
-                                   "estado": estado,
-                                   "precioUnidad": precioUnidad})
-            self.fincaAcText_3.clear()
-            self.cantidadAcText_3.clear()
-            self.lineEdit_5.clear()
-            QMessageBox.about(self, 'Aviso', 'Cotizacion realizada con exito!')
-        except Exception as e:
-            print(e)
-            QMessageBox.about(self, 'Aviso', 'Error en la cotizacion!')
-
-    def realizarCotizacion(self):
-        now = datetime.now()
-        formato = now.strftime('%d - %m - %Y')
-
-        # Crear un nuevo documento PDF
-        pdf = canvas.Canvas(f"cotizacion{self.idFactura}.pdf")
-        # Configurar el estilo del texto
-        pdf.setFont("Helvetica", 12)
-
-        # Agregar los datos del cliente
-        cliente_nombre = str(self.fincaAcText_4.text())
-        cliente_nit = str(self.fincaAcText_5.text())
-        cliente_direccion = str(self.fincaAcText_6.text())
-        pdf.drawString(100, 700, "Cliente: " + cliente_nombre)
-        pdf.drawString(100, 680, "NIT: " + cliente_nit)
-        pdf.drawString(100, 660, "Dirección: " + cliente_direccion)
-        pdf.drawString(400, 700, f"Cotizacion: ---")
-        pdf.drawString(400, 680, f"Fecha: {formato}")
-        y = 600  # Posición vertical inicial
-        pdf.drawString(50, 620, "PROUCTO")
-        pdf.drawString(150, 620, "FINCA")
-        pdf.drawString(225, 620, "CANTIDAD UNIDAD")
-        pdf.drawString(375, 620, "ESTADO")
-        pdf.drawString(450, 620, "PRECIO UNIDAD")
-
-        for producto in self.productos:
-            pdf.drawString(50, y, producto["region"])
-            pdf.drawString(150, y, str(producto["finca"]))
-            pdf.drawString(225, y, str(producto["cantidadUnidad"]))
-            pdf.drawString(375, y, str(producto["estado"]))
-            pdf.drawString(450, y, str(producto["precioUnidad"]))
-            y -= 20
-
-        for producto in self.productos:
-            total = float(producto["precioUnidad"]) * int(producto["cantidadUnidad"])
-            self.total = total + self.total
-
-        pdf.drawString(400, y - 20, "Total: " + str(self.total))
-        pdf.save()
-        factura = f"cotizacion{self.idFactura}.pdf"
-        webbrowser.open_new(factura)
-        self.productos.clear()
-        self.total = 0
-
-    def realizarReporte(self):
-        print('1')
-        now = datetime.now()
-        formato = now.strftime('%d - %m - %Y')
-        print('2')
-        # Crear un nuevo documento PDF
-        pdf = canvas.Canvas(f"Reporte{self.idReporte}.pdf")
-        # Configurar el estilo del texto
-        pdf.setFont("Helvetica", 12)
-        print('3')
-
-        # Agregar los datos del cliente
-        pdf.drawString(400, 700, f"Reporte: ---")
-        pdf.drawString(100, 700, f"Fecha: {formato}")
-        print('4')
-        y = 600  # Posición vertical inicial
-        mana = sql_structures.Manager()
-        dato1 = mana.print_table('transaccion')
-        print(dato1)
-        print('5')
-        for i in range(len(dato1)):
-            print('6')
-            hora = str(dato1[i][1])
-            usuario = str(dato1[i][2])
-            modulo = str(dato1[i][3])
-            estado = str(dato1[i][4])
-            error = str(dato1[i][5])
-            print('7')
-            self.reportes.append({"Hora": hora,
-                                  "Usuario": usuario,
-                                  "Modulo": modulo,
-                                  "Estado": estado,
-                                  "Error": error
-                                  })
-            print('8')
-
-        z = 650
-        x = 620
-        print('9')
-        for i in range(len(dato1)):
-            print('10')
-            pdf.drawString(50, z, f"Transaccion: {i + 1}")
-            pdf.drawString(50, x, "Hora")
-            pdf.drawString(220, x, "Usuario")
-            pdf.drawString(300, x, "Modulo")
-            pdf.drawString(375, x, "Estado")
-            pdf.drawString(450, x, "Error")
-            print('11')
-
-            print('13')
-            pdf.drawString(50, y, str(dato1[i][1]))
-            pdf.drawString(220, y, str(dato1[i][2]))
-            pdf.drawString(300, y, str(dato1[i][3]))
-            pdf.drawString(375, y, str(dato1[i][4]))
-            pdf.drawString(450, y, str(dato1[i][5]))
-            y -= 60
-            z -= 70
-            x -= 60
-
-        print('15')
-        pdf.save()
-        print('17')
-        reporte = f"reporte{self.idReporte}.pdf"
-        webbrowser.open_new(reporte)
-        self.reportes.clear()
-
-    def agregarFacturaUno(self):
-        region = self.comboBox.currentText()
-        finca = self.lineEdit_3.text()
-        cantidadUnidad = self.lineEdit_4.text()
-        estado = self.comboBox_2.currentText()
-        precioUnidad = self.lineEdit_6.text()
-        if self.aux == 0:
-            self.productos.append({"region": region,
-                                       "finca": finca,
-                                       "cantidadUnidad": cantidadUnidad,
-                                       "estado": estado,
-                                       "precioUnidad": precioUnidad})
-        else:
-            encontrado = False
-            for p in self.productos:
-                if p["finca"] == finca:
-                    encontrado = True
-                    cantidadn = int(p['cantidadUnidad']) + int(cantidadUnidad)
-                    self.productos[self.productos.index(p)] = {"region": region,
-                                                                   "finca": finca,
-                                                                   "cantidadUnidad": cantidadn,
-                                                                   "estado": estado,
-                                                                   "precioUnidad": precioUnidad}
-                    break
-            if not encontrado:
-                self.productos.append({"region": region,
-                                           "finca": finca,
-                                           "cantidadUnidad": cantidadUnidad,
-                                           "estado": estado,
-                                           "precioUnidad": precioUnidad})
-
-        try:
-            region = self.comboBox.currentText()
-            finca = self.lineEdit_3.text()
-            data = ['id', 'Estampa', 'Color', 'Tamaño']
-            color = 'Color'
-            manager = sql_structures.Manager()
-                # print(region)
-            if region == 'Huehuetenango':
-                self.idEmpaque = manager.get('Empacado', data, 'Turquesa', color)
-            elif region == 'San Marcos':
-                self.idEmpaque = manager.get('Empacado', data, 'Rojo', color)
-            elif region == 'Coban':
-                self.idEmpaque = manager.get('Empacado', data, 'Verde', color)
-            elif region == 'Acatenango':
-                self.idEmpaque = manager.get('Empacado', data, 'Naranja', color)
-            elif region == 'Antigua':
-                self.idEmpaque = manager.get('Empacado', data, 'Amarillo', color)
-            elif region == 'Nuevo Oriente':
-                self.idEmpaque = manager.get('Empacado', data, 'Morado', color)
-            elif region == 'Fraijanes':
-                self.idEmpaque = manager.get('Empacado', data, 'Celeste', color)
-            elif region == 'Atitlan':
-                self.idEmpaque = manager.get('Empacado', data, 'Azul', color)
-            columnsCafe = ['id', 'Region', 'Finca', 'Libras', 'Estado']
-            fin = 'Finca'
-            self.idCafe = manager.get('Cafe', columnsCafe, finca, fin)
-            print('hola3')
-            total = 0
-            total = int(self.lineEdit_4.text()) * int(self.lineEdit_6.text())
-            venta_d = sql_structures.Venta(self.comboBox.currentText(),
-                                               self.lineEdit_3.text(),
-                                               int(self.lineEdit_4.text()),
-                                               total, self.lineEdit_6.text(), self.idEmpaque, self.idCafe)
-            venta_d.management('venta_cafe')
-            QMessageBox.about(self, 'Aviso', 'Se agrego correctamente!')
-            self.aux += 1
-            tran = sql_structures.Transaccion(str(datetime.now()),
-                                              self.usuario_comprobacion,
-                                              "Facturacion",
-                                              "Confirmado",
-                                              "Nulo",
-                                              '',
-                                              '',
-                                              ''
-                                              )
-            tran.management("ingresar_transaccion")
-
-        except Exception as e:
-            print(e)
-            QMessageBox.about(self, 'Aviso', 'Error al agregar!')
-
-        self.lineEdit_3.clear()
-        self.lineEdit_4.clear()
-        self.lineEdit_6.clear()
-
-
-    def agregarCliente(self):
-        try:
-            management = Manager()
-            mana = sql_structures.Manager()
-            nombre = self.fincaAcText_4.text()
-            # nit = self.fincaAcText_5.text()
-            direccion = self.fincaAcText_6.text()
-            data_list = [direccion, nombre, 0]
-            columns_ingreso = ['id', 'Direccion', 'Cliente', 'Venta_id']
-            management.insert_into_table('factura', columns_ingreso, data_list)
-            self.idFac = mana.get('factura', columns_ingreso, nombre, 'Cliente')
-            QMessageBox.about(self, 'Aviso', 'Se agrego correctamente!')
-        except Exception as e:
-            print(e)
-            QMessageBox.about(self, 'Aviso', 'Error al agregar!')
-
-    def realizarFactura(self):
-
-        now = datetime.now()
-        formato = now.strftime('%d - %m - %Y')
-
-        # Crear un nuevo documento PDF
-        pdf = canvas.Canvas(f"factura{self.idFactura}.pdf")
-        # Configurar el estilo del texto
-        pdf.setFont("Helvetica", 12)
-
-        # Agregar los datos del cliente
-        cliente_nombre = str(self.fincaAcText_4.text())
-        cliente_nit = str(self.fincaAcText_5.text())
-        cliente_direccion = str(self.fincaAcText_6.text())
-        pdf.drawString(100, 700, "Cliente: " + cliente_nombre)
-        pdf.drawString(100, 680, "NIT: " + cliente_nit)
-        pdf.drawString(100, 660, "Dirección: " + cliente_direccion)
-        pdf.drawString(400, 700, f"Factura: {self.idFactura + self.idFac}")
-        pdf.drawString(400, 680, f"Fecha: {formato}")
-        y = 600  # Posición vertical inicial
-        pdf.drawString(50, 620, "PROUCTO")
-        pdf.drawString(150, 620, "FINCA")
-        pdf.drawString(225, 620, "CANTIDAD UNIDAD")
-        pdf.drawString(375, 620, "ESTADO")
-        pdf.drawString(450, 620, "PRECIO UNIDAD")
-
-        for producto in self.productos:
-            pdf.drawString(50, y, producto["region"])
-            pdf.drawString(150, y, str(producto["finca"]))
-            pdf.drawString(225, y, str(producto["cantidadUnidad"]))
-            pdf.drawString(375, y, str(producto["estado"]))
-            pdf.drawString(450, y, str(producto["precioUnidad"]))
-            y -= 20
-
-        for producto in self.productos:
-            total = float(producto["precioUnidad"]) * int(producto["cantidadUnidad"])
-            self.total = total + self.total
-
-        pdf.drawString(400, y - 20, "Total: " + str(self.total))
-        pdf.save()
-        factura = f"factura{self.idFactura}.pdf"
-        webbrowser.open_new(factura)
-        self.productos.clear()
-        self.total = 0
-
-    def mostrarFilaTablaTransaccion(self, row, column):
-        item = self.transaccionesTabla.item(row, column)
-        value = item.text()
-        columns_ingreso = ['id', 'Hora', 'Usuario', 'Modulo', 'Estado', 'Error']
-        # Obtener el nombre de la columna
-        header_item = self.transaccionesTabla.horizontalHeaderItem(column)
-        column_name = header_item.text()
-        # Realizar la búsqueda en la base de datos según la columna correspondiente
-        if column_name == 'Hora':
-            self.id_t = self.manager.get('transaccion', columns_ingreso, value, 'Hora')
-            self.cm = 'Hora'
-        elif column_name == 'Usuario':
-            self.id_t = self.manager.get('transaccion', columns_ingreso, value, 'Usuario')
-            self.cm = 'Usuario'
-        elif column_name == 'Modulo':
-            self.id_t = self.manager.get('transaccion', columns_ingreso, value, 'Modulo')
-            self.cm = 'Modulo'
-        elif column_name == 'Estado':
-            self.id_t = self.manager.get('transaccion', columns_ingreso, value, 'Estado')
-            self.cm = 'Estado'
-        elif column_name == 'Error':
-            self.id_t = self.manager.get('transaccion', columns_ingreso, value, 'Error')
-            self.cm = 'Error'
-
